@@ -9,20 +9,8 @@ General:
     Someone gets ready to answer all questions that Islam will ask
 
 Frontend:
-    Functional buttons
 
 Backend:
-    Need to choose a database
-    Figure out what we need to store in te database
-        OAuth keys for blackboard
-        Usernames
-        Passwords
-    Set up the hash code so we can safely store usernames and Passwords
 
 Security:
-    Hash everything locally we do not want to send the real passwords to the database
-        Use Kyber Encryption with DH key exchange to make sure we have the same keys
-            Kyber encryption is just AES256^2 (it wraps the key within a hash)
-    Disable any way to ssh into the database unless it is going through a secure port
-        Might want to write a script on the database side to handle any weird incoming connections
-        Auto shutdown if it gets DoS'ed?
+    
