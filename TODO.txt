@@ -5,12 +5,16 @@ General:
 
     Figure out who will be dealing with the database mainly
         This will include the security of it
-    
-    Someone gets ready to answer all questions that Islam will ask
 
 Frontend:
-
+    Add an alert system
+    Make the GUI
+    
 Backend:
+    add a way to capture the packets from the system
+    add a way to start breaking down the packets. (Basically divide them up into their proper sections)
+    start adding rules/policies
+    Add a way for the user to set up their own rules and policies
 
 Security:
     
