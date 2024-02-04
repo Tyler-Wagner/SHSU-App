@@ -125,7 +125,7 @@ int main()
     // Set a packet capture filter (this is optional but we will more than likely do it since we will be using a local host to communicate between the front and back end for the time being)
     struct bpf_program fp;
 
-    if (pcap_compile(pcap_handle, &fp, "tcp", 0, PCAP_NETMASK_UNKNOWN) == -1)
+    if (pcap_compile(pcap_handle, &fp, "", 0, PCAP_NETMASK_UNKNOWN) == -1)
     {
         cerr << "Error compiling filter." << endl;
         pcap_freealldevs(alldevs);
@@ -137,7 +137,7 @@ int main()
     }
 
     // Start to capture the packets in a loop
-    pcap_loop(pcap_handle, 0, packet_handler, nullptr);
+    pcap_loop(pcap_handle, 100, packet_handler, nullptr);
 
     // Close the handle
     pcap_close(pcap_handle);
