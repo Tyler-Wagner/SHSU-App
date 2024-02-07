@@ -48,7 +48,7 @@ def process_packet(packet):
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
         dst_ip = packet[scapy.ARP].pdst
-        print(f"ARP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+        print(f"ARP Packet: {src_ip} -> {dst_ip}") #ARP does not have a port
 
 def capture_packets(interface):
     print(f"\nCapturing packets on {interface}...\n")
