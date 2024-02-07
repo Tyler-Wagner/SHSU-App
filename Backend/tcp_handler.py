@@ -33,5 +33,18 @@ def figure_flag(raw_flag):
             n_flag = 'FIN'
         case 'S':
             n_flag = 'SYN'
-        case '':
-
+        case 'R':
+            n_flag = 'RST'
+        case 'P':
+            n_flag = 'PSH'
+        case 'A':
+            n_flag = 'ACK'
+        case 'U':
+            n_flag = 'URG'
+        case 'E':
+            n_flag = 'ECE'
+        case 'C':
+            n_flag ='CWR'
+        case _:
+            print("Not implemented yet")
+    return n_flag
