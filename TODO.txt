@@ -1,6 +1,7 @@
 General:
     Feasibility Presentation February 14th
-    Feasibility Report
+    Feasibility Report February 23rd
+    Peer Evaluation Report February 25th
     Poster Presentation
     Project Progress Presentation
     Final Presentation

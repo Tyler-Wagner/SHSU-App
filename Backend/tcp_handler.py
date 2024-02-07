@@ -26,6 +26,11 @@ def handle_tcp_packet(packet, src_ip, src_port, dst_ip, dst_port):
     else:
         print("Not seeing TCP")
 
+"""
+Takes the information from scapy's flag and makes it easier for us to read
+when we are trying to move it to the front end and read it there I would use the raw flag at first
+THEN proceed to implement the below
+"""        
 def figure_flag(raw_flag):
     n_flag = ""
     match raw_flag:

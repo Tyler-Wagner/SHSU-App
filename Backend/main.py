@@ -1,6 +1,7 @@
 import psutil
 import scapy.all as scapy
 from tcp_handler import handle_tcp_packet
+from udp_handler import handle_udp_packet
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -33,15 +34,17 @@ def process_packet(packet):
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
             dst_port = packet[scapy.UDP].dport
-            print(f"UDP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            #use the below for debugging
+            #print(f"UDP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
 
             #send everything to the correct file below
+            handle_udp_packet(packet, src_ip, src_port, dst_ip, dst_port)
         
         elif packet.haslayer(scapy.ICMP):
             src_port = packet[scapy.ICMP].sport
             dst_port = packet[scapy.ICMP].dport
+            # use the below for debugging
             print(f"ICMP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
-
             #send everything to the correct file below
 
     #APR is the only thing that doesn't have te IP filter in scapy
