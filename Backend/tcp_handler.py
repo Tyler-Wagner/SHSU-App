@@ -50,6 +50,14 @@ def figure_flag(raw_flag):
             n_flag = 'ECE'
         case 'C':
             n_flag ='CWR'
+        case 'FA':
+            n_flag = 'FINACK'
+        case 'PA':
+            n_flag = 'PUSH_ACK'
+        case 'SA':
+            n_flag = 'SYNACK'
+        case 'RA':
+            n_flag = 'RSTACK'
         case _:
-            print("Not implemented yet")
+            print(f"TCP flag, {raw_flag} not implemented yet")
     return n_flag
