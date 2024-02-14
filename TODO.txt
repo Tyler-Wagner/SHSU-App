@@ -14,10 +14,10 @@ Frontend:
     Make the GUI
     
 Backend:
-    Add a way to see system names for the network devices.
-    add a way to start breaking down the packets. (Basically divide them up into their proper sections)
     start adding rules/policies
     Add a way for the user to set up their own rules and policies
+    Check for ARP poisoning (this will take all of 10 minutes)
 
 Security:
+    LMFAO NOT NEEDED AHHAHAHAHHAAHAHA
     
