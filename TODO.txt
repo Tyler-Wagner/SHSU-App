@@ -1,6 +1,7 @@
 General:
     Feasibility Presentation February 14th
-    Feasibility Report
+    Feasibility Report February 23rd
+    Peer Evaluation Report February 25th
     Poster Presentation
     Project Progress Presentation
     Final Presentation
@@ -13,10 +14,10 @@ Frontend:
     Make the GUI
     
 Backend:
-    add a way to capture the packets from the system
-    add a way to start breaking down the packets. (Basically divide them up into their proper sections)
     start adding rules/policies
     Add a way for the user to set up their own rules and policies
+    Check for ARP poisoning (this will take all of 10 minutes)
 
 Security:
+    LMFAO NOT NEEDED AHHAHAHAHHAAHAHA
     

@@ -1,2 +1,4 @@
-psutil
+pyzmq
+PyQt5
 scapy
+psutil
