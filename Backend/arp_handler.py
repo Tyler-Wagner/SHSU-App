@@ -10,7 +10,6 @@ class CheckARP:
         self.dst_ip = dst_ip
         self.dst_mac = dst_mac
 
-
     def handle_arp_packet(self):
         if self.packet.haslayer(scapy.ARP):
             arp_layer = self.packet[scapy.ARP]
