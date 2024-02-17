@@ -11,15 +11,15 @@ class CheckARP:
         self.dst_mac = dst_mac
 
 
-    def handle_arp_packet(packet, src_ip, dst_ip, src_mac, dst_mac):
-        if packet.haslayer(scapy.ARP):
-            arp_layer = packet[scapy.ARP]
+    def handle_arp_packet(self):
+        if self.packet.haslayer(scapy.ARP):
+            arp_layer = self.packet[scapy.ARP]
             operation = "Request" if arp_layer.op == 1 else "Reply"
 
-            print(f"ARP {operation}: {src_ip} ({src_mac}) -> {dst_ip} ({dst_mac})")
+            print(f"ARP {operation}: {self.src_ip} ({self.src_mac}) -> {self.dst_ip} ({self.dst_mac})")
 
         else:
             print("Not seeing ARP")
 
-    def check_for_poison():
+    def check_for_poison(self):
         pass
