@@ -9,7 +9,7 @@ def handle_icmp_packet(packet, src_ip, dst_ip):
         icmp_layer = packet[scapy.ICMP]
 
         #displaying information to the CONSOLE
-        print(f"UDP: {src_ip} -> {dst_ip}")
+        print(f"ICMP: {src_ip} -> {dst_ip}")
 
         
 

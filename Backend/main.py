@@ -2,6 +2,8 @@ import psutil
 import scapy.all as scapy
 from tcp_handler import handle_tcp_packet
 from udp_handler import handle_udp_packet
+from icmp_handler import handle_icmp_packet
+from arp_handler import handle_arp_packet
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -44,14 +46,19 @@ def process_packet(packet):
             src_port = packet[scapy.ICMP].sport
             dst_port = packet[scapy.ICMP].dport
             # use the below for debugging
-            print(f"ICMP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            #print(f"ICMP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
             #send everything to the correct file below
+            handle_icmp_packet(packet, src_ip, dst_ip)
 
     #APR is the only thing that doesn't have te IP filter in scapy
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
         dst_ip = packet[scapy.ARP].pdst
-        print(f"ARP Packet: {src_ip} -> {dst_ip}") #ARP does not have a port
+        src_mac = packet[scapy.ARP].srcmac
+        dst_mac = packet[scapy.ARP].dstmac
+        # Use the below for debugging
+        #print(f"ARP Packet: {src_ip} -> {dst_ip}") #ARP does not have a port
+        handle_arp_packet(packet, src_ip, dst_ip, src_mac, dst_mac)
 
 def capture_packets(interface):
     print(f"\nCapturing packets on {interface}...\n")
