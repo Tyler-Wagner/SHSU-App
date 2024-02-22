@@ -7,8 +7,7 @@ class CheckTCP:
         self.src_port = src_port
         self.dst_ip = dst_ip
         self.dst_port = dst_port
-    # This is what we call whenever we send the packet to get broken down by the system
-    # Basically an init
+
     def handle_tcp_packet(self):
         #print("Got packet")# used for debugging
 

@@ -1,4 +1,5 @@
 import scapy.all as scapy
+import logging
 
 class CheckARP:
     # allows the class to only use variables within the class
@@ -9,6 +10,8 @@ class CheckARP:
         self.src_mac = src_mac
         self.dst_ip = dst_ip
         self.dst_mac = dst_mac
+        self.arp_cache = {}
+
 
     def handle_arp_packet(self):
         if self.packet.haslayer(scapy.ARP):
@@ -17,10 +20,11 @@ class CheckARP:
 
             print(f"ARP {operation}: {self.src_ip} ({self.src_mac}) -> {self.dst_ip} ({self.dst_mac})")
 
+            # Checking for arp Poisoning
+            if self.src_ip in self.arp_cache[self.src_ip] != self.src_mac:
+                logging.warning(f"ARP Poisoning Detected! IP: {self.src_ip}, Original MAC: {self.arp_cache[self.src_ip]}, Current MAC: {self.src_mac}")
+
         else:
             print("Not seeing ARP")
 
-    def check_for_poison(self):
-        pass
 
-#FORCING AN UPDATE
