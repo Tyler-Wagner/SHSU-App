@@ -4,6 +4,7 @@ from tcp_handler import CheckTCP
 from udp_handler import CheckUDP
 from icmp_handler import CheckICMP
 from arp_handler import CheckARP
+from pMath import packet_math
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -17,6 +18,12 @@ def list_network_devices():
             print(f"      {addr.family.name}: {addr.address}")
 
 def process_packet(packet):
+    # Counters for the number of packets that come through the program
+    kntUDP = 0
+    kntTCP = 0
+    kntICMP = 0
+    kntARP = 0
+
     # Process and display information about the packet
     if packet.haslayer(scapy.IP):
         src_ip = packet[scapy.IP].src
@@ -30,6 +37,7 @@ def process_packet(packet):
             # TCP ANALYZER HERE
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet()# calls instance
+            kntTCP + 1
 
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
@@ -37,12 +45,14 @@ def process_packet(packet):
             # UDP ANALYZER HERE
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
+            kntUDP + 1
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type
             # ICMP ANALYZER HERE
             icmp_packet_check = CheckICMP(packet, src_ip, dst_ip, icmp_type)# creates instance
             icmp_packet_check.handle_icmp_packet()# calls instance
+            kntICMP + 1
 
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
@@ -52,7 +62,11 @@ def process_packet(packet):
         # ANALYZE HERE
         arp_packet_check = CheckARP(packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
         arp_packet_check.handle_arp_packet()# calls instance
+        kntARP + 1
     
+    # send everything back to be counted at the front end
+    packet_math(kntUDP, kntTCP, kntICMP, kntARP)
+
 def capture_packets(interface):
     print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=process_packet)
