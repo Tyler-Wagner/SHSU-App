@@ -1,4 +1,5 @@
-pyzmq
 PyQt5
 scapy
 psutil
+requests
+numpy
