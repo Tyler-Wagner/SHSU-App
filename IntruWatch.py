@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 # from PyQt5.QtCore import QTimer
 from Frontend.tabs import Ui_tabsPage
 # from time import sleep # FOR SIMULATION
+from Backend.main import list_network_devices
 from Backend.main import capture_packets
 
 app = QApplication([])
@@ -27,8 +28,8 @@ class DataEntryThread(threading.Thread):
 
     def run(self):
         devices = list(psutil.net_if_addrs().keys())
-
-        choice = 4
+        
+        choice = 2
 
         if 1 <= choice <= len(devices):
             selected_interface = devices[choice - 1]

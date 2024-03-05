@@ -21,7 +21,7 @@ class CheckARP:
             print(f"ARP {operation}: {self.src_ip} ({self.src_mac}) -> {self.dst_ip} ({self.dst_mac})")
 
             # Checking for arp Poisoning
-            if self.src_ip in self.arp_cache[self.src_ip] != self.src_mac:
+            if self.src_ip in self.arp_cache and self.arp_cache[self.src_ip] != self.src_mac:
                 logging.warning(f"ARP Poisoning Detected! IP: {self.src_ip}, Original MAC: {self.arp_cache[self.src_ip]}, Current MAC: {self.src_mac}")
 
         else:
