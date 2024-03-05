@@ -1,7 +1,11 @@
 import psutil
 import scapy.all as scapy
-from tcp_handler import handle_tcp_packet
-from udp_handler import handle_udp_packet
+# from Backend.tcp_handler import handle_tcp_packet
+# from Backend.udp_handler import handle_udp_packet
+# from PyQt5.QtWidgets import QApplication, QMainWindow
+# from PyQt5.QtCore import QTimer
+# from time import sleep # FOR SIMULATION
+
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -14,48 +18,47 @@ def list_network_devices():
         for addr in addresses:
             print(f"      {addr.family.name}: {addr.address}")
 
-def process_packet(packet):
+def process_packet(packet, data_handler):
     # Process and display information about the packet
     if packet.haslayer(scapy.IP):
         src_ip = packet[scapy.IP].src
         dst_ip = packet[scapy.IP].dst
-        #print(f"IP Packet: {src_ip} -> {dst_ip}")
 
-        #check the kind of packet that was being sent
         if packet.haslayer(scapy.TCP):
             src_port = packet[scapy.TCP].sport
             dst_port = packet[scapy.TCP].dport
-            #use the below for debugging in the visual mode
-            #print(f"TCP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            data_handler.add_log_row("TCP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
 
-            #send everything to the correct file below
-            handle_tcp_packet(packet, src_ip, src_port, dst_ip, dst_port)
-        
+
+            # Call handle_tcp_packet or any other processing function here if needed
+            # handle_tcp_packet(packet, src_ip, src_port, dst_ip, dst_port)
+
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
             dst_port = packet[scapy.UDP].dport
-            #use the below for debugging
-            #print(f"UDP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
+            data_handler.add_log_row("UDP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
 
-            #send everything to the correct file below
-            handle_udp_packet(packet, src_ip, src_port, dst_ip, dst_port)
-        
+            # Call handle_udp_packet or any other processing function here if needed
+            # handle_udp_packet(packet, src_ip, src_port, dst_ip, dst_port)
+
         elif packet.haslayer(scapy.ICMP):
             src_port = packet[scapy.ICMP].sport
             dst_port = packet[scapy.ICMP].dport
-            # use the below for debugging
-            print(f"ICMP Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
-            #send everything to the correct file below
+            data_handler.add_log_row("ICMP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
 
-    #APR is the only thing that doesn't have te IP filter in scapy
+            # Call any other processing function for ICMP packets here if needed
+
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
         dst_ip = packet[scapy.ARP].pdst
-        print(f"ARP Packet: {src_ip} -> {dst_ip}") #ARP does not have a port
+        data_handler.add_log_row("ARP", f"Packet: {src_ip} -> {dst_ip}")
 
-def capture_packets(interface):
+        # Call any other processing function for ARP packets here if needed
+
+# Modify the call to process_packet in capture_packets
+def capture_packets(interface, data_handler):
     print(f"\nCapturing packets on {interface}...\n")
-    scapy.sniff(iface=interface, store=False, prn=process_packet)
+    scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))
 
 def main():
     list_network_devices()
