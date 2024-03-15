@@ -2,3 +2,6 @@ __pycache__/
 .vscode/launch.json
 .vscode/settings.json
 *.pyc
+*.pyc
+/Backend/__pycache__
+*.pyc
