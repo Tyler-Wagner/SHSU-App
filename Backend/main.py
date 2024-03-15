@@ -44,7 +44,7 @@ def process_packet(packet, data_handler):
             icmp_type = packet[scapy.ICMP].type
             data_handler.add_log_row("ICMP", f"Packet: {src_ip} -> {dst_ip}") # ICMP does not have ports
             # Call any other processing function for ICMP packets here if needed
-            ICMP_packet_check = CheckICMP(packet, src_ip, src_port, icmp_type)# creates instance
+            ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
             ICMP_packet_check.handle_icmp_packet() # calls instance
 
 
