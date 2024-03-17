@@ -38,31 +38,6 @@ class Ui_tabsPage(object):
         self.tabWidget.addTab(self.history, "History")
         self.tabWidget.addTab(self.settings, "Settings")  # Add settings tab
 
-        # Apply style to tabs to match the color scheme of buttons
-        tab_stylesheet = """
-            QTabBar::tab {{
-                background-color: red;
-                color: white;
-                border: 2px solid black;
-                border-top-left-radius: 6px;
-                border-top-right-radius: 6px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 0px;
-                min-width: 50ex;
-                padding: 2px;
-                margin-left: 6px;
-                margin-right: 6px;
-            }}
-
-            QTabBar::tab:selected {{
-                border-color: red;
-                border-bottom: 0px;
-                border-bottom-left-radius: 0px;
-                border-bottom-right-radius: 0px;
-                border-width: 4px;
-            }}
-        """
-        self.tabWidget.setStyleSheet(tab_stylesheet)
         self.retranslateUi(tabsPage)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(tabsPage)
