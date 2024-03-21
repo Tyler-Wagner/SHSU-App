@@ -18,7 +18,9 @@ ui = Ui_tabsPage()
 ui.setupUi(tabsPage)
 
 data_handler = EnterDataHandler(ui)
-data_handler.log_row_added.connect(data_handler.add_table_row)
+data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
+data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # connects to the Past Alerts Table
+data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
 
 
 class DataEntryThread(threading.Thread):
