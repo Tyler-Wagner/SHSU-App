@@ -18,7 +18,7 @@ def list_network_devices():
     
 
 def process_packet(packet, data_handler):
-
+    
     # Process and display information about the packet
     if packet.haslayer(scapy.IP):
         src_ip = packet[scapy.IP].src

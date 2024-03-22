@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '..\tabs.ui'
+# Form implementation generated from reading ui file 'tabs.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -332,7 +332,7 @@ class Ui_tabsPage(object):
         self.pastAlertsTable.setCornerButtonEnabled(False)
         self.pastAlertsTable.setRowCount(0)
         self.pastAlertsTable.setObjectName("pastAlertsTable")
-        self.pastAlertsTable.setColumnCount(5)
+        self.pastAlertsTable.setColumnCount(4)
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -361,14 +361,7 @@ class Ui_tabsPage(object):
         font.setWeight(75)
         item.setFont(font)
         self.pastAlertsTable.setHorizontalHeaderItem(3, item)
-        item = QtWidgets.QTableWidgetItem()
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(True)
-        font.setWeight(75)
-        item.setFont(font)
-        self.pastAlertsTable.setHorizontalHeaderItem(4, item)
-        self.pastAlertsTable.horizontalHeader().setDefaultSectionSize(267)
+        self.pastAlertsTable.horizontalHeader().setDefaultSectionSize(333)
         self.pastAlertsTable.verticalHeader().setVisible(False)
         self.label_2 = QtWidgets.QLabel(self.alerts)
         self.label_2.setGeometry(QtCore.QRect(520, 300, 351, 21))
@@ -400,10 +393,70 @@ class Ui_tabsPage(object):
 "font: bold 14pt;\n"
 "}")
         self.dashboardButton_actions.setObjectName("dashboardButton_actions")
-        self.columnView = QtWidgets.QColumnView(self.action)
-        self.columnView.setGeometry(QtCore.QRect(10, 110, 1361, 511))
-        self.columnView.setStyleSheet(" /* ACTIONS PAGE */")
-        self.columnView.setObjectName("columnView")
+        self.pastAlertsTable_2 = QtWidgets.QTableWidget(self.action)
+        self.pastAlertsTable_2.setGeometry(QtCore.QRect(20, 40, 1341, 671))
+        self.pastAlertsTable_2.setStyleSheet("QTableWidget{\n"
+"border: 3px outset black;\n"
+"}\n"
+"QTableWidget:bar{\n"
+"border: 3px outset black;\n"
+"}\n"
+"QHeaderView {\n"
+"    border: 2px solid black; /* Adjust the thickness and color as needed */\n"
+"    border-top-style:null;\n"
+"    border-left-style:null;\n"
+"    border-right-style:null;\n"
+"}\n"
+"QTableWidget::item {\n"
+"    color: black;\n"
+"    text-align: center;\n"
+"    background: rgba(128,128,128,60);\n"
+"}\n"
+"")
+        self.pastAlertsTable_2.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.pastAlertsTable_2.setAutoScroll(False)
+        self.pastAlertsTable_2.setAlternatingRowColors(True)
+        self.pastAlertsTable_2.setCornerButtonEnabled(False)
+        self.pastAlertsTable_2.setRowCount(0)
+        self.pastAlertsTable_2.setObjectName("pastAlertsTable_2")
+        self.pastAlertsTable_2.setColumnCount(5)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable_2.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable_2.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable_2.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable_2.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable_2.setHorizontalHeaderItem(4, item)
+        self.pastAlertsTable_2.horizontalHeader().setDefaultSectionSize(333)
+        self.pastAlertsTable_2.verticalHeader().setVisible(False)
         self.tabWidget.addTab(self.action, "")
         self.settings = QtWidgets.QWidget()
         self.settings.setObjectName("settings")
@@ -432,7 +485,7 @@ class Ui_tabsPage(object):
         tabsPage.setStatusBar(self.statusbar)
 
         self.retranslateUi(tabsPage)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(tabsPage)
 
     def retranslateUi(self, tabsPage):
@@ -450,29 +503,37 @@ class Ui_tabsPage(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.log), _translate("tabsPage", "Logs"))
         self.dashboardButton_alerts.setText(_translate("tabsPage", "Dashboard"))
         item = self.activeAlertsTable.horizontalHeaderItem(0)
-        item.setText(_translate("tabsPage", "Date"))
+        item.setText(_translate("tabsPage", "Date/Time"))
         item = self.activeAlertsTable.horizontalHeaderItem(1)
-        item.setText(_translate("tabsPage", "Destination IP"))
-        item = self.activeAlertsTable.horizontalHeaderItem(2)
         item.setText(_translate("tabsPage", "Source IP"))
+        item = self.activeAlertsTable.horizontalHeaderItem(2)
+        item.setText(_translate("tabsPage", "Source Port"))
         item = self.activeAlertsTable.horizontalHeaderItem(3)
         item.setText(_translate("tabsPage", "Destination Port"))
         item = self.activeAlertsTable.horizontalHeaderItem(4)
-        item.setText(_translate("tabsPage", "Source Port"))
+        item.setText(_translate("tabsPage", "Move To Past"))
         self.label.setText(_translate("tabsPage", "Active Alerts"))
         item = self.pastAlertsTable.horizontalHeaderItem(0)
-        item.setText(_translate("tabsPage", "Date"))
+        item.setText(_translate("tabsPage", "Date/Time"))
         item = self.pastAlertsTable.horizontalHeaderItem(1)
-        item.setText(_translate("tabsPage", "Destination IP"))
-        item = self.pastAlertsTable.horizontalHeaderItem(2)
         item.setText(_translate("tabsPage", "Source IP"))
+        item = self.pastAlertsTable.horizontalHeaderItem(2)
+        item.setText(_translate("tabsPage", "Source Port"))
         item = self.pastAlertsTable.horizontalHeaderItem(3)
         item.setText(_translate("tabsPage", "Destination Port"))
-        item = self.pastAlertsTable.horizontalHeaderItem(4)
-        item.setText(_translate("tabsPage", "Source Port"))
         self.label_2.setText(_translate("tabsPage", "Past Alerts"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.alerts), _translate("tabsPage", "Alerts"))
         self.dashboardButton_actions.setText(_translate("tabsPage", "Dashboard"))
+        item = self.pastAlertsTable_2.horizontalHeaderItem(0)
+        item.setText(_translate("tabsPage", "Date"))
+        item = self.pastAlertsTable_2.horizontalHeaderItem(1)
+        item.setText(_translate("tabsPage", "Source IP"))
+        item = self.pastAlertsTable_2.horizontalHeaderItem(2)
+        item.setText(_translate("tabsPage", "Source Port"))
+        item = self.pastAlertsTable_2.horizontalHeaderItem(3)
+        item.setText(_translate("tabsPage", "Destination Port"))
+        item = self.pastAlertsTable_2.horizontalHeaderItem(4)
+        item.setText(_translate("tabsPage", "Suggested Actions"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("tabsPage", "Actions"))
         self.dashboardButton_settings.setText(_translate("tabsPage", "Dashboard"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("tabsPage", "Settings"))
