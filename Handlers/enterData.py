@@ -6,8 +6,8 @@ from datetime import datetime
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
-    pAlerts_row_added = pyqtSignal(str, str, str, str)
-    cAlerts_row_added = pyqtSignal(str, str, str)
+    pAlerts_row_added = pyqtSignal(str, str, int, str)
+    cAlerts_row_added = pyqtSignal(str, int, int)
 
     def __init__(self, ui, parent=None):
         super().__init__(parent)
@@ -60,14 +60,13 @@ class EnterDataHandler(QObject):
         current_datetime = datetime.now()
         dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
 
-        row_count = self.ui.activeAlertsTable.rowCount()
-        self.ui.activeAlertsTable.insertRow(row_count)
+        self.ui.activeAlertsTable.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(dtEntry)
         sIP_item = QTableWidgetItem(sourceIP)
-        sP_item = QTableWidgetItem(sourceP)
-        dPort_item = QTableWidgetItem(destP)
+        sP_item = QTableWidgetItem(str(sourceP))
+        dPort_item = QTableWidgetItem(str(destP))
 
         # Set font and alignment for each item
         font = QFont()
@@ -87,13 +86,20 @@ class EnterDataHandler(QObject):
 
         # Create a button and set it in the row
         button = QPushButton("Add to Past Alerts")
-        button.clicked.connect(lambda row=0: self.add_to_past_alerts(row))
+        button.clicked.connect(lambda: self.add_table_row_pAlerts(dtEntry, sourceIP, str(sourceP), str(destP)))
         self.ui.activeAlertsTable.setCellWidget(0, 4, button)
 
     def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
-
-        row_count = self.ui.pastAlertsTable.rowCount()
-        self.ui.pastAlertsTable.insertRow(row_count)
+        
+        #Finding and removeing the Row in cAlerts Table
+        row_count = self.ui.activeAlertsTable.rowCount()
+        for i in range(row_count):
+            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+                # Remove the row from CAlerts
+                self.ui.activeAlertsTable.removeRow(i)
+                break
+        
+        self.ui.pastAlertsTable.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(date)
