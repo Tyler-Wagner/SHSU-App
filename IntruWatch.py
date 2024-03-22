@@ -31,7 +31,7 @@ class DataEntryThread(threading.Thread):
     def run(self):
         devices = list(psutil.net_if_addrs().keys())
         
-        choice = 1
+        choice = 4
 
         if 1 <= choice <= len(devices):
             selected_interface = devices[choice - 1]

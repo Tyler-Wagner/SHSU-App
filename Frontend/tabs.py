@@ -9,6 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
+from Frontend.new_Dash import Dashboard
 
 
 class Ui_tabsPage(object):
@@ -474,7 +476,14 @@ class Ui_tabsPage(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("tabsPage", "Actions"))
         self.dashboardButton_settings.setText(_translate("tabsPage", "Dashboard"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("tabsPage", "Settings"))
+        self.dashboardButton_logs.clicked.connect(lambda: self.showDashboard(tabsPage))
+        self.dashboardButton_alerts.clicked.connect(lambda: self.showDashboard(tabsPage))
+        self.dashboardButton_actions.clicked.connect(lambda: self.showDashboard(tabsPage))
+        self.dashboardButton_settings.clicked.connect(lambda: self.showDashboard(tabsPage))
 
+    def showDashboard(self, tabsPage):
+        dashboard_Widget = Dashboard()
+        tabsPage.setCentralWidget(dashboard_Widget)
 
 if __name__ == "__main__":
     import sys

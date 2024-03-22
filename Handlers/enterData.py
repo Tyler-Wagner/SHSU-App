@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
-    log_row_added = pyqtSignal(str)
+    log_row_added = pyqtSignal(str, str)
     pAlerts_row_added = pyqtSignal(str)
     cAlerts_row_added = pyqtSignal(str)
 
@@ -14,8 +14,7 @@ class EnterDataHandler(QObject):
         self.ui = ui
 
     def add_log_row(self, category, message):
-        log_entry = f"{category}: {message}"
-        self.log_row_added.emit(log_entry)
+        self.log_row_added.emit(category, message)
 
     def add_past_alerts_row(self, category, message):
         pAlerts_entry = f"{category}: {message}"
@@ -25,16 +24,9 @@ class EnterDataHandler(QObject):
         cAlerts_entry = f"{category}: {message}"
         self.cAlerts_row_added.emit(cAlerts_entry)
 
-    def add_table_row(self, log_entry):
-        # print(f"Received log data: {log_entry}") #for Debug
+    def add_table_row(self, packet, details):
         
-
-        # Extract packet and details from log_entry
-        # Assuming log_entry has the format "Packet: {packet} -> {details}"
-        packet_start = log_entry.find("Packet: ") + len("Packet: ")
-        details_start = log_entry.find(" -> ") + len(" -> ")
-        packet = log_entry[packet_start:details_start - len(" -> ")]
-        details = log_entry[details_start:]
+        # print(f"Received log data: {log_entry}") #for Debug
 
         current_datetime = datetime.now()
         date = current_datetime.strftime("%Y-%m-%d")
