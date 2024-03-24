@@ -27,10 +27,10 @@ def updateUserSettings(column, value):
     cursor.close()
     conn.close()
 
-
-def main():
-    updateUserSettings('interface', '2')
-    importUserSettings()
+# Testing
+# def main():
+#     updateUserSettings('interface', '2')
+#     importUserSettings()
     
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
