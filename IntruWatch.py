@@ -45,9 +45,7 @@ def update_gui():
         QApplication.processEvents()
 
 def main():
-
-    global exit_flag
-
+    
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
 

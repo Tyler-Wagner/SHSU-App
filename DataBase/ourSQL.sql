@@ -26,5 +26,4 @@ CREATE TABLE pastAlerts(
 INSERT INTO settingsInfo(id, interface, notifications) VALUES (1, 2, 'T');
 
 -- DELETE FROM settingsInfo WHERE id=1;
-
--- SELECT * FROM settingsInfo;
+--  SELECT * FROM settingsInfo;
