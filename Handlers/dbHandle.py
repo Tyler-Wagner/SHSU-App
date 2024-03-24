@@ -5,7 +5,7 @@ import os
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 
 def importUserSettings():
-    db_path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')  # Corrected file path
+    db_path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cmd = f'SELECT * FROM settingsInfo'
@@ -21,7 +21,7 @@ def updateUserSettings(column, value):
     db_path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor() 
-    cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  # Use parameterized query
+    cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  # Prevents SQL Injections
     cursor.execute(cmd, (value,))
     conn.commit()
     cursor.close()
