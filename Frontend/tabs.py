@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from Frontend.new_Dash import Dashboard
-
+import psutil
 
 class Ui_tabsPage(object):
     def setupUi(self, tabsPage):
@@ -477,6 +477,16 @@ class Ui_tabsPage(object):
 "font: bold 14pt;\n"
 "}")
         self.dashboardButton_settings.setObjectName("dashboardButton_settings")
+        self.frame = QtWidgets.QFrame(self.settings)
+        self.frame.setGeometry(QtCore.QRect(50, 50, 276, 212))
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.listWidget = QtWidgets.QListWidget(self.frame)
+        self.listWidget.setObjectName("listWidget")
+        self.gridLayout_2.addWidget(self.listWidget, 0, 0, 1, 1)
         self.tabWidget.addTab(self.settings, "")
         self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
         tabsPage.setCentralWidget(self.centralwidget)

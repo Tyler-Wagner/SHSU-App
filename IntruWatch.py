@@ -1,15 +1,10 @@
 import psutil
-# import scapy.all as scapy
-# from Backedn.tcp_handler import handle_tcp_packet
-# from Backedn.udp_handler import handle_udp_packet
 import threading
-from Handlers.enterData import  EnterDataHandler
-from PyQt5.QtWidgets import QApplication, QMainWindow
-# from PyQt5.QtCore import QTimer
+from Handlers.enterData import  EnterDataHandler, dbHandle
+from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
+from PyQt5.QtGui import QFont
 from Frontend.tabs import Ui_tabsPage
-# from time import sleep # FOR SIMULATION
-from Backend.main import list_network_devices
-from Backend.main import capture_packets
+from Backend.main import list_network_devices, capture_packets
 
 app = QApplication([])
 
@@ -42,14 +37,32 @@ data_thread.start()
 
 
 def update_gui():
-        QApplication.processEvents()
+    QApplication.processEvents()
+
+def list_network_devices():
+    devices = psutil.net_if_addrs()
+    device_list = []
+    i=1
+    for name, addresses in devices.items():
+        device_list.append(f"{i}: {name}")
+        i+=1
+    return device_list
 
 def main():
-    
+
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
 
     tabsPage.show()
+    devices = list_network_devices()
+    for device in devices:
+        item = QListWidgetItem(device)
+        # Create a QFont object for bold text with 10pt size
+        font = QFont()
+        font.setBold(True)
+        font.setPointSize(10)  # Set the point size to 10
+        item.setFont(font)
+        ui.listWidget.addItem(item)
 
     app.exec_()
 
