@@ -1,96 +1,16 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QTabWidget, QHBoxLayout
-from PyQt5 import QtWidgets,QtCore, QtGui
-from tabs import Ui_tabsPage
+from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.uic import loadUi
+import os
 
-class Dashboard(QMainWindow):
+class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Intruwatch")
-        self.resize_to_monitor()  # Resize window to fit monitor size
-
-        self.central_widget = QWidget(self)
-        self.setCentralWidget(self.central_widget)
-
-        # Create a horizontal layout to hold dashboard and tab widget
-        self.layout = QHBoxLayout(self.central_widget)
-
-        # Dashboard
-        self.dashboard_widget = QWidget()
-        self.dashboard_layout = QVBoxLayout(self.dashboard_widget)
-        self.layout.addWidget(self.dashboard_widget)
-        self.layout.setAlignment(self.dashboard_widget, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
-
-        # Advanced Button
-        self.advanced_button = QPushButton("Advanced")
-        self.advanced_button.setStyleSheet("""
-            QPushButton{
-                border: 2px outset black;
-                background: red;
-                color: white;
-                font: bold 14pt;
-                border-radius: 20px;
-            }
-            QPushButton:pressed{
-                border: 2px outset black;
-                background: white;
-                color: black;
-                font: bold 14pt;
-            }
-        """)
-        self.advanced_button.clicked.connect(self.show_tabs_page)
-
-        self.dashboard_layout.addWidget(self.advanced_button)
-
-        # Tab Widget
-        self.tab_widget = QTabWidget()
-        self.tabs_page = Ui_tabsPage()
-        self.tabs_page.setupUi(self.tab_widget)
-
-        self.layout.addWidget(self.tab_widget)
-        self.tab_widget.hide()  # Initially hide the tab widget
-
-        # Back to Dashboard Button
-        self.back_to_dashboard_button = QPushButton("Back to Dashboard", self.central_widget)
-        self.back_to_dashboard_button.setStyleSheet("""
-            QPushButton{
-                border: 2px outset black;
-                background: red;
-                color: white;
-                font: bold 14pt;
-                border-radius: 20px;
-            }
-            QPushButton:pressed{
-                border: 2px outset black;
-                background: white;
-                color: black;
-                font: bold 14pt;
-            }
-        """)
-        self.back_to_dashboard_button.clicked.connect(self.show_dashboard)
-        self.back_to_dashboard_button.hide()  # Initially hide the "Back to Dashboard" button
-
-        self.layout.addWidget(self.back_to_dashboard_button, alignment=QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
-
-    def resize_to_monitor(self):
-        screen_geometry = QtWidgets.QDesktopWidget().screenGeometry()
-        self.resize(screen_geometry.width(), screen_geometry.height())
-
-    def show_tabs_page(self):
-        # Hide the "Advanced" button and show the tab widget and "Back to Dashboard" button
-        self.advanced_button.hide()
-        self.tab_widget.show()
-        self.back_to_dashboard_button.show()
-
-    def show_dashboard(self):
-        # Hide the tab widget and "Back to Dashboard" button, and show the "Advanced" button
-        self.tab_widget.hide()
-        self.back_to_dashboard_button.hide()
-        self.advanced_button.show()
-
+        ui_file_path = os.path.join(os.path.dirname(__file__), "Dashboard.ui")
+        loadUi(ui_file_path, self)
+        self.show()
 
 if __name__ == "__main__":
+    import sys
     app = QApplication(sys.argv)
-    window = Dashboard()
-    window.show()
+    mainWindow = MyMainWindow()
     sys.exit(app.exec_())
