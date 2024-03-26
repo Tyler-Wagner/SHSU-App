@@ -22,6 +22,13 @@ CREATE TABLE pastAlerts(
 -- DROP TABLE settingsInfo;
 -- DROP TABLE pastAlerts;
 
+
+-- ############## DEMO ############## --
+-- UPDATE settingsInfo SET interface=4;
+-- UPDATE settingsInfo SET notifications='T';
+-- SELECT * FROM settingsInfo;
+-- ##############      ############## --
+
 -- Here I have made the DEFAULT settings entery for each user.
 
 -- INSERT INTO settingsInfo(id, interface, notifications) VALUES (1, 2, 'T');

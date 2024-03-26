@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QTableWidgetItem, QPushButton
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import pyqtSignal, Qt, QObject
 from datetime import datetime
+from Handlers.dbHandle import updatePastAlerts as dbhandeler
 
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
@@ -17,6 +18,7 @@ class EnterDataHandler(QObject):
         self.log_row_added.emit(category, message)
 
     def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
+        dbhandeler(date, sourceIP, sourceP, destP)
         self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
 
     def add_current_alerts_row(self, sourceIP, sourceP, destP):

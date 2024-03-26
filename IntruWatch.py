@@ -1,6 +1,6 @@
 import psutil
 import threading
-from Handlers.enterData import  EnterDataHandler, dbHandle
+from Handlers.enterData import  EnterDataHandler
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtGui import QFont
 from Frontend.tabs import Ui_tabsPage

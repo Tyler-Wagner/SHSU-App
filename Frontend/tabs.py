@@ -9,9 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow
-from Frontend.new_Dash import Dashboard
-import psutil
+from Handlers.dbHandle import importUserSettings as dbhandle
+
 
 class Ui_tabsPage(object):
     def setupUi(self, tabsPage):
@@ -477,18 +476,93 @@ class Ui_tabsPage(object):
 "font: bold 14pt;\n"
 "}")
         self.dashboardButton_settings.setObjectName("dashboardButton_settings")
-        self.frame = QtWidgets.QFrame(self.settings)
-        self.frame.setGeometry(QtCore.QRect(50, 50, 276, 212))
-        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setObjectName("frame")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.frame)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        self.listWidget = QtWidgets.QListWidget(self.frame)
+        self.interfaceSelectionBox = QtWidgets.QSpinBox(self.settings)
+        self.interfaceSelectionBox.setGeometry(QtCore.QRect(540, 260, 42, 22))
+        self.interfaceSelectionBox.setProperty("value", dbhandle("interface"))
+        self.interfaceSelectionBox.setObjectName("interfaceSelectionBox")
+        self.label_3 = QtWidgets.QLabel(self.settings)
+        self.label_3.setGeometry(QtCore.QRect(390, 260, 151, 21))
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.settings)
+        self.label_4.setGeometry(QtCore.QRect(510, 290, 71, 21))
+        self.label_4.setObjectName("label_4")
+        self.listWidget = QtWidgets.QListWidget(self.settings)
+        self.listWidget.setGeometry(QtCore.QRect(330, 60, 256, 192))
+        self.listWidget.setFrameShape(QtWidgets.QFrame.Box)
+        self.listWidget.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.listWidget.setLineWidth(2)
         self.listWidget.setObjectName("listWidget")
-        self.gridLayout_2.addWidget(self.listWidget, 0, 0, 1, 1)
+        self.frame_2 = QtWidgets.QFrame(self.settings)
+        self.frame_2.setGeometry(QtCore.QRect(830, 110, 141, 103))
+        self.frame_2.setStyleSheet("QFrame {\n"
+"    background-color: white;\n"
+"}\n"
+"")
+        self.frame_2.setFrameShape(QtWidgets.QFrame.Box)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.frame_2.setLineWidth(2)
+        self.frame_2.setObjectName("frame_2")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.frame_2)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.label_7 = QtWidgets.QLabel(self.frame_2)
+        self.label_7.setStyleSheet("QLabel {\n"
+"    font-weight: bold;\n"
+"    font-size: 10pt;\n"
+"    background-color: transparent;\n"
+"}\n"
+"")
+        self.label_7.setObjectName("label_7")
+        self.gridLayout_4.addWidget(self.label_7, 0, 0, 1, 1)
+        self.frame_3 = QtWidgets.QFrame(self.frame_2)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.frame_3)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.checkBox = QtWidgets.QCheckBox(self.frame_3)
+        self.checkBox.setStyleSheet("QCheckBox {\n"
+"    font-weight: bold;\n"
+"    font-size: 10pt\n"
+"\n"
+"}\n"
+"")
+        self.checkBox.setChecked(dbhandle("notifications"))
+        self.checkBox.setObjectName("checkBox")
+        self.gridLayout_3.addWidget(self.checkBox, 0, 0, 1, 1)
+        self.checkBox_2 = QtWidgets.QCheckBox(self.frame_3)
+        self.checkBox_2.setStyleSheet("QCheckBox {\n"
+"    font-weight: bold;\n"
+"    font-size: 10pt;\n"
+"}\n"
+"")
+        self.checkBox_2.setObjectName("checkBox_2")
+        self.checkBox_2.setChecked(not dbhandle("notifications"))
+        self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
+        self.label_8 = QtWidgets.QLabel(self.frame_3)
+        self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_8.setStyleSheet("font-color: red;")
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
+        self.gridLayout_3.addWidget(self.label_8, 1, 0, 1, 2)
+        self.gridLayout_4.addWidget(self.frame_3, 1, 0, 1, 1)
+        self.label_5 = QtWidgets.QLabel(self.settings)
+        self.label_5.setGeometry(QtCore.QRect(370, 30, 171, 21))
+        self.label_5.setStyleSheet("QLabel {\n"
+"    font-weight: bold;\n"
+"    font-size: 10pt;\n"
+"}\n"
+"")
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.settings)
+        self.label_6.setGeometry(QtCore.QRect(860, 90, 81, 16))
+        self.label_6.setStyleSheet("QLabel {\n"
+"    font-weight: bold;\n"
+"    font-size: 10pt;\n"
+"}\n"
+"")
+        self.label_6.setObjectName("label_6")
         self.tabWidget.addTab(self.settings, "")
-        self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.tabWidget, 0, 1, 1, 1)
         tabsPage.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(tabsPage)
         self.statusbar.setObjectName("statusbar")
@@ -546,6 +620,14 @@ class Ui_tabsPage(object):
         item.setText(_translate("tabsPage", "Suggested Actions"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("tabsPage", "Actions"))
         self.dashboardButton_settings.setText(_translate("tabsPage", "Dashboard"))
+        self.label_3.setText(_translate("tabsPage", "<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>"))
+        self.label_4.setText(_translate("tabsPage", "*Defaule Is 2*"))
+        self.label_7.setText(_translate("tabsPage", "Allow Notifications"))
+        self.checkBox.setText(_translate("tabsPage", "Yes"))
+        self.checkBox_2.setText(_translate("tabsPage", "No"))
+        self.label_8.setText(_translate("tabsPage", "*Default is Yes*"))
+        self.label_5.setText(_translate("tabsPage", "Scanning Interface Option"))
+        self.label_6.setText(_translate("tabsPage", "Notifications"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("tabsPage", "Settings"))
         self.dashboardButton_logs.clicked.connect(lambda: self.showDashboard(tabsPage))
         self.dashboardButton_alerts.clicked.connect(lambda: self.showDashboard(tabsPage))
