@@ -1,47 +1,93 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QTableWidget, QTableWidgetItem, QDesktopWidget, QVBoxLayout, QHBoxLayout, QWidget
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QTabWidget, QHBoxLayout
+from PyQt5 import QtWidgets,QtCore, QtGui
+from tabs import Ui_tabsPage
 
 class Dashboard(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Intruwatch")  # Set the window title
+        self.setWindowTitle("Intruwatch")
+        self.resize_to_monitor()  # Resize window to fit monitor size
 
-        # Create a central widget and set it as the main window's central widget
-        central_widget = QWidget(self)
-        self.setCentralWidget(central_widget)
+        self.central_widget = QWidget(self)
+        self.setCentralWidget(self.central_widget)
 
-        # Create a vertical layout for the central widget
-        layout = QVBoxLayout(central_widget)
+        # Create a horizontal layout to hold dashboard and tab widget
+        self.layout = QHBoxLayout(self.central_widget)
 
-        # Create a label and add it to the layout
-        label = QLabel("Dashboard", self)
-        label.setStyleSheet("font-size: 20px;")
-        layout.addWidget(label)
+        # Dashboard
+        self.dashboard_widget = QWidget()
+        self.dashboard_layout = QVBoxLayout(self.dashboard_widget)
+        self.layout.addWidget(self.dashboard_widget)
+        self.layout.setAlignment(self.dashboard_widget, QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
 
-        # Create the counters and add them to the layout
-        self.scanned_packets_counter = QLabel("Scanned Packets: 0", self)
-        self.scanned_packets_counter.setStyleSheet("font-size: 12px;")
-        layout.addWidget(self.scanned_packets_counter)
+        # Advanced Button
+        self.advanced_button = QPushButton("Advanced")
+        self.advanced_button.setStyleSheet("""
+            QPushButton{
+                border: 2px outset black;
+                background: red;
+                color: white;
+                font: bold 14pt;
+                border-radius: 20px;
+            }
+            QPushButton:pressed{
+                border: 2px outset black;
+                background: white;
+                color: black;
+                font: bold 14pt;
+            }
+        """)
+        self.advanced_button.clicked.connect(self.show_tabs_page)
 
-        self.threats_detected_counter = QLabel("Threats Detected: 0", self)
-        self.threats_detected_counter.setStyleSheet("font-size: 12px;")
-        layout.addWidget(self.threats_detected_counter)
+        self.dashboard_layout.addWidget(self.advanced_button)
 
-        # Create the table and add it to the layout
-        self.table = QTableWidget(self)
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["Destination IP", "Destination Port", "Source IP", "Source Port"])
-        layout.addWidget(self.table)
+        # Tab Widget
+        self.tab_widget = QTabWidget()
+        self.tabs_page = Ui_tabsPage()
+        self.tabs_page.setupUi(self.tab_widget)
 
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self.scale_table(0.6, 0.4)
+        self.layout.addWidget(self.tab_widget)
+        self.tab_widget.hide()  # Initially hide the tab widget
 
-    def scale_table(self, width_ratio, height_ratio):
-        table_width = int(self.width() * width_ratio)
-        table_height = int(self.height() * height_ratio)
-        self.table.setGeometry(5, self.height() - table_height - 5, table_width - 10, table_height - 10)
+        # Back to Dashboard Button
+        self.back_to_dashboard_button = QPushButton("Back to Dashboard", self.central_widget)
+        self.back_to_dashboard_button.setStyleSheet("""
+            QPushButton{
+                border: 2px outset black;
+                background: red;
+                color: white;
+                font: bold 14pt;
+                border-radius: 20px;
+            }
+            QPushButton:pressed{
+                border: 2px outset black;
+                background: white;
+                color: black;
+                font: bold 14pt;
+            }
+        """)
+        self.back_to_dashboard_button.clicked.connect(self.show_dashboard)
+        self.back_to_dashboard_button.hide()  # Initially hide the "Back to Dashboard" button
+
+        self.layout.addWidget(self.back_to_dashboard_button, alignment=QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
+
+    def resize_to_monitor(self):
+        screen_geometry = QtWidgets.QDesktopWidget().screenGeometry()
+        self.resize(screen_geometry.width(), screen_geometry.height())
+
+    def show_tabs_page(self):
+        # Hide the "Advanced" button and show the tab widget and "Back to Dashboard" button
+        self.advanced_button.hide()
+        self.tab_widget.show()
+        self.back_to_dashboard_button.show()
+
+    def show_dashboard(self):
+        # Hide the tab widget and "Back to Dashboard" button, and show the "Advanced" button
+        self.tab_widget.hide()
+        self.back_to_dashboard_button.hide()
+        self.advanced_button.show()
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
