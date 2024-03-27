@@ -9,8 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Handlers.dbHandle import importUserSettings as dbhandle
-
+from PyQt5.QtCore import Qt
+from Handlers.dbHandle import importUserSettings as dbhandle_getSETTINGS
+from Handlers.dbHandle import updateUserSettings as dbhandle_setSETTINGS
+from Frontend.new_Dash import Dashboard
 
 class Ui_tabsPage(object):
     def setupUi(self, tabsPage):
@@ -478,8 +480,11 @@ class Ui_tabsPage(object):
         self.dashboardButton_settings.setObjectName("dashboardButton_settings")
         self.interfaceSelectionBox = QtWidgets.QSpinBox(self.settings)
         self.interfaceSelectionBox.setGeometry(QtCore.QRect(540, 260, 42, 22))
-        self.interfaceSelectionBox.setProperty("value", dbhandle("interface"))
+        self.interfaceSelectionBox.setProperty("value", dbhandle_getSETTINGS("interface"))
         self.interfaceSelectionBox.setObjectName("interfaceSelectionBox")
+        self.interfaceSelectionBox.valueChanged.connect(self.on_number_state_change)
+
+        
         self.label_3 = QtWidgets.QLabel(self.settings)
         self.label_3.setGeometry(QtCore.QRect(390, 260, 151, 21))
         self.label_3.setObjectName("label_3")
@@ -526,8 +531,9 @@ class Ui_tabsPage(object):
 "\n"
 "}\n"
 "")
-        self.checkBox.setChecked(dbhandle("notifications"))
         self.checkBox.setObjectName("checkBox")
+        self.checkBox.setChecked(dbhandle_getSETTINGS("notifications"))
+        self.checkBox.stateChanged.connect(lambda state: self.on_checkbox_state_changed(state, "1"))
         self.gridLayout_3.addWidget(self.checkBox, 0, 0, 1, 1)
         self.checkBox_2 = QtWidgets.QCheckBox(self.frame_3)
         self.checkBox_2.setStyleSheet("QCheckBox {\n"
@@ -536,7 +542,8 @@ class Ui_tabsPage(object):
 "}\n"
 "")
         self.checkBox_2.setObjectName("checkBox_2")
-        self.checkBox_2.setChecked(not dbhandle("notifications"))
+        self.checkBox_2.setChecked(not dbhandle_getSETTINGS("notifications"))
+        self.checkBox_2.stateChanged.connect(lambda state: self.on_checkbox_state_changed(state, "2"))
         self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.frame_3)
         self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -637,6 +644,43 @@ class Ui_tabsPage(object):
     def showDashboard(self, tabsPage):
         dashboard_Widget = Dashboard()
         tabsPage.setCentralWidget(dashboard_Widget)
+
+    def on_checkbox_state_changed(self, state, value):
+        string = "notifications"
+        if state == Qt.Checked:
+                if value == "1":
+                        self.checkBox_2.setChecked(False)
+                else:
+                        self.checkBox.setChecked(False)
+                        # Update database state
+                dbhandle_setSETTINGS(string, "T")
+        elif state == QtCore.Qt.Unchecked:
+                if value == "1":
+                        self.checkBox_2.setChecked(True)
+                else:
+                        self.checkBox.setChecked(True)
+                        # Update database state
+                dbhandle_setSETTINGS(string, "F")
+        
+    def on_number_state_change(self, number):
+        dbhandle_setSETTINGS("interface", number)
+        
+
+        ######  I WANT TO GET A DISPLAY BOX THAT COMES UP AND THEN RESTARTS THE PROGRAM TO GET THE CHANGES TO TAKE AFFECT ######
+        # reply = QtWidgets.QMessageBox.question(self.tabsPage, 'Restart Required', 'The program needs to restart for the changes to take effect. Do you want to restart now?', 
+        #                                       QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No, QtWidgets.QMessageBox.NoButton)
+
+
+        # if reply == QtWidgets.QMessageBox.Yes:
+        #     QtWidgets.qApp.quit()  # Quit the application
+
+
+        #     QtCore.QProcess.startDetached('python', ['IntruWatch.py'])  
+
+        # else:
+        #     # User chose not to restart, you can handle this case as needed
+        #     pass
+
 
 if __name__ == "__main__":
     import sys

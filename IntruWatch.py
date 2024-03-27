@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtGui import QFont
 from Frontend.tabs import Ui_tabsPage
 from Backend.main import list_network_devices, capture_packets
+from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 
 app = QApplication([])
 
@@ -25,7 +26,7 @@ class DataEntryThread(threading.Thread):
     def run(self):
         devices = list(psutil.net_if_addrs().keys())
         
-        choice = 4
+        choice = dbhandle_SETTINGS('interface')
 
         if 1 <= choice <= len(devices):
             selected_interface = devices[choice - 1]
