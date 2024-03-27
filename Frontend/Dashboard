@@ -5,9 +5,42 @@ import os
 class MyMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        ui_file_path = os.path.join(os.path.dirname(__file__), "Dashboard.ui")
-        loadUi(ui_file_path, self)
+        self.dashboard_ui_file_path = os.path.join(os.path.dirname(__file__), "Dashboard.ui")
+        self.tabs_ui_file_path = os.path.join(os.path.dirname(__file__), "tabs.ui")
+        
+        self.load_dashboard()
+
+        # Connect the 'clicked' signal of the Advanced button to the toggle_view function
+        self.pushButton.clicked.connect(self.toggle_view)
+        
         self.show()
+
+    def toggle_view(self):
+        # Check if the current central widget is the main window
+        if self.centralWidget() == self.dashboard_ui:
+            # If it is, switch to the tabbed view
+            self.load_tabs()
+        else:
+            # If it's not, switch back to the main window
+            self.load_dashboard()
+
+    def load_dashboard(self):
+        self.dashboard_ui = loadUi(self.dashboard_ui_file_path)
+        self.setCentralWidget(self.dashboard_ui)
+
+    def load_tabs(self):
+        self.tabs_ui = loadUi(self.tabs_ui_file_path)
+        # Connect the 'clicked' signal of each tab button to the show_dashboard function
+        self.tabs_ui.dashboardButton_logs.clicked.connect(lambda: self.show_dashboard("Logs"))
+        self.tabs_ui.dashboardButton_alerts.clicked.connect(lambda: self.show_dashboard("Alerts"))
+        self.tabs_ui.dashboardButton_actions.clicked.connect(lambda: self.show_dashboard("Actions"))
+        self.tabs_ui.dashboardButton_settings.clicked.connect(lambda: self.show_dashboard("Settings"))
+        self.setCentralWidget(self.tabs_ui)
+
+    def show_dashboard(self, tab_name):
+        # Handle showing the dashboard for the specified tab
+        pass
+
 
 if __name__ == "__main__":
     import sys
