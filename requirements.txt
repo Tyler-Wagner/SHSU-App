@@ -1,5 +1,8 @@
-PyQt5
+pyqt5
+PyQt5Designer
+pyzmp
 scapy
 psutil
+plyer
 requests
 numpy
