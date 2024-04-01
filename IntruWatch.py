@@ -6,6 +6,7 @@ from PyQt5.QtGui import QFont
 from Frontend.tabs import Ui_tabsPage
 from Backend.main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
+from Handlers.dbHandle import importPastAlerts as getPastAlerts
 
 app = QApplication([])
 
@@ -49,11 +50,24 @@ def list_network_devices():
         i+=1
     return device_list
 
+def loadPastAlerts():
+    out = getPastAlerts()
+    print(out)
+    
+    for past_alert in out:
+        # Extract the necessary information from the past_alert tuple
+        dtEntry, sourceP, sourceIP, destP = past_alert  # Adjust the order of arguments if needed
+
+        # Add the past alert to the data handler
+        data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
+
+    pass
+
 def main():
 
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
-
+    
     tabsPage.show()
     devices = list_network_devices()
     for device in devices:
@@ -64,6 +78,7 @@ def main():
         font.setPointSize(10)  # Set the point size to 10
         item.setFont(font)
         ui.listWidget.addItem(item)
+    loadPastAlerts()
 
     app.exec_()
 

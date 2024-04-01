@@ -13,15 +13,24 @@ CREATE TABLE settingsInfo(
 );
 
 CREATE TABLE pastAlerts(
-    id INTEGER NOT NULL PRIMARY KEY,
-    sourcePort VARCHAR(15),
-    sourceIP VARCHAR(15),
-    destP INTEGER
+    id VARCHAR NOT NULL PRIMARY KEY,
+    sourcePort VARCHAR,
+    sourceIP VARCHAR,
+    destP VARChAR
 );
+
+CREATE TRIGGER prevent_delete
+BEFORE DELETE ON pastAlerts
+FOR EACH ROW
+WHEN OLD.id = 1
+BEGIN
+    SELECT RAISE(ABORT, 'Deletion is not allowed for this row');
+END;
 -- DROP TABLE ipInfo;
 -- DROP TABLE settingsInfo;
 -- DROP TABLE pastAlerts;
 
+INSERT INTO settingsInfo (id, interface, notifications) VALUES (1, 4,'T'); 
 
 -- ############## DEMO ############## --
 -- UPDATE settingsInfo SET interface=4;
@@ -33,5 +42,5 @@ CREATE TABLE pastAlerts(
 
 -- INSERT INTO settingsInfo(id, interface, notifications) VALUES (1, 2, 'T');
 
--- DELETE FROM settingsInfo WHERE id=1;
+-- DELETE FROM settingsInfo; --clear table
 --  SELECT * FROM settingsInfo;

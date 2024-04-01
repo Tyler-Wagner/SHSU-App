@@ -18,7 +18,6 @@ class EnterDataHandler(QObject):
         self.log_row_added.emit(category, message)
 
     def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
-        dbhandeler(date, sourceIP, sourceP, destP)
         self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
 
     def add_current_alerts_row(self, sourceIP, sourceP, destP):
@@ -92,6 +91,41 @@ class EnterDataHandler(QObject):
         self.ui.activeAlertsTable.setCellWidget(0, 4, button)
 
     def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
+        dbhandeler(date, sourceIP, sourceP, destP)
+        
+        #Finding and removeing the Row in cAlerts Table
+        row_count = self.ui.activeAlertsTable.rowCount()
+        for i in range(row_count):
+            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+                # Remove the row from CAlerts
+                self.ui.activeAlertsTable.removeRow(i)
+                break
+        
+        self.ui.pastAlertsTable.insertRow(0)
+
+        # Add items to each cell in the new row
+        dateTime_item = QTableWidgetItem(date)
+        sIP_item = QTableWidgetItem(sourceIP)
+        sP_item = QTableWidgetItem(sourceP)
+        dPort_item = QTableWidgetItem(destP)
+
+        # Set font and alignment for each item
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+
+        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            item.setFont(font)
+            item.setTextAlignment(Qt.AlignCenter)
+
+        # Set items in the new row
+        self.ui.pastAlertsTable.setItem(0, 0, dateTime_item)
+        self.ui.pastAlertsTable.setItem(0, 1, sIP_item)
+        self.ui.pastAlertsTable.setItem(0, 2, sP_item)
+        self.ui.pastAlertsTable.setItem(0, 3, dPort_item)
+    
+    def add_table_row_pAlerts_ONSTART(self, date, sourceIP, sourceP, destP):
+        # dbhandeler(date, sourceIP, sourceP, destP)
         
         #Finding and removeing the Row in cAlerts Table
         row_count = self.ui.activeAlertsTable.rowCount()

@@ -3,6 +3,7 @@ import os
 
 # Get the path to the parent directory
 parent_dir = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
 
 def importUserSettings(info):
     parent_dir = os.path.dirname(__file__)
@@ -52,11 +53,32 @@ def updateUserSettings(column, value):
 
 
 def updatePastAlerts(date, sourceIP, sourceP, destP):
-    pass
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("INSERT INTO pastAlerts (date, sourcePort, sourceIP, destP) VALUES (?,?,?,?)", (date, sourceP, sourceIP, destP,))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+def importPastAlerts():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT * FROM pastAlerts")
+    
+    rows = cursor.fetchall()
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+    return rows
 
 # Table Info
 # CREATE TABLE pastAlerts(
-#     id INTEGER NOT NULL PRIMARY KEY,
+#     date INTEGER NOT NULL PRIMARY KEY,
 #     sourcePort VARCHAR(15),
 #     sourceIP VARCHAR(15),
 #     destP INTEGER
