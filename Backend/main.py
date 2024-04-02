@@ -6,6 +6,13 @@ from Backend.arp_handler import CheckARP
 from Backend.icmp_handler import CheckICMP
 from Handlers.sendNotification import sendnotification
 
+tcpcount = 0
+udpcount = 0
+icmpcount = 0
+
+def getCount(option):
+   return tcpcount, udpcount, icmpcount 
+
 def list_network_devices():
     # Get a list of all network devices using psutil
     devices = psutil.net_if_addrs()
@@ -29,12 +36,14 @@ def process_packet(packet, data_handler):
             src_port = packet[scapy.TCP].sport
             dst_port = packet[scapy.TCP].dport
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
+            tcpcount+=1
             tcp_packet_check.handle_tcp_packet() # calls instance
             data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
 
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
             dst_port = packet[scapy.UDP].dport
+            udpcount+=1
 
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
@@ -42,6 +51,7 @@ def process_packet(packet, data_handler):
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type
+            icmpcount+=1
             # data_handler.add_log_row("ICMP", f"{src_ip} -> {dst_ip}") # ICMP does not have ports # sends to data handler
             # Call any other processing function for ICMP packets here if needed
             ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
