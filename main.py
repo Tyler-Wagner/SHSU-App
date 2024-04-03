@@ -1,3 +1,5 @@
+import sys
+import os
 import psutil
 import scapy.all as scapy
 # from Backend.tcp_handler import handle_tcp_packet
