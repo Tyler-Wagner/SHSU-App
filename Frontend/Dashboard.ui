@@ -307,8 +307,11 @@ font: bold 14pt;
     <property name="autoScrollMargin">
      <number>10</number>
     </property>
-    <property name="showGrid">
+    <property name="tabKeyNavigation">
      <bool>true</bool>
+    </property>
+    <property name="showGrid">
+     <bool>false</bool>
     </property>
     <property name="rowCount">
      <number>128</number>
