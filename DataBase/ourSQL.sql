@@ -32,8 +32,9 @@ END;
 
 INSERT INTO settingsInfo (id, interface, notifications) VALUES (1, 4,'T'); 
 
+
 -- ############## DEMO ############## --
--- UPDATE settingsInfo SET interface=4;
+UPDATE settingsInfo SET interface=7;
 -- UPDATE settingsInfo SET notifications='T';
 -- SELECT * FROM settingsInfo;
 -- ##############      ############## --

@@ -3,7 +3,7 @@ import threading
 from Handlers.enterData import  EnterDataHandler
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from Frontend.Ui_Dashboard import Ui_Dashboard
+from Frontend.ui_Dashboard import Ui_Dashboard
 from Frontend.Ui_Tabspage import Ui_Tabspage
 from main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
@@ -67,16 +67,25 @@ def loadPastAlerts():
 
     pass
 
+def showDash():
+    TabsPage.hide()
+    DashPage.show()
+    pass
+def showTabs():
+    DashPage.hide()
+    TabsPage.show()
+    pass
+
 def main():
     DashPage.show()
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
-    advanced_button = DashPage.findChild(QPushButton, "Advanced")
+    advanced_button = DashPage.findChild(QPushButton, "pushButton")
     dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
-    advanced_button.clicked.connect(lambda: tabs_ui.setupUi(TabsPage))
-    dashboard_button.clicked.connect(lambda: Dash_ui.setupUi(DashPage))
+    advanced_button.clicked.connect(lambda: showTabs())
+    dashboard_button.clicked.connect(lambda: showDash())
 
-    TabsPage.show()
+    # TabsPage.show()
     DashPage.show()
     devices = list_network_devices()
     for device in devices:

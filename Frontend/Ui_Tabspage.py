@@ -1,6 +1,7 @@
 import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from Handlers.dbHandle import importUserSettings as user
 from PyQt5.QtWidgets import *
 
 class Ui_Tabspage(object):
@@ -321,7 +322,7 @@ class Ui_Tabspage(object):
         self.interfaceSelectionBox = QSpinBox(self.settings)
         self.interfaceSelectionBox.setObjectName(u"interfaceSelectionBox")
         self.interfaceSelectionBox.setGeometry(QRect(540, 260, 42, 22))
-        self.interfaceSelectionBox.setValue(4)
+        self.interfaceSelectionBox.setValue(user("interface"))
         self.label_3 = QLabel(self.settings)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(390, 260, 151, 21))
