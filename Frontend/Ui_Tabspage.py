@@ -4,14 +4,14 @@ from PyQt5.QtGui import *
 from Handlers.dbHandle import importUserSettings as user
 from PyQt5.QtWidgets import *
 
-class Ui_Tabspage(object):
+class Ui_TabsPage(object):
     def setupUi(self, AdvancedPage):
         if AdvancedPage.objectName():
             AdvancedPage.setObjectName(u"AdvancedPage")
-        AdvancedPage.resize(1280, 1066)
+        AdvancedPage.resize(1600, 900)
         self.tabWidget = QTabWidget(AdvancedPage)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(130, 80, 1386, 846))
+        self.tabWidget.setGeometry(QRect(135, 45, 1321, 721))
         font = QFont()
         font.setPointSize(12)
         font.setBold(True)
@@ -121,7 +121,7 @@ class Ui_Tabspage(object):
         __qtablewidgetitem3.setFont(font);
         self.logTable.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         self.logTable.setObjectName(u"logTable")
-        self.logTable.setGeometry(QRect(20, 10, 1341, 731))
+        self.logTable.setGeometry(QRect(10, 10, 1291, 671))
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -154,7 +154,7 @@ class Ui_Tabspage(object):
         self.logTable.setCornerButtonEnabled(False)
         self.logTable.setRowCount(0)
         self.logTable.horizontalHeader().setCascadingSectionResizes(False)
-        self.logTable.horizontalHeader().setDefaultSectionSize(339)
+        self.logTable.horizontalHeader().setDefaultSectionSize(321)
         self.logTable.horizontalHeader().setHighlightSections(True)
         self.logTable.horizontalHeader().setProperty("showSortIndicator", False)
         self.logTable.verticalHeader().setVisible(False)
@@ -165,7 +165,21 @@ class Ui_Tabspage(object):
         self.tabWidget.addTab(self.log, "")
         self.alerts = QWidget()
         self.alerts.setObjectName(u"alerts")
-        self.activeAlertsTable = QTableWidget(self.alerts)
+        self.splitter = QSplitter(self.alerts)
+        self.splitter.setObjectName(u"splitter")
+        self.splitter.setGeometry(QRect(10, 10, 1301, 671))
+        self.splitter.setOrientation(Qt.Vertical)
+        self.label = QLabel(self.splitter)
+        self.label.setObjectName(u"label")
+        font1 = QFont()
+        font1.setPointSize(19)
+        font1.setBold(True)
+        font1.setWeight(75)
+        self.label.setFont(font1)
+        self.label.setLayoutDirection(Qt.LeftToRight)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.splitter.addWidget(self.label)
+        self.activeAlertsTable = QTableWidget(self.splitter)
         if (self.activeAlertsTable.columnCount() < 5):
             self.activeAlertsTable.setColumnCount(5)
         __qtablewidgetitem4 = QTableWidgetItem()
@@ -184,7 +198,6 @@ class Ui_Tabspage(object):
         __qtablewidgetitem8.setFont(font);
         self.activeAlertsTable.setHorizontalHeaderItem(4, __qtablewidgetitem8)
         self.activeAlertsTable.setObjectName(u"activeAlertsTable")
-        self.activeAlertsTable.setGeometry(QRect(20, 80, 1341, 171))
         self.activeAlertsTable.setStyleSheet(u" /* ALERTS PAGE */\n"
 "QTableWidget{\n"
 "border: 3px outset black;\n"
@@ -208,19 +221,16 @@ class Ui_Tabspage(object):
         self.activeAlertsTable.setAlternatingRowColors(True)
         self.activeAlertsTable.setCornerButtonEnabled(False)
         self.activeAlertsTable.setRowCount(0)
-        self.activeAlertsTable.horizontalHeader().setDefaultSectionSize(267)
+        self.splitter.addWidget(self.activeAlertsTable)
+        self.activeAlertsTable.horizontalHeader().setDefaultSectionSize(259)
         self.activeAlertsTable.verticalHeader().setVisible(False)
-        self.label = QLabel(self.alerts)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(520, 50, 351, 21))
-        font1 = QFont()
-        font1.setPointSize(19)
-        font1.setBold(True)
-        font1.setWeight(75)
-        self.label.setFont(font1)
-        self.label.setLayoutDirection(Qt.LeftToRight)
-        self.label.setAlignment(Qt.AlignCenter)
-        self.pastAlertsTable = QTableWidget(self.alerts)
+        self.label_2 = QLabel(self.splitter)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setFont(font1)
+        self.label_2.setLayoutDirection(Qt.LeftToRight)
+        self.label_2.setAlignment(Qt.AlignCenter)
+        self.splitter.addWidget(self.label_2)
+        self.pastAlertsTable = QTableWidget(self.splitter)
         if (self.pastAlertsTable.columnCount() < 4):
             self.pastAlertsTable.setColumnCount(4)
         __qtablewidgetitem9 = QTableWidgetItem()
@@ -236,7 +246,6 @@ class Ui_Tabspage(object):
         __qtablewidgetitem12.setFont(font);
         self.pastAlertsTable.setHorizontalHeaderItem(3, __qtablewidgetitem12)
         self.pastAlertsTable.setObjectName(u"pastAlertsTable")
-        self.pastAlertsTable.setGeometry(QRect(20, 350, 1341, 371))
         self.pastAlertsTable.setStyleSheet(u"QTableWidget{\n"
 "border: 3px outset black;\n"
 "}\n"
@@ -260,14 +269,9 @@ class Ui_Tabspage(object):
         self.pastAlertsTable.setAlternatingRowColors(True)
         self.pastAlertsTable.setCornerButtonEnabled(False)
         self.pastAlertsTable.setRowCount(0)
-        self.pastAlertsTable.horizontalHeader().setDefaultSectionSize(333)
+        self.splitter.addWidget(self.pastAlertsTable)
+        self.pastAlertsTable.horizontalHeader().setDefaultSectionSize(322)
         self.pastAlertsTable.verticalHeader().setVisible(False)
-        self.label_2 = QLabel(self.alerts)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(520, 300, 351, 21))
-        self.label_2.setFont(font1)
-        self.label_2.setLayoutDirection(Qt.LeftToRight)
-        self.label_2.setAlignment(Qt.AlignCenter)
         self.tabWidget.addTab(self.alerts, "")
         self.action = QWidget()
         self.action.setObjectName(u"action")
@@ -290,7 +294,7 @@ class Ui_Tabspage(object):
         __qtablewidgetitem17.setFont(font);
         self.pastAlertsTable_2.setHorizontalHeaderItem(4, __qtablewidgetitem17)
         self.pastAlertsTable_2.setObjectName(u"pastAlertsTable_2")
-        self.pastAlertsTable_2.setGeometry(QRect(20, 40, 1341, 671))
+        self.pastAlertsTable_2.setGeometry(QRect(0, 0, 1321, 691))
         self.pastAlertsTable_2.setStyleSheet(u"QTableWidget{\n"
 "border: 3px outset black;\n"
 "}\n"
@@ -322,7 +326,7 @@ class Ui_Tabspage(object):
         self.interfaceSelectionBox = QSpinBox(self.settings)
         self.interfaceSelectionBox.setObjectName(u"interfaceSelectionBox")
         self.interfaceSelectionBox.setGeometry(QRect(540, 260, 42, 22))
-        self.interfaceSelectionBox.setValue(user("interface"))
+        self.interfaceSelectionBox.setValue(4)
         self.label_3 = QLabel(self.settings)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(390, 260, 151, 21))
@@ -416,7 +420,7 @@ class Ui_Tabspage(object):
         self.tabWidget.addTab(self.settings, "")
         self.dashboardButton = QPushButton(AdvancedPage)
         self.dashboardButton.setObjectName(u"dashboardButton")
-        self.dashboardButton.setGeometry(QRect(1400, 980, 131, 51))
+        self.dashboardButton.setGeometry(QRect(1340, 820, 131, 51))
         font2 = QFont()
         font2.setPointSize(8)
         font2.setBold(True)
@@ -440,7 +444,7 @@ class Ui_Tabspage(object):
 
         self.retranslateUi(AdvancedPage)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(AdvancedPage)
@@ -457,6 +461,7 @@ class Ui_Tabspage(object):
         ___qtablewidgetitem3 = self.logTable.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("AdvancedPage", u"Details", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.log), QCoreApplication.translate("AdvancedPage", u"Logs", None))
+        self.label.setText(QCoreApplication.translate("AdvancedPage", u"Active Alerts", None))
         ___qtablewidgetitem4 = self.activeAlertsTable.horizontalHeaderItem(0)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("AdvancedPage", u"Date/Time", None));
         ___qtablewidgetitem5 = self.activeAlertsTable.horizontalHeaderItem(1)
@@ -467,7 +472,7 @@ class Ui_Tabspage(object):
         ___qtablewidgetitem7.setText(QCoreApplication.translate("AdvancedPage", u"Destination Port", None));
         ___qtablewidgetitem8 = self.activeAlertsTable.horizontalHeaderItem(4)
         ___qtablewidgetitem8.setText(QCoreApplication.translate("AdvancedPage", u"Move To Past", None));
-        self.label.setText(QCoreApplication.translate("AdvancedPage", u"Active Alerts", None))
+        self.label_2.setText(QCoreApplication.translate("AdvancedPage", u"Past Alerts", None))
         ___qtablewidgetitem9 = self.pastAlertsTable.horizontalHeaderItem(0)
         ___qtablewidgetitem9.setText(QCoreApplication.translate("AdvancedPage", u"Date/Time", None));
         ___qtablewidgetitem10 = self.pastAlertsTable.horizontalHeaderItem(1)
@@ -476,7 +481,6 @@ class Ui_Tabspage(object):
         ___qtablewidgetitem11.setText(QCoreApplication.translate("AdvancedPage", u"Source Port", None));
         ___qtablewidgetitem12 = self.pastAlertsTable.horizontalHeaderItem(3)
         ___qtablewidgetitem12.setText(QCoreApplication.translate("AdvancedPage", u"Destination Port", None));
-        self.label_2.setText(QCoreApplication.translate("AdvancedPage", u"Past Alerts", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.alerts), QCoreApplication.translate("AdvancedPage", u"Alerts", None))
         ___qtablewidgetitem13 = self.pastAlertsTable_2.horizontalHeaderItem(0)
         ___qtablewidgetitem13.setText(QCoreApplication.translate("AdvancedPage", u"Date", None));
@@ -500,4 +504,5 @@ class Ui_Tabspage(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), QCoreApplication.translate("AdvancedPage", u"Settings", None))
         self.dashboardButton.setText(QCoreApplication.translate("AdvancedPage", u"Back To Dashboard", None))
     # retranslateUi
+
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1182</width>
-    <height>887</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>980</x>
+      <x>1450</x>
       <y>810</y>
       <width>131</width>
       <height>51</height>
@@ -63,10 +63,10 @@ font: bold 14pt;
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>1420</x>
       <y>10</y>
-      <width>151</width>
-      <height>121</height>
+      <width>171</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="orientation">
@@ -193,16 +193,93 @@ border-radius: 20px;
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>88</y>
+      <width>1391</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:rgb(255, 255, 255);
+background-color: rgb(255, 0, 0);
+border : 2px outsetblack;
+font: bold 14pt;
+border-radius: 15px;
+</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <widget class="QLabel" name="Graph">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>9</y>
+       <width>16</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QTableWidget" name="tableWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>570</y>
+      <width>1391</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 8pt &quot;MS Shell Dlg 2&quot;;
+font: rgb(0, 0, 0)</string>
+    </property>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>347</number>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Source IP</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Source Port</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Destination IP</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Destination Port</string>
+     </property>
+    </column>
+   </widget>
    <widget class="QLabel" name="label">
     <property name="enabled">
      <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
-      <x>11</x>
-      <y>11</y>
-      <width>901</width>
-      <height>61</height>
+      <x>10</x>
+      <y>21</y>
+      <width>1391</width>
+      <height>62</height>
      </rect>
     </property>
     <property name="font">
@@ -239,249 +316,7 @@ border-radius: 20px;
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>79</y>
-      <width>901</width>
-      <height>481</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color:rgb(255, 255, 255);
-background-color: rgb(255, 0, 0);
-border : 2px outsetblack;
-font: bold 14pt;
-border-radius: 15px;
-</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="Graph">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>570</y>
-      <width>901</width>
-      <height>231</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">
-border: 2px outset black;
-background:white;
-color: black;
-font: bold 14pt;
-
-
-
-</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::Box</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="autoScroll">
-     <bool>false</bool>
-    </property>
-    <property name="autoScrollMargin">
-     <number>10</number>
-    </property>
-    <property name="tabKeyNavigation">
-     <bool>true</bool>
-    </property>
-    <property name="showGrid">
-     <bool>false</bool>
-    </property>
-    <property name="rowCount">
-     <number>128</number>
-    </property>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>219</number>
-    </attribute>
-    <attribute name="horizontalHeaderStretchLastSection">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="verticalHeaderVisible">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="verticalHeaderDefaultSectionSize">
-     <number>33</number>
-    </attribute>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <row/>
-    <column>
-     <property name="text">
-      <string>Source IP</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Source Port</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Destination IP</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Destination Port</string>
-     </property>
-    </column>
-   </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

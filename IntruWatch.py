@@ -3,8 +3,8 @@ import threading
 from Handlers.enterData import  EnterDataHandler
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from Frontend.ui_Dashboard import Ui_Dashboard
-from Frontend.Ui_Tabspage import Ui_Tabspage
+from Frontend.Ui_Dashboard import Ui_Dashboard
+from Frontend.Ui_Tabspage import Ui_TabsPage
 from main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
@@ -15,7 +15,7 @@ DashPage = QMainWindow()
 Dash_ui = Ui_Dashboard()
 Dash_ui.setupUi(DashPage)
 TabsPage = QWidget()
-tabs_ui = Ui_Tabspage()
+tabs_ui = Ui_TabsPage()
 tabs_ui.setupUi(TabsPage)
 
 # Instantiate the EnterDataHandler class with references to UI objects

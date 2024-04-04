@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1643</width>
-    <height>1098</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>80</y>
-     <width>1386</width>
-     <height>846</height>
+     <x>135</x>
+     <y>45</y>
+     <width>1321</width>
+     <height>721</height>
     </rect>
    </property>
    <property name="font">
@@ -120,7 +120,7 @@ QTabWidget:pane {
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="log">
     <attribute name="title">
@@ -129,10 +129,10 @@ QTabWidget:pane {
     <widget class="QTableWidget" name="logTable">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>10</y>
-       <width>1341</width>
-       <height>731</height>
+       <width>1291</width>
+       <height>671</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -192,7 +192,7 @@ QTableWidget::item {
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>339</number>
+      <number>321</number>
      </attribute>
      <attribute name="horizontalHeaderHighlightSections">
       <bool>true</bool>
@@ -269,17 +269,39 @@ QTableWidget::item {
     <attribute name="title">
      <string>Alerts</string>
     </attribute>
-    <widget class="QTableWidget" name="activeAlertsTable">
+    <widget class="QSplitter" name="splitter">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>80</y>
-       <width>1341</width>
-       <height>171</height>
+       <x>10</x>
+       <y>10</y>
+       <width>1301</width>
+       <height>671</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true"> /* ALERTS PAGE */
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>19</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Active Alerts</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="activeAlertsTable">
+      <property name="styleSheet">
+       <string notr="true"> /* ALERTS PAGE */
 QTableWidget{
 border: 3px outset black;
 }
@@ -297,126 +319,110 @@ QTableWidget::item {
 	color: black;
 }
 </string>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
-     </property>
-     <property name="autoScroll">
-      <bool>false</bool>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="cornerButtonEnabled">
-      <bool>false</bool>
-     </property>
-     <property name="rowCount">
-      <number>0</number>
-     </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>267</number>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Date/Time</string>
       </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
+      <property name="autoScroll">
+       <bool>false</bool>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>259</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Date/Time</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Source IP</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Source Port</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Destination Port</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Move To Past</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="label_2">
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>19</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
-     </column>
-     <column>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
       <property name="text">
-       <string>Source IP</string>
+       <string>Past Alerts</string>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Source Port</string>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Destination Port</string>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Move To Past</string>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>520</x>
-       <y>50</y>
-       <width>351</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>19</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>Active Alerts</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QTableWidget" name="pastAlertsTable">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>350</y>
-       <width>1341</width>
-       <height>371</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QTableWidget{
+     </widget>
+     <widget class="QTableWidget" name="pastAlertsTable">
+      <property name="styleSheet">
+       <string notr="true">QTableWidget{
 border: 3px outset black;
 }
 QTableWidget:bar{
@@ -434,102 +440,77 @@ QTableWidget::item {
 	background: rgba(128,128,128,60);
 }
 </string>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustIgnored</enum>
-     </property>
-     <property name="autoScroll">
-      <bool>false</bool>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="cornerButtonEnabled">
-      <bool>false</bool>
-     </property>
-     <property name="rowCount">
-      <number>0</number>
-     </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>333</number>
-     </attribute>
-     <attribute name="verticalHeaderVisible">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Date/Time</string>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Source IP</string>
+      <property name="autoScroll">
+       <bool>false</bool>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+      <property name="alternatingRowColors">
+       <bool>true</bool>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Source Port</string>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
+      <property name="rowCount">
+       <number>0</number>
       </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Destination Port</string>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-     </column>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>520</x>
-       <y>300</y>
-       <width>351</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>19</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>Past Alerts</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>322</number>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Date/Time</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Source IP</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Source Port</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Destination Port</string>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="action">
@@ -539,10 +520,10 @@ QTableWidget::item {
     <widget class="QTableWidget" name="pastAlertsTable_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>1341</width>
-       <height>671</height>
+       <x>0</x>
+       <y>0</y>
+       <width>1321</width>
+       <height>691</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -857,8 +838,8 @@ QTableWidget::item {
   <widget class="QPushButton" name="dashboardButton">
    <property name="geometry">
     <rect>
-     <x>1400</x>
-     <y>980</y>
+     <x>1340</x>
+     <y>820</y>
      <width>131</width>
      <height>51</height>
     </rect>
