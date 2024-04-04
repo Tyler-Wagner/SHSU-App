@@ -32,7 +32,7 @@ def process_packet(packet, data_handler):
             dst_port = packet[scapy.TCP].dport
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet() # calls instance
-            data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
+            # data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
             data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.UDP):
@@ -40,7 +40,7 @@ def process_packet(packet, data_handler):
             dst_port = packet[scapy.UDP].dport
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
-            data_handler.add_log_row("UDP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
+            # data_handler.add_log_row("UDP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
             data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.ICMP):
@@ -64,7 +64,7 @@ def process_packet(packet, data_handler):
 def capture_packets(interface, data_handler):
     print(f"\nCapturing packets on {interface}...\n")
     #TEST ATTACK##############################################################################################################
-    data_handler.add_current_alerts_row("1234556789",22,22)
+    # data_handler.add_current_alerts_row("1234556789",22,22)
     #sendnotification("Attack Detected", f"Please see ALerts Page for the following attack\nIP: 1234556789 SrcP: 22 dstP: 22")
     ##########################################################################################################################
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))

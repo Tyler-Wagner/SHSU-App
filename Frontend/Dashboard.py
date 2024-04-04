@@ -42,6 +42,9 @@ class IntruwatchGUI(QMainWindow):
         else:
             print("dashboardButton not found")
 
+    def load_graph(self):
+        self.graph_ui = loadUi(self.graph_ui_file_path)
+        self.setCentralWidget(self.graph_ui)
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

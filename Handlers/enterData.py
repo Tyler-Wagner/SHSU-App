@@ -9,6 +9,8 @@ class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
     pAlerts_row_added = pyqtSignal(str, str, int, str)
     cAlerts_row_added = pyqtSignal(str, int, int)
+    DashTable_row_added = pyqtSignal(str, int, int)
+
 
     def __init__(self, ui, parent=None):
         super().__init__(parent)
@@ -16,6 +18,9 @@ class EnterDataHandler(QObject):
 
     def add_log_row(self, category, message):
         self.log_row_added.emit(category, message)
+
+    def add_dashTable_row(self, sourceIP, sourceP, destP):
+        self.DashTable_row_added.emit(sourceIP, sourceP, destP)
 
     def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
         self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
@@ -54,6 +59,36 @@ class EnterDataHandler(QObject):
         self.ui.logTable.setItem(0, 1, time_item)
         self.ui.logTable.setItem(0, 2, packet_item)
         self.ui.logTable.setItem(0, 3, details_item)
+
+    def DashTabRow(self, sourceIP, sourceP, destP):
+        # print(f"Received log data: {log_entry}") #for Debug
+        
+        current_datetime = datetime.now()
+        dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
+
+        self.ui.DashTab.insertRow(0)
+
+        # Add items to each cell in the new row
+        dateTime_item = QTableWidgetItem(dtEntry)
+        sIP_item = QTableWidgetItem(sourceIP)
+        sP_item = QTableWidgetItem(str(sourceP))
+        dPort_item = QTableWidgetItem(str(destP))
+
+        # Set font and alignment for each item
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+
+        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            item.setFont(font)
+            item.setTextAlignment(Qt.AlignCenter)
+
+        # Set items in the new row
+        self.ui.DashTab.setItem(0, 0, dateTime_item)
+        self.ui.DashTab.setItem(0, 1, sIP_item)
+        self.ui.DashTab.setItem(0, 2, sP_item)
+        self.ui.DashTab.setItem(0, 3, dPort_item)
+        
 
     def add_table_row_cAlerts(self, sourceIP, sourceP, destP):
         # print(f"Received log data: {log_entry}") #for Debug
