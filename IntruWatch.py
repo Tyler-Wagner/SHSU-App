@@ -1,19 +1,18 @@
 import psutil
 import threading
-import sys
 from Handlers.enterData import  EnterDataHandler
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtGui import QFont
-from Frontend.Dashboard import IntruwatchGUI as Dashboard
-#from Frontend.Ui_Tabspage import Ui_Tabspage
-from main import list_network_devices, capture_packets
-#from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
+from Frontend.tabs import Ui_tabsPage
+from Backend.main import list_network_devices, capture_packets
+from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
+from Handlers.dbHandle import importPastAlerts as getPastAlerts
 
 app = QApplication([])
 
-#tabsPage = QWidget()
-#ui = Ui_Tabspage()
-#ui.setupUi(tabsPage)
+tabsPage = QMainWindow()
+ui = Ui_tabsPage()
+ui.setupUi(tabsPage)
 
 data_handler = EnterDataHandler(ui)
 data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
@@ -28,11 +27,11 @@ class DataEntryThread(threading.Thread):
     def run(self):
         devices = list(psutil.net_if_addrs().keys())
         
-        #choice = dbhandle_SETTINGS('interface')
-        choice = 1
-        # if 1 <= choice <= len(devices):
-        selected_interface = devices[choice - 1]
-        capture_packets(selected_interface)
+        choice = dbhandle_SETTINGS('interface')
+
+        if 1 <= choice <= len(devices):
+            selected_interface = devices[choice - 1]
+            capture_packets(selected_interface, self.data_handler)
 
 # Update the creation and start of DataEntryThread in the main function
 data_thread = DataEntryThread(data_handler)
@@ -51,11 +50,37 @@ def list_network_devices():
         i+=1
     return device_list
 
+def loadPastAlerts():
+    out = getPastAlerts()
+    print(out)
+    
+    for past_alert in out:
+        # Extract the necessary information from the past_alert tuple
+        dtEntry, sourceP, sourceIP, destP = past_alert  # Adjust the order of arguments if needed
+
+        # Add the past alert to the data handler
+        data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
+
+    pass
+
 def main():
-    app = QApplication(sys.argv)
-    window = Dashboard()  # Create an instance of Dashboard
-    window.show()
-    sys.exit(app.exec_())
+
+    data_thread = DataEntryThread(data_handler)
+    data_thread.start()
+    
+    tabsPage.show()
+    devices = list_network_devices()
+    for device in devices:
+        item = QListWidgetItem(device)
+        # Create a QFont object for bold text with 10pt size
+        font = QFont()
+        font.setBold(True)
+        font.setPointSize(10)  # Set the point size to 10
+        item.setFont(font)
+        ui.listWidget.addItem(item)
+    loadPastAlerts()
+
+    app.exec_()
 
 if __name__ == "__main__":
-    main()
+     main()

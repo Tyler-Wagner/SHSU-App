@@ -1,30 +1,31 @@
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem, QPushButton
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import pyqtSignal, Qt, QObject
 from datetime import datetime
+from Handlers.dbHandle import updatePastAlerts as dbhandeler
 
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
-    log_row_added = pyqtSignal(str)
+    log_row_added = pyqtSignal(str, str)
+    pAlerts_row_added = pyqtSignal(str, str, int, str)
+    cAlerts_row_added = pyqtSignal(str, int, int)
 
     def __init__(self, ui, parent=None):
         super().__init__(parent)
         self.ui = ui
 
     def add_log_row(self, category, message):
-        log_entry = f"{category}: {message}"
-        self.log_row_added.emit(log_entry)
+        self.log_row_added.emit(category, message)
 
-    def add_table_row(self, log_entry):
-        # print(f"Received log data: {log_entry}") #for Debug
+    def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
+        self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
+
+    def add_current_alerts_row(self, sourceIP, sourceP, destP):
+        self.cAlerts_row_added.emit(sourceIP, sourceP, destP)
+
+    def add_table_row(self, packet, details):
         
-
-        # Extract packet and details from log_entry
-        # Assuming log_entry has the format "Packet: {packet} -> {details}"
-        packet_start = log_entry.find("Packet: ") + len("Packet: ")
-        details_start = log_entry.find(" -> ") + len(" -> ")
-        packet = log_entry[packet_start:details_start - len(" -> ")]
-        details = log_entry[details_start:]
+        # print(f"Received log data: {log_entry}") #for Debug
 
         current_datetime = datetime.now()
         date = current_datetime.strftime("%Y-%m-%d")
@@ -53,3 +54,106 @@ class EnterDataHandler(QObject):
         self.ui.logTable.setItem(0, 1, time_item)
         self.ui.logTable.setItem(0, 2, packet_item)
         self.ui.logTable.setItem(0, 3, details_item)
+
+    def add_table_row_cAlerts(self, sourceIP, sourceP, destP):
+        # print(f"Received log data: {log_entry}") #for Debug
+        
+        current_datetime = datetime.now()
+        dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
+
+        self.ui.activeAlertsTable.insertRow(0)
+
+        # Add items to each cell in the new row
+        dateTime_item = QTableWidgetItem(dtEntry)
+        sIP_item = QTableWidgetItem(sourceIP)
+        sP_item = QTableWidgetItem(str(sourceP))
+        dPort_item = QTableWidgetItem(str(destP))
+
+        # Set font and alignment for each item
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+
+        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            item.setFont(font)
+            item.setTextAlignment(Qt.AlignCenter)
+
+        # Set items in the new row
+        self.ui.activeAlertsTable.setItem(0, 0, dateTime_item)
+        self.ui.activeAlertsTable.setItem(0, 1, sIP_item)
+        self.ui.activeAlertsTable.setItem(0, 2, sP_item)
+        self.ui.activeAlertsTable.setItem(0, 3, dPort_item)
+        
+
+        # Create a button and set it in the row
+        button = QPushButton("Add to Past Alerts")
+        button.clicked.connect(lambda: self.add_table_row_pAlerts(dtEntry, sourceIP, str(sourceP), str(destP)))
+        self.ui.activeAlertsTable.setCellWidget(0, 4, button)
+
+    def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
+        dbhandeler(date, sourceIP, sourceP, destP)
+        
+        #Finding and removeing the Row in cAlerts Table
+        row_count = self.ui.activeAlertsTable.rowCount()
+        for i in range(row_count):
+            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+                # Remove the row from CAlerts
+                self.ui.activeAlertsTable.removeRow(i)
+                break
+        
+        self.ui.pastAlertsTable.insertRow(0)
+
+        # Add items to each cell in the new row
+        dateTime_item = QTableWidgetItem(date)
+        sIP_item = QTableWidgetItem(sourceIP)
+        sP_item = QTableWidgetItem(sourceP)
+        dPort_item = QTableWidgetItem(destP)
+
+        # Set font and alignment for each item
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+
+        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            item.setFont(font)
+            item.setTextAlignment(Qt.AlignCenter)
+
+        # Set items in the new row
+        self.ui.pastAlertsTable.setItem(0, 0, dateTime_item)
+        self.ui.pastAlertsTable.setItem(0, 1, sIP_item)
+        self.ui.pastAlertsTable.setItem(0, 2, sP_item)
+        self.ui.pastAlertsTable.setItem(0, 3, dPort_item)
+    
+    def add_table_row_pAlerts_ONSTART(self, date, sourceIP, sourceP, destP):
+        # dbhandeler(date, sourceIP, sourceP, destP)
+        
+        #Finding and removeing the Row in cAlerts Table
+        row_count = self.ui.activeAlertsTable.rowCount()
+        for i in range(row_count):
+            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+                # Remove the row from CAlerts
+                self.ui.activeAlertsTable.removeRow(i)
+                break
+        
+        self.ui.pastAlertsTable.insertRow(0)
+
+        # Add items to each cell in the new row
+        dateTime_item = QTableWidgetItem(date)
+        sIP_item = QTableWidgetItem(sourceIP)
+        sP_item = QTableWidgetItem(sourceP)
+        dPort_item = QTableWidgetItem(destP)
+
+        # Set font and alignment for each item
+        font = QFont()
+        font.setPointSize(14)
+        font.setBold(True)
+
+        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            item.setFont(font)
+            item.setTextAlignment(Qt.AlignCenter)
+
+        # Set items in the new row
+        self.ui.pastAlertsTable.setItem(0, 0, dateTime_item)
+        self.ui.pastAlertsTable.setItem(0, 1, sIP_item)
+        self.ui.pastAlertsTable.setItem(0, 2, sP_item)
+        self.ui.pastAlertsTable.setItem(0, 3, dPort_item)
