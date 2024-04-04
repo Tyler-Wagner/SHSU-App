@@ -1,87 +1,99 @@
 import psutil
 import threading
-from Handlers.enterData import  EnterDataHandler
-from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
-from PyQt5.QtGui import QFont
-from Frontend.ui_Dashboard import Ui_Dashboard 
+import sys 
+import os
+from Handlers.enterData import EnterDataHandler
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from Frontend.ui_Dashboard import Ui_Dashboard
 from Frontend.Ui_Tabspage import Ui_Tabspage as tabs
 from main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
+from Handlers.enterData import EnterDataHandler as data_handler
+from PyQt5.QtWidgets import *
+from Frontend.ui_Dashboard import Ui_Dashboard
+from Frontend.Ui_Tabspage import Ui_Tabspage as tabs
+from Handlers.dbHandle import importPastAlerts as getPastAlerts
 
 app = QApplication([])
-Dashboard = QMainWindow()
-ui = Ui_Dashboard()
-ui_tabs = tabs()
-ui_tabs.setupUi(Dashboard)
-ui.setupUi(Dashboard)
 
-data_handler = EnterDataHandler(ui) 
-data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
-data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # connects to the Past Alerts Table
-data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
-
-class DataEntryThread(threading.Thread):
-    def __init__(self, data_handler):
-        threading.Thread.__init__(self)
-        self.data_handler = data_handler
-
-    def run(self):
-        devices = list(psutil.net_if_addrs().keys())
-        
-        choice = dbhandle_SETTINGS('interface')
-
-        if 1 <= choice <= len(devices):
-            selected_interface = devices[choice - 1]
-            capture_packets(selected_interface, self.data_handler)
-
-# Update the creation and start of DataEntryThread in the main function
-data_thread = DataEntryThread(data_handler)
-data_thread.start()
-
-
-def update_gui():
-    QApplication.processEvents()
-
-def list_network_devices():
-    devices = psutil.net_if_addrs()
-    device_list = []
-    i=1
-    for name, addresses in devices.items():
-        device_list.append(f"{i}: {name}")
-        i+=1
-    return device_list
-
-def loadPastAlerts():
-    out = getPastAlerts()
-    print(out)
+class IntruwatchGUI(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        # self.ui = Ui_Dashboard()
+        # self.ui_tabs = tabs()
+        self.dashboard_ui_file_path = os.path.join(os.path.dirname(__file__), "Dashboard.ui")
+        self.tabs_ui_file_path = os.path.join(os.path.dirname(__file__), "tabs.ui")
+        self.ui.setupUi(self)
+        # self.ui.pushButton.clicked.connect(self.open_tabs_page)
+        # self.ui_tabs.dashboardButton.clicked.connect(self.dashboardButton)  # Connect back to dashboard button
+        self.data_handler = EnterDataHandler(self.ui)
+        self.data_handler.log_row_added.connect(self.data_handler.add_table_row)
+        self.data_handler.pAlerts_row_added.connect(self.data_handler.add_table_row_pAlerts)
+        self.data_handler.cAlerts_row_added.connect(self.data_handler.add_table_row_cAlerts)
+        self.data_handler.DashTable_row_added.connect(self.data_handler.add_table_row_cAlerts)
     
-    for past_alert in out:
-        # Extract the necessary information from the past_alert tuple
-        dtEntry, sourceP, sourceIP, destP = past_alert  # Adjust the order of arguments if needed
+    def toggle_view(self):
+        # Check if the current central widget is the main window
+        if isinstance(self.centralWidget(), type(self.ui)):
+            # If it is, switch to the tabbed view
+            self.load_tabs()
+        else:
+            # If it's not, switch back to the main window
+            self.load_dashboard()
+    
+    def load_dashboard(self):
+        self.ui
+        self.setCentralWidget(tabs)
+        # Initialize pushButton and connect its clicked signal
+        self.pushButton = self.dashboard_ui.findChild(QPushButton, "pushButton")
+        self.pushButton.clicked.connect(self.toggle_view)
 
-        # Add the past alert to the data handler
-        data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
+    def load_tabs(self):
+        self.tabs_ui = loadUi(self.tabs_ui_file_path)
+        self.setCentralWidget(self.tabs_ui)
+        # Connect the 'clicked' signal of the dashboard button to toggle_view
+        self.dashboardButton = self.tabs_ui.findChild(QPushButton, "dashboardButton")
+        if self.dashboardButton is not None:
+            try:
+                self.dashboardButton.clicked.disconnect()
+            except TypeError:
+                pass
+            self.dashboardButton.clicked.connect(self.toggle_view)
+        else:
+            print("dashboardButton not found")
+        devices = list_network_devices()
+        for device in devices:
+            item = QListWidgetItem(device)
+            font = QFont()
+            font.setBold(True)
+            font.setPointSize(10)
+            item.setFont(font)
+            self.ui_tabs.listWidget.addItem(item)
 
-    pass
+        self.loadPastAlerts()
+
+    def loadPastAlerts(self):
+        out = getPastAlerts()
+        print(out)
+
+        for past_alert in out:
+            dtEntry, sourceP, sourceIP, destP = past_alert
+            self.data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)
+
+    def back_to_dashboard(self):
+        self.setCentralWidget(self.ui)  # Replace 'centralwidget' with the actual central widget name
+
+    def update_gui(self):
+        QApplication.processEvents()
+
+# Your other functions remain the same
 
 def main():
-    Dashboard.show()
-
-    data_thread = DataEntryThread(data_handler)
-    data_thread.start()
-    devices = list_network_devices()
-    for device in devices:
-        item = QListWidgetItem(device)
-        # Create a QFont object for bold text with 10pt size
-        font = QFont()
-        font.setBold(True)
-        font.setPointSize(10)  # Set the point size to 10
-        item.setFont(font)
-        ui_tabs.listWidget.addItem(item)
-    loadPastAlerts()
-
+    gui = IntruwatchGUI()
+    gui.show()
     app.exec_()
 
 if __name__ == "__main__":
-     main()
+    main()
