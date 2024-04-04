@@ -121,7 +121,7 @@ class Ui_Dashboard(object):
         self.label.setAlignment(Qt.AlignCenter)
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(11, 79, 901, 291))
+        self.frame.setGeometry(QRect(11, 79, 901, 481))
         self.frame.setStyleSheet(u"color:rgb(255, 255, 255);\n"
 "background-color: rgb(255, 0, 0);\n"
 "border : 2px outsetblack;\n"
@@ -134,7 +134,6 @@ class Ui_Dashboard(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.Graph = QLabel(self.frame)
         self.Graph.setObjectName(u"Graph")
-        self.Graph.setPixmap(QPixmap(u"Generic.png"))
         self.Graph.setScaledContents(True)
 
         self.horizontalLayout.addWidget(self.Graph)
@@ -153,7 +152,7 @@ class Ui_Dashboard(object):
         if (self.tableWidget.rowCount() < 128):
             self.tableWidget.setRowCount(128)
         self.tableWidget.setObjectName(u"tableWidget")
-        self.tableWidget.setGeometry(QRect(10, 380, 901, 421))
+        self.tableWidget.setGeometry(QRect(10, 570, 901, 231))
         self.tableWidget.setStyleSheet(u"\n"
 "border: 2px outset black;\n"
 "background:white;\n"
