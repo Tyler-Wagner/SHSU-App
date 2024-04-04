@@ -1,19 +1,19 @@
-import sys
 import psutil
 import threading
+import sys
 from Handlers.enterData import  EnterDataHandler
-from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
+from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont
-from Frontend.new_Dash import new_Dash
-from Frontend.tabs import Ui_tabsPage
-from Backend.main import list_network_devices, capture_packets
-from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
+from Frontend.Dashboard import IntruwatchGUI as Dashboard
+#from Frontend.Ui_Tabspage import Ui_Tabspage
+from main import list_network_devices, capture_packets
+#from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 
 app = QApplication([])
 
-tabsPage = QMainWindow()
-ui = Ui_tabsPage()
-ui.setupUi(tabsPage)
+#tabsPage = QWidget()
+#ui = Ui_Tabspage()
+#ui.setupUi(tabsPage)
 
 data_handler = EnterDataHandler(ui)
 data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
@@ -28,11 +28,11 @@ class DataEntryThread(threading.Thread):
     def run(self):
         devices = list(psutil.net_if_addrs().keys())
         
-        choice = dbhandle_SETTINGS('interface')
-
-        if 1 <= choice <= len(devices):
-            selected_interface = devices[choice - 1]
-            capture_packets(selected_interface, self.data_handler)
+        #choice = dbhandle_SETTINGS('interface')
+        choice = 1
+        # if 1 <= choice <= len(devices):
+        selected_interface = devices[choice - 1]
+        capture_packets(selected_interface)
 
 # Update the creation and start of DataEntryThread in the main function
 data_thread = DataEntryThread(data_handler)
@@ -53,7 +53,7 @@ def list_network_devices():
 
 def main():
     app = QApplication(sys.argv)
-    window = new_Dash()  # Create an instance of Dashboard
+    window = Dashboard()  # Create an instance of Dashboard
     window.show()
     sys.exit(app.exec_())
 

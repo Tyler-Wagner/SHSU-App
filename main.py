@@ -2,10 +2,10 @@ import sys
 import os
 import psutil
 import scapy.all as scapy
-from tcp_handler import CheckTCP
-from udp_handler import CheckUDP
-from icmp_handler import CheckICMP
-from Handlers.sendNotification import sendnotification
+from Backend.tcp_handler import handle_tcp_packet as CheckTCP
+from Backend.udp_handler import handle_udp_packet as CheckUDP
+from Backend.icmp_handler import handle_icmp_packet as CheckICMP
+#from Handlers.sendNotification import sendnotification
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -49,13 +49,12 @@ def process_packet(packet, data_handler):
             ICMP_packet_check.handle_icmp_packet() # calls instance
 
 
-    elif packet.haslayer(scapy.ARP):
-        src_ip = packet[scapy.ARP].psrc
-        dst_ip = packet[scapy.ARP].pdst
-        src_mac = packet[scapy.ARP].hwsrc
-        dst_mac = packet[scapy.ARP].hwdst
-        ARP_packet_check = CheckARP(packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
-        ARP_packet_check.handle_arp_packet() # calls instance
+  ##  elif packet.haslayer(scapy.ARP):
+  #      src_ip = packet[scapy.ARP].psrc
+   #     dst_ip = packet[scapy.ARP].pdst
+    #    src_mac = packet[scapy.ARP].hwsrc
+     #   dst_mac = packet[scapy.ARP].hwdst
+      # ARP_packet_check.handle_arp_packet() # calls instance
 
 
 # Modify the call to process_packet in capture_packets
@@ -63,7 +62,7 @@ def capture_packets(interface, data_handler):
     print(f"\nCapturing packets on {interface}...\n")
     #TEST ATTACK##############################################################################################################
     data_handler.add_current_alerts_row("1234556789",22,22)
-    sendnotification("Attack Detected", f"Please see ALerts Page for the following attack\nIP: 1234556789 SrcP: 22 dstP: 22")
+    #sendnotification("Attack Detected", f"Please see ALerts Page for the following attack\nIP: 1234556789 SrcP: 22 dstP: 22")
     ##########################################################################################################################
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))
 

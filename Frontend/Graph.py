@@ -1,7 +1,6 @@
 import sys
-import numpy as np
 import matplotlib.pyplot as plt
-from datetime import datetime
+from datetime import datetime, timezone
 from random import randint
 from typing import Optional
 from matplotlib.animation import FuncAnimation
@@ -18,7 +17,7 @@ class RealTimeGraph(QWidget):
         self.ax.set_title(chart_title)
         self.ax.set_xlabel("Time")
         self.ax.set_ylabel("Amount of Packets")
-        self.ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: datetime.utcfromtimestamp(x).strftime('%H:%M:%S')))
+        self.ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: datetime.fromtimestamp(x, timezone.utc).strftime('%H:%M:%S')))
         self.TCP_dataset, = self.ax.plot([], [], label="TCP")
         self.UDP_dataset, = self.ax.plot([], [], label="UDP")
         self.ICMP_dataset, = self.ax.plot([], [], label="ICMP")
@@ -27,7 +26,7 @@ class RealTimeGraph(QWidget):
         self.UDP_data = []
         self.ICMP_data = []
         self.dates = []
-        self.animation = FuncAnimation(self.fig, self.update, interval=1000)
+        self.animation = FuncAnimation(self.fig, self.update, interval=1000, cache_frame_data=False)
 
         self.canvas = FigureCanvas(self.fig)
         layout.addWidget(self.canvas)
