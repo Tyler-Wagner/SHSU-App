@@ -12,7 +12,7 @@ from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.enterData import EnterDataHandler as data_handler
 from PyQt5.QtWidgets import *
-from Frontend.ui_Dashboard import Ui_Dashboard
+from Frontend.ui_Dashboard import Ui_Dashboard as Dashboard
 from Frontend.Ui_Tabspage import Ui_Tabspage as tabs
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 
@@ -21,11 +21,10 @@ app = QApplication([])
 class IntruwatchGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        # self.ui = Ui_Dashboard()
-        # self.ui_tabs = tabs()
-        self.dashboard_ui_file_path = os.path.join(os.path.dirname(__file__), "Dashboard.ui")
-        self.tabs_ui_file_path = os.path.join(os.path.dirname(__file__), "tabs.ui")
-        self.ui.setupUi(self)
+        self.Dashboard = Dashboard()
+        self.Tabs = tabs()
+        self.Dashboard.setupUi(self)
+        self.Tabs.setupUi(self)
         # self.ui.pushButton.clicked.connect(self.open_tabs_page)
         # self.ui_tabs.dashboardButton.clicked.connect(self.dashboardButton)  # Connect back to dashboard button
         self.data_handler = EnterDataHandler(self.ui)
