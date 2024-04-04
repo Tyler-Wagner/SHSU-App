@@ -151,7 +151,7 @@ class Ui_Dashboard(object):
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         if (self.tableWidget.rowCount() < 128):
             self.tableWidget.setRowCount(128)
-        self.tableWidget.setObjectName(u"tableWidget")
+        self.tableWidget.setObjectName(u"DashTab")
         self.tableWidget.setGeometry(QRect(10, 570, 901, 231))
         self.tableWidget.setStyleSheet(u"\n"
 "border: 2px outset black;\n"
@@ -167,7 +167,7 @@ class Ui_Dashboard(object):
         self.tableWidget.setAutoScroll(False)
         self.tableWidget.setAutoScrollMargin(10)
         self.tableWidget.setShowGrid(True)
-        self.tableWidget.setRowCount(128)
+        # self.tableWidget.setRowCount(128)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(219)
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
         self.tableWidget.verticalHeader().setVisible(False)

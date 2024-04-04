@@ -9,18 +9,19 @@ class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
     pAlerts_row_added = pyqtSignal(str, str, int, str)
     cAlerts_row_added = pyqtSignal(str, int, int)
-    DashTable_row_added = pyqtSignal(str, int, int)
+    tableWidgetle_row_added = pyqtSignal(int, int, int)
 
 
-    def __init__(self, ui, parent=None):
+    def __init__(self, dash_ui, tabs_ui, parent=None):
         super().__init__(parent)
-        self.ui = ui
+        self.dash_ui = dash_ui
+        self.tabs_ui = tabs_ui
 
     def add_log_row(self, category, message):
         self.log_row_added.emit(category, message)
 
-    def add_dashTable_row(self, sourceIP, sourceP, destP):
-        self.DashTable_row_added.emit(sourceIP, sourceP, destP)
+    def add_tableWidgetle_row(self, sourceIP, sourceP, destP):
+        self.tableWidgetle_row_added.emit(sourceIP, sourceP, destP)
 
     def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
         self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
@@ -37,7 +38,7 @@ class EnterDataHandler(QObject):
         time = current_datetime.strftime("%H:%M:%S")
 
         # Insert a new row at the beginning
-        self.ui.logTable.insertRow(0)
+        self.tabs_ui.logTable.insertRow(0)
 
         # Add items to each cell in the new row
         date_item = QTableWidgetItem(date)
@@ -55,18 +56,18 @@ class EnterDataHandler(QObject):
             item.setTextAlignment(Qt.AlignCenter)
 
         # Set items in the new row
-        self.ui.logTable.setItem(0, 0, date_item)
-        self.ui.logTable.setItem(0, 1, time_item)
-        self.ui.logTable.setItem(0, 2, packet_item)
-        self.ui.logTable.setItem(0, 3, details_item)
+        self.tabs_ui.logTable.setItem(0, 0, date_item)
+        self.tabs_ui.logTable.setItem(0, 1, time_item)
+        self.tabs_ui.logTable.setItem(0, 2, packet_item)
+        self.tabs_ui.logTable.setItem(0, 3, details_item)
 
-    def DashTabRow(self, sourceIP, sourceP, destP):
+    def tableWidgetRow(self, sourceIP, sourceP, destP):
         # print(f"Received log data: {log_entry}") #for Debug
         
         current_datetime = datetime.now()
         dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
 
-        self.ui.DashTab.insertRow(0)
+        self.dash_ui.tableWidget.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(dtEntry)
@@ -82,12 +83,13 @@ class EnterDataHandler(QObject):
         for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
             item.setFont(font)
             item.setTextAlignment(Qt.AlignCenter)
+            item.setForeground(QColor('red'))
 
         # Set items in the new row
-        self.ui.DashTab.setItem(0, 0, dateTime_item)
-        self.ui.DashTab.setItem(0, 1, sIP_item)
-        self.ui.DashTab.setItem(0, 2, sP_item)
-        self.ui.DashTab.setItem(0, 3, dPort_item)
+        self.dash_ui.tableWidget.setItem(0, 0, dateTime_item)
+        self.dash_ui.tableWidget.setItem(0, 1, sIP_item)
+        self.dash_ui.tableWidget.setItem(0, 2, sP_item)
+        self.dash_ui.tableWidget.setItem(0, 3, dPort_item)
         
 
     def add_table_row_cAlerts(self, sourceIP, sourceP, destP):
@@ -96,7 +98,7 @@ class EnterDataHandler(QObject):
         current_datetime = datetime.now()
         dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
 
-        self.ui.activeAlertsTable.insertRow(0)
+        self.tabs_ui.activeAlertsTable.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(dtEntry)
@@ -114,16 +116,16 @@ class EnterDataHandler(QObject):
             item.setTextAlignment(Qt.AlignCenter)
 
         # Set items in the new row
-        self.ui.activeAlertsTable.setItem(0, 0, dateTime_item)
-        self.ui.activeAlertsTable.setItem(0, 1, sIP_item)
-        self.ui.activeAlertsTable.setItem(0, 2, sP_item)
-        self.ui.activeAlertsTable.setItem(0, 3, dPort_item)
+        self.tabs_ui.activeAlertsTable.setItem(0, 0, dateTime_item)
+        self.tabs_ui.activeAlertsTable.setItem(0, 1, sIP_item)
+        self.tabs_ui.activeAlertsTable.setItem(0, 2, sP_item)
+        self.tabs_ui.activeAlertsTable.setItem(0, 3, dPort_item)
         
 
         # Create a button and set it in the row
         button = QPushButton("Add to Past Alerts")
         button.clicked.connect(lambda: self.add_table_row_pAlerts(dtEntry, sourceIP, str(sourceP), str(destP)))
-        self.ui.activeAlertsTable.setCellWidget(0, 4, button)
+        self.tabs_ui.activeAlertsTable.setCellWidget(0, 4, button)
 
     def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
         dbhandeler(date, sourceIP, sourceP, destP)
@@ -131,9 +133,9 @@ class EnterDataHandler(QObject):
         #Finding and removeing the Row in cAlerts Table
         row_count = self.ui.activeAlertsTable.rowCount()
         for i in range(row_count):
-            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+            if self.tabs_ui.activeAlertsTable.item(i, 0).text() == date:
                 # Remove the row from CAlerts
-                self.ui.activeAlertsTable.removeRow(i)
+                self.tabs_ui.activeAlertsTable.removeRow(i)
                 break
         
         self.ui.pastAlertsTable.insertRow(0)
@@ -154,23 +156,23 @@ class EnterDataHandler(QObject):
             item.setTextAlignment(Qt.AlignCenter)
 
         # Set items in the new row
-        self.ui.pastAlertsTable.setItem(0, 0, dateTime_item)
-        self.ui.pastAlertsTable.setItem(0, 1, sIP_item)
-        self.ui.pastAlertsTable.setItem(0, 2, sP_item)
-        self.ui.pastAlertsTable.setItem(0, 3, dPort_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 0, dateTime_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 1, sIP_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 2, sP_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 3, dPort_item)
     
     def add_table_row_pAlerts_ONSTART(self, date, sourceIP, sourceP, destP):
         # dbhandeler(date, sourceIP, sourceP, destP)
         
         #Finding and removeing the Row in cAlerts Table
-        row_count = self.ui.activeAlertsTable.rowCount()
+        row_count = self.tabs_ui.activeAlertsTable.rowCount()
         for i in range(row_count):
-            if self.ui.activeAlertsTable.item(i, 0).text() == date:
+            if self.tabs_ui.activeAlertsTable.item(i, 0).text() == date:
                 # Remove the row from CAlerts
-                self.ui.activeAlertsTable.removeRow(i)
+                self.tabs_ui.activeAlertsTable.removeRow(i)
                 break
         
-        self.ui.pastAlertsTable.insertRow(0)
+        self.tabs_ui.pastAlertsTable.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(date)
@@ -188,7 +190,7 @@ class EnterDataHandler(QObject):
             item.setTextAlignment(Qt.AlignCenter)
 
         # Set items in the new row
-        self.ui.pastAlertsTable.setItem(0, 0, dateTime_item)
-        self.ui.pastAlertsTable.setItem(0, 1, sIP_item)
-        self.ui.pastAlertsTable.setItem(0, 2, sP_item)
-        self.ui.pastAlertsTable.setItem(0, 3, dPort_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 0, dateTime_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 1, sIP_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 2, sP_item)
+        self.tabs_ui.pastAlertsTable.setItem(0, 3, dPort_item)

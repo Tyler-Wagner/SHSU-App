@@ -33,7 +33,7 @@ def process_packet(packet, data_handler):
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet() # calls instance
             data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
-            # data_handler.add_dashTable_row(src_port, dst_ip, dst_port)# sends to data handler
+            # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
@@ -41,7 +41,7 @@ def process_packet(packet, data_handler):
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
             data_handler.add_log_row("UDP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
-            # data_handler.add_dashTable_row(src_port, dst_ip, dst_port)# sends to data handler
+            # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type
@@ -50,7 +50,7 @@ def process_packet(packet, data_handler):
             ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
             ICMP_packet_check.handle_icmp_packet() # calls instance
             data_handler.add_log_row("ICMP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")
-            # data_handler.add_dashTable_row(src_port, dst_ip, dst_port)# sends to data handler
+            # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
@@ -59,7 +59,7 @@ def process_packet(packet, data_handler):
         dst_mac = packet[scapy.ARP].hwdst
         ARP_packet_check = CheckARP(packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
         data_handler.add_log_row("ARP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")
-        # data_handler.add_dashTable_row(src_port, dst_ip, dst_port)# sends to data handler
+        # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
 
 # Modify the call to process_packet in capture_packets
