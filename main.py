@@ -19,7 +19,7 @@ def list_network_devices():
         for addr in addresses:
             print(f"      {addr.family.name}: {addr.address}")
     
-
+    return devices
 def process_packet(packet, data_handler):
     
     # Process and display information about the packet
@@ -33,14 +33,15 @@ def process_packet(packet, data_handler):
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet() # calls instance
             data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
+            data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
             dst_port = packet[scapy.UDP].dport
-
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
             data_handler.add_log_row("UDP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
+            data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type
@@ -48,7 +49,7 @@ def process_packet(packet, data_handler):
             # Call any other processing function for ICMP packets here if needed
             ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
             ICMP_packet_check.handle_icmp_packet() # calls instance
-
+            data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
@@ -56,6 +57,7 @@ def process_packet(packet, data_handler):
         src_mac = packet[scapy.ARP].hwsrc
         dst_mac = packet[scapy.ARP].hwdst
         ARP_packet_check = CheckARP(packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
+        data_handler.add_dashTable_row(src_ip, src_port, dst_ip, dst_port)# sends to data handler
 
 
 # Modify the call to process_packet in capture_packets
@@ -78,7 +80,7 @@ def main():
 
     if 1 <= choice <= len(devices):
         selected_interface = devices[choice - 1]
-        capture_packets(selected_interface, data_handler= None)
+        capture_packets(selected_interface)
     else:
         print("Invalid choice. Please choose a valid interface.")
 if __name__ == "__main__":

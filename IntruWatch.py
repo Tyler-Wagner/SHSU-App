@@ -3,7 +3,7 @@ import threading
 from Handlers.enterData import  EnterDataHandler
 from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtGui import QFont
-from Frontend.ui_Dashboard import Ui_Dashboard as IntruwatchGUI
+from Frontend.ui_Dashboard import Ui_Dashboard 
 from Frontend.Ui_Tabspage import Ui_Tabspage as tabs
 from main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
@@ -11,12 +11,12 @@ from Handlers.dbHandle import importPastAlerts as getPastAlerts
 
 app = QApplication([])
 Dashboard = QMainWindow()
-tabsPage = QListWidgetItem()
-ui_Dashboard = IntruwatchGUI()
+ui = Ui_Dashboard()
 ui_tabs = tabs()
-ui_tabs.setupUi(tabsPage)
+ui_tabs.setupUi(Dashboard)
+ui.setupUi(Dashboard)
 
-data_handler = EnterDataHandler(ui_tabs)
+data_handler = EnterDataHandler(ui) 
 data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
 data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # connects to the Past Alerts Table
 data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
@@ -66,12 +66,10 @@ def loadPastAlerts():
     pass
 
 def main():
+    Dashboard.show()
 
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
-    
-    Dashboard.show()
-    tabs.show
     devices = list_network_devices()
     for device in devices:
         item = QListWidgetItem(device)
