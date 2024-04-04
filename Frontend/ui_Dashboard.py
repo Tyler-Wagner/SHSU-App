@@ -1,17 +1,30 @@
-import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+# -*- coding: utf-8 -*-
 
-class new_Dash(object):
-    def setupUi(self, MainWindow):
-        if MainWindow.objectName():
-            MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1182, 887)
-        MainWindow.setAutoFillBackground(False)
-        MainWindow.setStyleSheet(u"color:rgb(255,0,0);")
-        MainWindow.setAnimated(True)
-        self.centralwidget = QWidget(MainWindow)
+################################################################################
+## Form generated from reading UI file 'DashboardqwXqfY.ui'
+##
+## Created by: Qt User Interface Compiler version 5.14.1
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
+    QRect, QSize, QUrl, Qt)
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
+    QRadialGradient)
+from PySide2.QtWidgets import *
+
+
+class Ui_Dashboard(object):
+    def setupUi(self, Dashboard):
+        if Dashboard.objectName():
+            Dashboard.setObjectName(u"Dashboard")
+        Dashboard.resize(1182, 887)
+        Dashboard.setAutoFillBackground(False)
+        Dashboard.setStyleSheet(u"color:rgb(255,0,0);")
+        Dashboard.setAnimated(True)
+        self.centralwidget = QWidget(Dashboard)
         self.centralwidget.setObjectName(u"centralwidget")
         self.pushButton = QPushButton(self.centralwidget)
         self.pushButton.setObjectName(u"pushButton")
@@ -174,32 +187,32 @@ class new_Dash(object):
         self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setCascadingSectionResizes(False)
         self.tableWidget.verticalHeader().setDefaultSectionSize(33)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(MainWindow)
+        Dashboard.setCentralWidget(self.centralwidget)
+        self.statusbar = QStatusBar(Dashboard)
         self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        Dashboard.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
+        self.retranslateUi(Dashboard)
 
-        QMetaObject.connectSlotsByName(MainWindow)
+        QMetaObject.connectSlotsByName(Dashboard)
     # setupUi
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Intruwatch Dash", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Advanced", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Packets Scanned", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"PSCounter", None))
-        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Threats Detected", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"TDCounter", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"Intruwatch Dashboard", None))
+    def retranslateUi(self, Dashboard):
+        Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
+        self.pushButton.setText(QCoreApplication.translate("Dashboard", u"Advanced", None))
+        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Packets Scanned", None))
+        self.label_4.setText(QCoreApplication.translate("Dashboard", u"PSCounter", None))
+        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
+        self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
+        self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
         self.Graph.setText("")
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"Source IP", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Source IP", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Source Port", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Dashboard", u"Source Port", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"Destination IP", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Dashboard", u"Destination IP", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Destination Port", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
     # retranslateUi
 

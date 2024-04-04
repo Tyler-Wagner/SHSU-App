@@ -1,9 +1,4 @@
-<<<<<<< Updated upstream
 import sys
-from PyQt5.QtWidgets import QApplication
-from Frontend.Dashboard import Dashboard
-from Frontend.tabs import Ui_tabsPage
-=======
 import psutil
 import threading
 from Handlers.enterData import  EnterDataHandler
@@ -11,7 +6,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QListWidgetItem
 from PyQt5.QtGui import QFont
 from Frontend.new_Dash import new_Dash
 from Frontend.tabs import Ui_tabsPage
-from main import list_network_devices, capture_packets
+from Backend.main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 
 app = QApplication([])
@@ -56,10 +51,9 @@ def list_network_devices():
         i+=1
     return device_list
 
->>>>>>> Stashed changes
 def main():
     app = QApplication(sys.argv)
-    window = Dashboard()  # Create an instance of Dashboard
+    window = new_Dash()  # Create an instance of Dashboard
     window.show()
     sys.exit(app.exec_())
 

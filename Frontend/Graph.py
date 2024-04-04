@@ -17,7 +17,7 @@ class RealTimeGraph(QWidget):
         self.fig, self.ax = plt.subplots()
         self.ax.set_title(chart_title)
         self.ax.set_xlabel("Time")
-        self.ax.set_ylabel("Amount")
+        self.ax.set_ylabel("Amount of Packets")
         self.ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: datetime.utcfromtimestamp(x).strftime('%H:%M:%S')))
         self.TCP_dataset, = self.ax.plot([], [], label="TCP")
         self.UDP_dataset, = self.ax.plot([], [], label="UDP")

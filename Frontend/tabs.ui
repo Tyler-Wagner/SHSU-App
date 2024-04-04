@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1643</width>
-    <height>982</height>
+    <height>1098</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -120,7 +120,7 @@ QTabWidget:pane {
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="log">
     <attribute name="title">
@@ -264,69 +264,11 @@ QTableWidget::item {
       </property>
      </column>
     </widget>
-    <widget class="QPushButton" name="dashboardButton_logs">
-     <property name="geometry">
-      <rect>
-       <x>1190</x>
-       <y>750</y>
-       <width>107</width>
-       <height>27</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-border: 2px outset black;
-background:red;
-color: white;
-font: bold 14pt;
-border-radius: 20px;
-}
-
-QPushButton:pressed{
-border: 2px outset black;
-background:white;
-color: black;
-font: bold 14pt;
-}</string>
-     </property>
-     <property name="text">
-      <string>Dashboard</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QWidget" name="alerts">
     <attribute name="title">
      <string>Alerts</string>
     </attribute>
-    <widget class="QPushButton" name="dashboardButton_alerts">
-     <property name="geometry">
-      <rect>
-       <x>1190</x>
-       <y>750</y>
-       <width>151</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-border: 2px outset black;
-background:red;
-color: white;
-font: bold 14pt;
-border-radius: 20px;
-}
-
-QPushButton:pressed{
-border: 2px outset black;
-background:white;
-color: black;
-font: bold 14pt;
-}</string>
-     </property>
-     <property name="text">
-      <string>Dashboard</string>
-     </property>
-    </widget>
     <widget class="QTableWidget" name="activeAlertsTable">
      <property name="geometry">
       <rect>
@@ -594,35 +536,6 @@ QTableWidget::item {
     <attribute name="title">
      <string>Actions</string>
     </attribute>
-    <widget class="QPushButton" name="dashboardButton_actions">
-     <property name="geometry">
-      <rect>
-       <x>1190</x>
-       <y>750</y>
-       <width>151</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-border: 2px outset black;
-background:red;
-color: white;
-font: bold 14pt;
-border-radius: 20px;
-}
-
-QPushButton:pressed{
-border: 2px outset black;
-background:white;
-color: black;
-font: bold 14pt;
-}</string>
-     </property>
-     <property name="text">
-      <string>Dashboard</string>
-     </property>
-    </widget>
     <widget class="QTableWidget" name="pastAlertsTable_2">
      <property name="geometry">
       <rect>
@@ -739,35 +652,6 @@ QTableWidget::item {
     <attribute name="title">
      <string>Settings</string>
     </attribute>
-    <widget class="QPushButton" name="dashboardButton_settings">
-     <property name="geometry">
-      <rect>
-       <x>1190</x>
-       <y>750</y>
-       <width>151</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton{
-border: 2px outset black;
-background:red;
-color: white;
-font: bold 14pt;
-border-radius: 20px;
-}
-
-QPushButton:pressed{
-border: 2px outset black;
-background:white;
-color: black;
-font: bold 14pt;
-}</string>
-     </property>
-     <property name="text">
-      <string>Dashboard</string>
-     </property>
-    </widget>
     <widget class="QSpinBox" name="interfaceSelectionBox">
      <property name="geometry">
       <rect>
@@ -969,6 +853,43 @@ font: bold 14pt;
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="dashboardButton">
+   <property name="geometry">
+    <rect>
+     <x>1400</x>
+     <y>980</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>8</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+border: 2px outset black;
+background:red;
+color: white;
+font: bold 8pt;
+border-radius: 20px;
+}
+
+QPushButton:pressed{
+border: 2px outset black;
+background:white;
+color: black;
+font: bold 8pt;
+}</string>
+   </property>
+   <property name="text">
+    <string>Back To Dashboard</string>
+   </property>
   </widget>
  </widget>
  <resources/>
