@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from Handlers.dbHandle import importUserSettings as user
+from Handlers.dbHandle import updateUserSettings as userUpdate
 from PyQt5.QtWidgets import *
 
 class Ui_TabsPage(object):
@@ -326,7 +327,8 @@ class Ui_TabsPage(object):
         self.interfaceSelectionBox = QSpinBox(self.settings)
         self.interfaceSelectionBox.setObjectName(u"interfaceSelectionBox")
         self.interfaceSelectionBox.setGeometry(QRect(540, 260, 42, 22))
-        self.interfaceSelectionBox.setValue(4)
+        self.interfaceSelectionBox.setValue(user("interface"))
+        self.interfaceSelectionBox.valueChanged.connect(lambda value: userUpdate("interface", value))
         self.label_3 = QLabel(self.settings)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(390, 260, 151, 21))
@@ -494,7 +496,7 @@ class Ui_TabsPage(object):
         ___qtablewidgetitem17.setText(QCoreApplication.translate("AdvancedPage", u"Suggested Actions", None));
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), QCoreApplication.translate("AdvancedPage", u"Actions", None))
         self.label_3.setText(QCoreApplication.translate("AdvancedPage", u"<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>", None))
-        self.label_4.setText(QCoreApplication.translate("AdvancedPage", u"*Defaule Is 4*", None))
+        self.label_4.setText(QCoreApplication.translate("AdvancedPage", u"*Default Is 4*", None))
         self.label_7.setText(QCoreApplication.translate("AdvancedPage", u"Allow Notifications", None))
         self.checkBox.setText(QCoreApplication.translate("AdvancedPage", u"Yes", None))
         self.checkBox_2.setText(QCoreApplication.translate("AdvancedPage", u"No", None))
