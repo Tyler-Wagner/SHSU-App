@@ -1,8 +1,14 @@
 import sys
+import matplotlib.pyplot as plt
+from datetime import datetime, timezone
+from random import randint
+from typing import Optional
+from matplotlib.animation import FuncAnimation
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
@@ -97,21 +103,6 @@ class Ui_Dashboard(object):
         self.label_5.setFrameShadow(QFrame.Sunken)
         self.label_5.setAlignment(Qt.AlignCenter)
         self.splitter.addWidget(self.label_5)
-        self.frame = QFrame(self.centralwidget)
-        self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(10, 88, 1391, 471))
-        self.frame.setStyleSheet(u"color:rgb(255, 255, 255);\n"
-"background-color: rgb(255, 0, 0);\n"
-"border : 2px outsetblack;\n"
-"font: bold 14pt;\n"
-"border-radius: 15px;\n"
-"")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Plain)
-        self.Graph = QLabel(self.frame)
-        self.Graph.setObjectName(u"Graph")
-        self.Graph.setGeometry(QRect(9, 9, 16, 23))
-        self.Graph.setScaledContents(True)
         self.tableWidget = QTableWidget(self.centralwidget)
         if (self.tableWidget.columnCount() < 4):
             self.tableWidget.setColumnCount(4)
@@ -151,10 +142,7 @@ class Ui_Dashboard(object):
         self.label.setFrameShadow(QFrame.Plain)
         self.label.setAlignment(Qt.AlignCenter)
         Dashboard.setCentralWidget(self.centralwidget)
-
         self.retranslateUi(Dashboard)
-
-        QMetaObject.connectSlotsByName(Dashboard)
     # setupUi
 
     def retranslateUi(self, Dashboard):
@@ -164,7 +152,6 @@ class Ui_Dashboard(object):
         self.label_4.setText(QCoreApplication.translate("Dashboard", u"PSCounter", None))
         self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
         self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
-        self.Graph.setText("")
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Source IP", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
@@ -175,4 +162,46 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
     # retranslateUi
+###################################################################################################################################
 
+class RealTimeGraph(QWidget):
+    def __init__(self, packet_graph: Optional[str] = None, histo_tick_size: int = 200):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        self.fig, self.ax = plt.subplots()
+        self.ax.set_title(packet_graph)
+        self.ax.set_xlabel("Time")
+        self.ax.set_ylabel("Amount of Packets")
+        self.ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: datetime.fromtimestamp(x, timezone.utc).strftime('%H:%M:%S')))
+        self.TCP_dataset, = self.ax.plot([], [], label="TCP")
+        self.UDP_dataset, = self.ax.plot([], [], label="UDP")
+        self.ICMP_dataset, = self.ax.plot([], [], label="ICMP")
+        self.ax.legend()
+        self.TCP_data = []
+        self.UDP_data = []
+        self.ICMP_data = []
+        self.dates = []
+        self.animation = FuncAnimation(self.fig, self.update, interval=1000, cache_frame_data=False)
+
+        self.canvas = FigureCanvas(self.fig)
+        layout.addWidget(self.canvas)
+
+    def update(self, frame):
+        date_px = datetime.now().timestamp()
+        self.dates.append(date_px)
+        self.TCP_data.append(randint(0,1000))
+        self.UDP_data.append(randint(0,1000))
+        self.ICMP_data.append(randint(0,1000))
+
+        self.TCP_dataset.set_data(self.dates, self.TCP_data)
+        self.UDP_dataset.set_data(self.dates, self.UDP_data)
+        self.ICMP_dataset.set_data(self.dates, self.ICMP_data)
+
+        # Set Y-axis limits dynamically based on the maximum values of the data
+        max_value = max(max(self.TCP_data), max(self.UDP_data), max(self.ICMP_data))
+        self.ax.set_ylim(0, max_value)  # Add some margin for better visualization
+
+        self.ax.relim()
+        self.ax.autoscale_view(True,True,True)

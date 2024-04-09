@@ -1,10 +1,11 @@
 import psutil
 import threading
-from Handlers.enterData import  EnterDataHandler
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from Frontend.Ui_Dashboard import Ui_Dashboard
+from PyQt5.QtCore import *
+from Frontend.Ui_Dashboard import Ui_Dashboard, RealTimeGraph
 from Frontend.Ui_Tabspage import Ui_TabsPage
+from Handlers.enterData import EnterDataHandler
 from main import list_network_devices, capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
@@ -25,6 +26,15 @@ data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # con
 data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
 data_handler.tableWidgetle_row_added.connect(data_handler.tableWidgetRow)
 
+real_time_graph = RealTimeGraph()
+real_time_graph.setFixedSize(1381, 471)
+real_time_graph.setGeometry(QRect( 10, 92, 1381, 471))
+layout = QVBoxLayout()  # Define the layout variable
+layout.addWidget(real_time_graph)
+
+# Add real-time graph to the central widget layout
+Dash_ui.centralwidget.setLayout(layout)
+
 class DataEntryThread(threading.Thread):
     def __init__(self, data_handler):
         threading.Thread.__init__(self)
@@ -38,15 +48,11 @@ class DataEntryThread(threading.Thread):
         if 1 <= choice <= len(devices):
             selected_interface = devices[choice - 1]
             capture_packets(selected_interface, self.data_handler)
-
 # Update the creation and start of DataEntryThread in the main function
 data_thread = DataEntryThread(data_handler)
 data_thread.start()
-
-
 def update_gui():
     QApplication.processEvents()
-
 def list_network_devices():
     devices = psutil.net_if_addrs()
     device_list = []
@@ -55,7 +61,6 @@ def list_network_devices():
         device_list.append(f"{i}: {name}")
         i+=1
     return device_list
-
 def loadPastAlerts():
     out = getPastAlerts()
     print(out)
@@ -68,7 +73,6 @@ def loadPastAlerts():
         data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
 
     pass
-
 def showDash():
     TabsPage.hide()
     DashPage.show()
@@ -77,7 +81,6 @@ def showTabs():
     DashPage.hide()
     TabsPage.show()
     pass
-
 def main():
     DashPage.show()
     data_thread = DataEntryThread(data_handler)
@@ -86,8 +89,6 @@ def main():
     dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
     advanced_button.clicked.connect(lambda: showTabs())
     dashboard_button.clicked.connect(lambda: showDash())
-
-    # TabsPage.show()
     DashPage.show()
     devices = list_network_devices()
     for device in devices:
@@ -99,7 +100,7 @@ def main():
         item.setFont(font)
         tabs_ui.listWidget.addItem(item)
     loadPastAlerts()
-
+    
     app.exec_()
 
 if __name__ == "__main__":
