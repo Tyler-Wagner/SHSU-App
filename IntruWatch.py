@@ -29,11 +29,23 @@ data_handler.tableWidgetle_row_added.connect(data_handler.tableWidgetRow)
 real_time_graph = RealTimeGraph()
 real_time_graph.setFixedSize(1381, 471)
 real_time_graph.setGeometry(QRect( 10, 92, 1381, 471))
-layout = QVBoxLayout()  # Define the layout variable
-layout.addWidget(real_time_graph)
+# layout = QVBoxLayout()  # Define the layout variable
+# layout.addWidget(real_time_graph)
 
 # Add real-time graph to the central widget layout
-Dash_ui.centralwidget.setLayout(layout)
+# Dash_ui.centralwidget.setLayout(layout)
+if not Dash_ui.centralwidget.layout():
+    layout = QVBoxLayout(Dash_ui.centralwidget)
+else:
+    layout = Dash_ui.centralwidget.layout()
+
+# Add a stretch item to create empty space above the graph widget
+layout.addStretch(2)
+# Add real-time graph to the central widget layout
+layout.addWidget(real_time_graph)
+
+# Add another stretch item to create empty space below the graph widget
+layout.addStretch(10)
 
 class DataEntryThread(threading.Thread):
     def __init__(self, data_handler):

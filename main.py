@@ -33,7 +33,7 @@ def process_packet(packet, data_handler):
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet() # calls instance
             data_handler.add_log_row("TCP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
-            # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
+            data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.UDP):
             src_port = packet[scapy.UDP].sport
@@ -41,7 +41,7 @@ def process_packet(packet, data_handler):
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
             data_handler.add_log_row("UDP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
-            # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
+            data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type

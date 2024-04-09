@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QTableWidgetItem, QPushButton
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import pyqtSignal, Qt, QObject
 from datetime import datetime
 from Handlers.dbHandle import updatePastAlerts as dbhandeler
