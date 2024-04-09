@@ -9,7 +9,7 @@ class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
     pAlerts_row_added = pyqtSignal(str, str, int, str)
     cAlerts_row_added = pyqtSignal(str, int, int)
-    tableWidgetle_row_added = pyqtSignal(int, int, int)
+    tableWidgetle_row_added = pyqtSignal(str, int, int)
 
 
     def __init__(self, dash_ui, tabs_ui, parent=None):
@@ -65,7 +65,7 @@ class EnterDataHandler(QObject):
         # print(f"Received log data: {log_entry}") #for Debug
         
         current_datetime = datetime.now()
-        dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
+        dtEntry = current_datetime.strftime("%H:%M:%S")
 
         self.dash_ui.tableWidget.insertRow(0)
 
@@ -74,7 +74,9 @@ class EnterDataHandler(QObject):
         sIP_item = QTableWidgetItem(sourceIP)
         sP_item = QTableWidgetItem(str(sourceP))
         dPort_item = QTableWidgetItem(str(destP))
-
+         
+        print(sourceIP)
+         
         # Set font and alignment for each item
         font = QFont()
         font.setPointSize(14)

@@ -153,11 +153,11 @@ class Ui_Dashboard(object):
         self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
         self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Source IP", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Time", None)); # 
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Dashboard", u"Source Port", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("Dashboard", u"Source IP", None));
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Dashboard", u"Destination IP", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("Dashboard", u"Source Port", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
