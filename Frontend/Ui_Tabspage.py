@@ -1,25 +1,19 @@
-import sys
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from Handlers.dbHandle import importUserSettings as user
-from Handlers.dbHandle import updateUserSettings as userUpdate
-from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_TabsPage(object):
     def setupUi(self, AdvancedPage):
-        if AdvancedPage.objectName():
-            AdvancedPage.setObjectName(u"AdvancedPage")
+        AdvancedPage.setObjectName("AdvancedPage")
         AdvancedPage.resize(1600, 900)
-        self.tabWidget = QTabWidget(AdvancedPage)
-        self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(135, 45, 1321, 721))
-        font = QFont()
+        self.tabWidget = QtWidgets.QTabWidget(AdvancedPage)
+        self.tabWidget.setGeometry(QtCore.QRect(135, 45, 1321, 721))
+        font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         self.tabWidget.setFont(font)
-        self.tabWidget.setLayoutDirection(Qt.LeftToRight)
-        self.tabWidget.setStyleSheet(u"QTabWidget::tab-bar {\n"
+        self.tabWidget.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.tabWidget.setStyleSheet("QTabWidget::tab-bar {\n"
 "    alignment: center;\n"
 "}\n"
 "\n"
@@ -32,7 +26,7 @@ class Ui_TabsPage(object):
 "    border-bottom-right-radius: 0px;\n"
 "    min-width: 50ex;\n"
 "    padding: 2px;\n"
-"	margin-left: 6px;\n"
+"    margin-left: 6px;\n"
 "    margin-right: 6px;\n"
 "}\n"
 "\n"
@@ -41,7 +35,7 @@ class Ui_TabsPage(object):
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
-"	border-width:4px;\n"
+"    border-width:4px;\n"
 "}\n"
 "\n"
 "QTabBar::tab:!selected {\n"
@@ -57,8 +51,7 @@ class Ui_TabsPage(object):
 "    border: 2px solid black; /* Set the border color for the content area */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
-""
-                        "    border-bottom-left-radius: 0px;\n"
+"    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}\n"
 "QTabWidget::tab-bar {\n"
@@ -96,41 +89,26 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabWidget:pane {\n"
-"    border: 2px solid red; /* Set the border color for the o"
-                        "utline of the QTabWidget */\n"
+"    border: 2px solid red; /* Set the border color for the outline of the QTabWidget */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}")
-        self.tabWidget.setTabPosition(QTabWidget.North)
-        self.log = QWidget()
-        self.log.setObjectName(u"log")
-        self.logTable = QTableWidget(self.log)
-        if (self.logTable.columnCount() < 4):
-            self.logTable.setColumnCount(4)
-        __qtablewidgetitem = QTableWidgetItem()
-        __qtablewidgetitem.setFont(font);
-        self.logTable.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        __qtablewidgetitem1.setFont(font);
-        self.logTable.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        __qtablewidgetitem2.setFont(font);
-        self.logTable.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        __qtablewidgetitem3.setFont(font);
-        self.logTable.setHorizontalHeaderItem(3, __qtablewidgetitem3)
-        self.logTable.setObjectName(u"logTable")
-        self.logTable.setGeometry(QRect(10, 10, 1291, 671))
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
+        self.tabWidget.setObjectName("tabWidget")
+        self.log = QtWidgets.QWidget()
+        self.log.setObjectName("log")
+        self.logTable = QtWidgets.QTableWidget(self.log)
+        self.logTable.setGeometry(QtCore.QRect(10, 10, 1291, 671))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.logTable.sizePolicy().hasHeightForWidth())
         self.logTable.setSizePolicy(sizePolicy)
-        self.logTable.setMinimumSize(QSize(760, 0))
+        self.logTable.setMinimumSize(QtCore.QSize(760, 0))
         self.logTable.setAutoFillBackground(False)
-        self.logTable.setStyleSheet(u" /* LOG PAGE */\n"
+        self.logTable.setStyleSheet(" /* LOG PAGE */\n"
 "QTableWidget{\n"
 "border: 3px outset black;\n"
 "}\n"
@@ -139,67 +117,78 @@ class Ui_TabsPage(object):
 "}\n"
 "QHeaderView {\n"
 "    border: 2px solid black;\n"
-"	border-top-style:null;\n"
-"	border-left-style:null;\n"
-"	border-right-style:null;\n"
+"    border-top-style:null;\n"
+"    border-left-style:null;\n"
+"    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
 "    background-color: rgba(255,0,0,90);\n"
-"	color: black;\n"
+"    color: black;\n"
 "}\n"
 "")
         self.logTable.setAutoScroll(False)
         self.logTable.setAlternatingRowColors(True)
-        self.logTable.setSelectionMode(QAbstractItemView.ContiguousSelection)
+        self.logTable.setSelectionMode(QtWidgets.QAbstractItemView.ContiguousSelection)
         self.logTable.setShowGrid(True)
         self.logTable.setCornerButtonEnabled(False)
         self.logTable.setRowCount(0)
+        self.logTable.setObjectName("logTable")
+        self.logTable.setColumnCount(4)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.logTable.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.logTable.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.logTable.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.logTable.setHorizontalHeaderItem(3, item)
         self.logTable.horizontalHeader().setCascadingSectionResizes(False)
         self.logTable.horizontalHeader().setDefaultSectionSize(321)
         self.logTable.horizontalHeader().setHighlightSections(True)
-        self.logTable.horizontalHeader().setProperty("showSortIndicator", False)
+        self.logTable.horizontalHeader().setSortIndicatorShown(False)
         self.logTable.verticalHeader().setVisible(False)
         self.logTable.verticalHeader().setCascadingSectionResizes(False)
         self.logTable.verticalHeader().setHighlightSections(True)
-        self.logTable.verticalHeader().setProperty("showSortIndicator", False)
+        self.logTable.verticalHeader().setSortIndicatorShown(False)
         self.logTable.verticalHeader().setStretchLastSection(False)
         self.tabWidget.addTab(self.log, "")
-        self.alerts = QWidget()
-        self.alerts.setObjectName(u"alerts")
-        self.splitter = QSplitter(self.alerts)
-        self.splitter.setObjectName(u"splitter")
-        self.splitter.setGeometry(QRect(10, 10, 1301, 671))
-        self.splitter.setOrientation(Qt.Vertical)
-        self.label = QLabel(self.splitter)
-        self.label.setObjectName(u"label")
-        font1 = QFont()
-        font1.setPointSize(19)
-        font1.setBold(True)
-        font1.setWeight(75)
-        self.label.setFont(font1)
-        self.label.setLayoutDirection(Qt.LeftToRight)
-        self.label.setAlignment(Qt.AlignCenter)
-        self.splitter.addWidget(self.label)
-        self.activeAlertsTable = QTableWidget(self.splitter)
-        if (self.activeAlertsTable.columnCount() < 5):
-            self.activeAlertsTable.setColumnCount(5)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        __qtablewidgetitem4.setFont(font);
-        self.activeAlertsTable.setHorizontalHeaderItem(0, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        __qtablewidgetitem5.setFont(font);
-        self.activeAlertsTable.setHorizontalHeaderItem(1, __qtablewidgetitem5)
-        __qtablewidgetitem6 = QTableWidgetItem()
-        __qtablewidgetitem6.setFont(font);
-        self.activeAlertsTable.setHorizontalHeaderItem(2, __qtablewidgetitem6)
-        __qtablewidgetitem7 = QTableWidgetItem()
-        __qtablewidgetitem7.setFont(font);
-        self.activeAlertsTable.setHorizontalHeaderItem(3, __qtablewidgetitem7)
-        __qtablewidgetitem8 = QTableWidgetItem()
-        __qtablewidgetitem8.setFont(font);
-        self.activeAlertsTable.setHorizontalHeaderItem(4, __qtablewidgetitem8)
-        self.activeAlertsTable.setObjectName(u"activeAlertsTable")
-        self.activeAlertsTable.setStyleSheet(u" /* ALERTS PAGE */\n"
+        self.alerts = QtWidgets.QWidget()
+        self.alerts.setObjectName("alerts")
+        self.splitter = QtWidgets.QSplitter(self.alerts)
+        self.splitter.setGeometry(QtCore.QRect(10, 10, 1301, 671))
+        self.splitter.setOrientation(QtCore.Qt.Vertical)
+        self.splitter.setObjectName("splitter")
+        self.label = QtWidgets.QLabel(self.splitter)
+        font = QtGui.QFont()
+        font.setPointSize(19)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label.setFont(font)
+        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.activeAlertsTable = QtWidgets.QTableWidget(self.splitter)
+        self.activeAlertsTable.setStyleSheet(" /* ALERTS PAGE */\n"
 "QTableWidget{\n"
 "border: 3px outset black;\n"
 "}\n"
@@ -208,46 +197,70 @@ class Ui_TabsPage(object):
 "}\n"
 "QHeaderView {\n"
 "    border: 2px solid black; /* Adjust the thickness and color as needed */\n"
-"	border-top-style:null;\n"
-"	border-left-style:null;\n"
-"	border-right-style:null;\n"
+"    border-top-style:null;\n"
+"    border-left-style:null;\n"
+"    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
 "    background-color: rgba(255,0,0,90);\n"
-"	color: black;\n"
+"    color: black;\n"
 "}\n"
 "")
-        self.activeAlertsTable.setSizeAdjustPolicy(QAbstractScrollArea.AdjustIgnored)
+        self.activeAlertsTable.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.activeAlertsTable.setAutoScroll(False)
         self.activeAlertsTable.setAlternatingRowColors(True)
         self.activeAlertsTable.setCornerButtonEnabled(False)
         self.activeAlertsTable.setRowCount(0)
-        self.splitter.addWidget(self.activeAlertsTable)
+        self.activeAlertsTable.setObjectName("activeAlertsTable")
+        self.activeAlertsTable.setColumnCount(5)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.activeAlertsTable.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.activeAlertsTable.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.activeAlertsTable.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.activeAlertsTable.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.activeAlertsTable.setHorizontalHeaderItem(4, item)
         self.activeAlertsTable.horizontalHeader().setDefaultSectionSize(259)
         self.activeAlertsTable.verticalHeader().setVisible(False)
-        self.label_2 = QLabel(self.splitter)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setFont(font1)
-        self.label_2.setLayoutDirection(Qt.LeftToRight)
-        self.label_2.setAlignment(Qt.AlignCenter)
-        self.splitter.addWidget(self.label_2)
-        self.pastAlertsTable = QTableWidget(self.splitter)
-        if (self.pastAlertsTable.columnCount() < 4):
-            self.pastAlertsTable.setColumnCount(4)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        __qtablewidgetitem9.setFont(font);
-        self.pastAlertsTable.setHorizontalHeaderItem(0, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        __qtablewidgetitem10.setFont(font);
-        self.pastAlertsTable.setHorizontalHeaderItem(1, __qtablewidgetitem10)
-        __qtablewidgetitem11 = QTableWidgetItem()
-        __qtablewidgetitem11.setFont(font);
-        self.pastAlertsTable.setHorizontalHeaderItem(2, __qtablewidgetitem11)
-        __qtablewidgetitem12 = QTableWidgetItem()
-        __qtablewidgetitem12.setFont(font);
-        self.pastAlertsTable.setHorizontalHeaderItem(3, __qtablewidgetitem12)
-        self.pastAlertsTable.setObjectName(u"pastAlertsTable")
-        self.pastAlertsTable.setStyleSheet(u"QTableWidget{\n"
+        self.label_2 = QtWidgets.QLabel(self.splitter)
+        font = QtGui.QFont()
+        font.setPointSize(19)
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_2.setFont(font)
+        self.label_2.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.pastAlertsTable = QtWidgets.QTableWidget(self.splitter)
+        self.pastAlertsTable.setStyleSheet("QTableWidget{\n"
 "border: 3px outset black;\n"
 "}\n"
 "QTableWidget:bar{\n"
@@ -255,181 +268,180 @@ class Ui_TabsPage(object):
 "}\n"
 "QHeaderView {\n"
 "    border: 2px solid black; /* Adjust the thickness and color as needed */\n"
-"	border-top-style:null;\n"
-"	border-left-style:null;\n"
-"	border-right-style:null;\n"
+"    border-top-style:null;\n"
+"    border-left-style:null;\n"
+"    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
-"	color: black;\n"
-"	text-align: center;\n"
-"	background: rgba(128,128,128,60);\n"
+"    color: black;\n"
+"    text-align: center;\n"
+"    background: rgba(128,128,128,60);\n"
 "}\n"
 "")
-        self.pastAlertsTable.setSizeAdjustPolicy(QAbstractScrollArea.AdjustIgnored)
+        self.pastAlertsTable.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.pastAlertsTable.setAutoScroll(False)
         self.pastAlertsTable.setAlternatingRowColors(True)
         self.pastAlertsTable.setCornerButtonEnabled(False)
         self.pastAlertsTable.setRowCount(0)
-        self.splitter.addWidget(self.pastAlertsTable)
+        self.pastAlertsTable.setObjectName("pastAlertsTable")
+        self.pastAlertsTable.setColumnCount(4)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable.setHorizontalHeaderItem(2, item)
+        item = QtWidgets.QTableWidgetItem()
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        item.setFont(font)
+        self.pastAlertsTable.setHorizontalHeaderItem(3, item)
         self.pastAlertsTable.horizontalHeader().setDefaultSectionSize(322)
         self.pastAlertsTable.verticalHeader().setVisible(False)
         self.tabWidget.addTab(self.alerts, "")
-        self.action = QWidget()
-        self.action.setObjectName(u"action")
-        self.pastAlertsTable_2 = QTableWidget(self.action)
-        if (self.pastAlertsTable_2.columnCount() < 5):
-            self.pastAlertsTable_2.setColumnCount(5)
-        __qtablewidgetitem13 = QTableWidgetItem()
-        __qtablewidgetitem13.setFont(font);
-        self.pastAlertsTable_2.setHorizontalHeaderItem(0, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        __qtablewidgetitem14.setFont(font);
-        self.pastAlertsTable_2.setHorizontalHeaderItem(1, __qtablewidgetitem14)
-        __qtablewidgetitem15 = QTableWidgetItem()
-        __qtablewidgetitem15.setFont(font);
-        self.pastAlertsTable_2.setHorizontalHeaderItem(2, __qtablewidgetitem15)
-        __qtablewidgetitem16 = QTableWidgetItem()
-        __qtablewidgetitem16.setFont(font);
-        self.pastAlertsTable_2.setHorizontalHeaderItem(3, __qtablewidgetitem16)
-        __qtablewidgetitem17 = QTableWidgetItem()
-        __qtablewidgetitem17.setFont(font);
-        self.pastAlertsTable_2.setHorizontalHeaderItem(4, __qtablewidgetitem17)
-        self.pastAlertsTable_2.setObjectName(u"pastAlertsTable_2")
-        self.pastAlertsTable_2.setGeometry(QRect(0, 0, 1321, 691))
-        self.pastAlertsTable_2.setStyleSheet(u"QTableWidget{\n"
-"border: 3px outset black;\n"
-"}\n"
-"QTableWidget:bar{\n"
-"border: 3px outset black;\n"
-"}\n"
-"QHeaderView {\n"
-"    border: 2px solid black; /* Adjust the thickness and color as needed */\n"
-"	border-top-style:null;\n"
-"	border-left-style:null;\n"
-"	border-right-style:null;\n"
-"}\n"
-"QTableWidget::item {\n"
-"	color: black;\n"
-"	text-align: center;\n"
-"	background: rgba(128,128,128,60);\n"
-"}\n"
-"")
-        self.pastAlertsTable_2.setSizeAdjustPolicy(QAbstractScrollArea.AdjustIgnored)
-        self.pastAlertsTable_2.setAutoScroll(False)
-        self.pastAlertsTable_2.setAlternatingRowColors(True)
-        self.pastAlertsTable_2.setCornerButtonEnabled(False)
-        self.pastAlertsTable_2.setRowCount(0)
-        self.pastAlertsTable_2.horizontalHeader().setDefaultSectionSize(333)
-        self.pastAlertsTable_2.verticalHeader().setVisible(False)
+        self.action = QtWidgets.QWidget()
+        self.action.setObjectName("action")
+        self.textBrowser = QtWidgets.QTextBrowser(self.action)
+        self.textBrowser.setGeometry(QtCore.QRect(280, 20, 901, 191))
+        self.textBrowser.setStyleSheet("QTextBrowser{\n"
+"    background-color:green;\n"
+"    color: white;\n"
+"}")
+        self.textBrowser.setObjectName("textBrowser")
+        self.textBrowser_2 = QtWidgets.QTextBrowser(self.action)
+        self.textBrowser_2.setGeometry(QtCore.QRect(280, 230, 901, 191))
+        self.textBrowser_2.setStyleSheet("QTextBrowser{\n"
+"    background-color:rgb(255, 205, 0);\n"
+"    color: black;\n"
+"}")
+        self.textBrowser_2.setObjectName("textBrowser_2")
+        self.textBrowser_3 = QtWidgets.QTextBrowser(self.action)
+        self.textBrowser_3.setGeometry(QtCore.QRect(280, 440, 901, 201))
+        self.textBrowser_3.setStyleSheet("QTextBrowser{\n"
+"    background-color:rgb(185, 0, 0);\n"
+"    color: white;\n"
+"}")
+        self.textBrowser_3.setObjectName("textBrowser_3")
+        self.label_9 = QtWidgets.QLabel(self.action)
+        self.label_9.setGeometry(QtCore.QRect(280, 650, 901, 21))
+        self.label_9.setObjectName("label_9")
         self.tabWidget.addTab(self.action, "")
-        self.settings = QWidget()
-        self.settings.setObjectName(u"settings")
-        self.interfaceSelectionBox = QSpinBox(self.settings)
-        self.interfaceSelectionBox.setObjectName(u"interfaceSelectionBox")
-        self.interfaceSelectionBox.setGeometry(QRect(540, 260, 42, 22))
-        self.interfaceSelectionBox.setValue(user("interface"))
-        self.interfaceSelectionBox.valueChanged.connect(lambda value: userUpdate("interface", value))
-        self.label_3 = QLabel(self.settings)
-        self.label_3.setObjectName(u"label_3")
-        self.label_3.setGeometry(QRect(390, 260, 151, 21))
-        self.label_4 = QLabel(self.settings)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(510, 290, 71, 21))
-        self.listWidget = QListWidget(self.settings)
-        self.listWidget.setObjectName(u"listWidget")
-        self.listWidget.setGeometry(QRect(330, 60, 256, 192))
-        self.listWidget.setFrameShape(QFrame.Box)
-        self.listWidget.setFrameShadow(QFrame.Plain)
+        self.settings = QtWidgets.QWidget()
+        self.settings.setObjectName("settings")
+        self.interfaceSelectionBox = QtWidgets.QSpinBox(self.settings)
+        self.interfaceSelectionBox.setGeometry(QtCore.QRect(540, 260, 42, 22))
+        self.interfaceSelectionBox.setProperty("value", 4)
+        self.interfaceSelectionBox.setObjectName("interfaceSelectionBox")
+        self.label_3 = QtWidgets.QLabel(self.settings)
+        self.label_3.setGeometry(QtCore.QRect(390, 260, 151, 21))
+        self.label_3.setObjectName("label_3")
+        self.label_4 = QtWidgets.QLabel(self.settings)
+        self.label_4.setGeometry(QtCore.QRect(510, 290, 71, 21))
+        self.label_4.setObjectName("label_4")
+        self.listWidget = QtWidgets.QListWidget(self.settings)
+        self.listWidget.setGeometry(QtCore.QRect(330, 60, 256, 192))
+        self.listWidget.setFrameShape(QtWidgets.QFrame.Box)
+        self.listWidget.setFrameShadow(QtWidgets.QFrame.Plain)
         self.listWidget.setLineWidth(2)
-        self.frame_2 = QFrame(self.settings)
-        self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(830, 110, 141, 103))
-        self.frame_2.setStyleSheet(u"QFrame {\n"
+        self.listWidget.setObjectName("listWidget")
+        self.frame_2 = QtWidgets.QFrame(self.settings)
+        self.frame_2.setGeometry(QtCore.QRect(830, 110, 141, 103))
+        self.frame_2.setStyleSheet("QFrame {\n"
 "    background-color: white;\n"
 "}\n"
 "")
-        self.frame_2.setFrameShape(QFrame.Box)
-        self.frame_2.setFrameShadow(QFrame.Plain)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.Box)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame_2.setLineWidth(2)
-        self.gridLayout_4 = QGridLayout(self.frame_2)
-        self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.label_7 = QLabel(self.frame_2)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setStyleSheet(u"QLabel {\n"
+        self.frame_2.setObjectName("frame_2")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.frame_2)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.label_7 = QtWidgets.QLabel(self.frame_2)
+        self.label_7.setStyleSheet("QLabel {\n"
 "    font-weight: bold;\n"
 "    font-size: 10pt;\n"
 "    background-color: transparent;\n"
 "}\n"
 "")
-
+        self.label_7.setObjectName("label_7")
         self.gridLayout_4.addWidget(self.label_7, 0, 0, 1, 1)
-
-        self.frame_3 = QFrame(self.frame_2)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
-        self.gridLayout_3 = QGridLayout(self.frame_3)
-        self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.checkBox = QCheckBox(self.frame_3)
-        self.checkBox.setObjectName(u"checkBox")
-        self.checkBox.setStyleSheet(u"QCheckBox {\n"
+        self.frame_3 = QtWidgets.QFrame(self.frame_2)
+        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_3.setObjectName("frame_3")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.frame_3)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.checkBox = QtWidgets.QCheckBox(self.frame_3)
+        self.checkBox.setStyleSheet("QCheckBox {\n"
 "    font-weight: bold;\n"
-"	font-size: 10pt\n"
+"    font-size: 10pt\n"
 "\n"
 "}\n"
 "")
         self.checkBox.setChecked(True)
-
+        self.checkBox.setObjectName("checkBox")
         self.gridLayout_3.addWidget(self.checkBox, 0, 0, 1, 1)
-
-        self.checkBox_2 = QCheckBox(self.frame_3)
-        self.checkBox_2.setObjectName(u"checkBox_2")
-        self.checkBox_2.setStyleSheet(u"QCheckBox {\n"
+        self.checkBox_2 = QtWidgets.QCheckBox(self.frame_3)
+        self.checkBox_2.setStyleSheet("QCheckBox {\n"
 "    font-weight: bold;\n"
-"	font-size: 10pt;\n"
+"    font-size: 10pt;\n"
 "}\n"
 "")
-
+        self.checkBox_2.setObjectName("checkBox_2")
         self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
-
-        self.label_8 = QLabel(self.frame_3)
-        self.label_8.setObjectName(u"label_8")
-        self.label_8.setLayoutDirection(Qt.RightToLeft)
-        self.label_8.setStyleSheet(u"font-color: red;")
-        self.label_8.setAlignment(Qt.AlignCenter)
-
+        self.label_8 = QtWidgets.QLabel(self.frame_3)
+        self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_8.setStyleSheet("font-color: red;")
+        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setObjectName("label_8")
         self.gridLayout_3.addWidget(self.label_8, 1, 0, 1, 2)
-
-
         self.gridLayout_4.addWidget(self.frame_3, 1, 0, 1, 1)
-
-        self.label_5 = QLabel(self.settings)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setGeometry(QRect(370, 30, 171, 21))
-        self.label_5.setStyleSheet(u"QLabel {\n"
+        self.label_5 = QtWidgets.QLabel(self.settings)
+        self.label_5.setGeometry(QtCore.QRect(370, 30, 171, 21))
+        self.label_5.setStyleSheet("QLabel {\n"
 "    font-weight: bold;\n"
 "    font-size: 10pt;\n"
 "}\n"
 "")
-        self.label_6 = QLabel(self.settings)
-        self.label_6.setObjectName(u"label_6")
-        self.label_6.setGeometry(QRect(860, 90, 81, 16))
-        self.label_6.setStyleSheet(u"QLabel {\n"
+        self.label_5.setObjectName("label_5")
+        self.label_6 = QtWidgets.QLabel(self.settings)
+        self.label_6.setGeometry(QtCore.QRect(860, 90, 81, 16))
+        self.label_6.setStyleSheet("QLabel {\n"
 "    font-weight: bold;\n"
 "    font-size: 10pt;\n"
 "}\n"
 "")
+        self.label_6.setObjectName("label_6")
+        self.textBrowser_4 = QtWidgets.QTextBrowser(self.settings)
+        self.textBrowser_4.setGeometry(QtCore.QRect(490, 360, 441, 131))
+        self.textBrowser_4.setObjectName("textBrowser_4")
         self.tabWidget.addTab(self.settings, "")
-        self.dashboardButton = QPushButton(AdvancedPage)
-        self.dashboardButton.setObjectName(u"dashboardButton")
-        self.dashboardButton.setGeometry(QRect(1340, 820, 131, 51))
-        font2 = QFont()
-        font2.setPointSize(8)
-        font2.setBold(True)
-        font2.setItalic(False)
-        font2.setWeight(75)
-        self.dashboardButton.setFont(font2)
-        self.dashboardButton.setStyleSheet(u"QPushButton{\n"
+        self.dashboardButton = QtWidgets.QPushButton(AdvancedPage)
+        self.dashboardButton.setGeometry(QtCore.QRect(1340, 820, 131, 51))
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.dashboardButton.setFont(font)
+        self.dashboardButton.setStyleSheet("QPushButton{\n"
 "border: 2px outset black;\n"
 "background:red;\n"
 "color: white;\n"
@@ -443,68 +455,110 @@ class Ui_TabsPage(object):
 "color: black;\n"
 "font: bold 8pt;\n"
 "}")
+        self.dashboardButton.setObjectName("dashboardButton")
 
         self.retranslateUi(AdvancedPage)
-
         self.tabWidget.setCurrentIndex(0)
-
-
-        QMetaObject.connectSlotsByName(AdvancedPage)
-    # setupUi
+        QtCore.QMetaObject.connectSlotsByName(AdvancedPage)
 
     def retranslateUi(self, AdvancedPage):
-        AdvancedPage.setWindowTitle(QCoreApplication.translate("AdvancedPage", u"Form", None))
-        ___qtablewidgetitem = self.logTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("AdvancedPage", u"Date", None));
-        ___qtablewidgetitem1 = self.logTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("AdvancedPage", u"Time", None));
-        ___qtablewidgetitem2 = self.logTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("AdvancedPage", u"Packet", None));
-        ___qtablewidgetitem3 = self.logTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("AdvancedPage", u"Details", None));
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.log), QCoreApplication.translate("AdvancedPage", u"Logs", None))
-        self.label.setText(QCoreApplication.translate("AdvancedPage", u"Active Alerts", None))
-        ___qtablewidgetitem4 = self.activeAlertsTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("AdvancedPage", u"Date/Time", None));
-        ___qtablewidgetitem5 = self.activeAlertsTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("AdvancedPage", u"Source IP", None));
-        ___qtablewidgetitem6 = self.activeAlertsTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("AdvancedPage", u"Source Port", None));
-        ___qtablewidgetitem7 = self.activeAlertsTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("AdvancedPage", u"Destination Port", None));
-        ___qtablewidgetitem8 = self.activeAlertsTable.horizontalHeaderItem(4)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("AdvancedPage", u"Move To Past", None));
-        self.label_2.setText(QCoreApplication.translate("AdvancedPage", u"Past Alerts", None))
-        ___qtablewidgetitem9 = self.pastAlertsTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("AdvancedPage", u"Date/Time", None));
-        ___qtablewidgetitem10 = self.pastAlertsTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("AdvancedPage", u"Source IP", None));
-        ___qtablewidgetitem11 = self.pastAlertsTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("AdvancedPage", u"Source Port", None));
-        ___qtablewidgetitem12 = self.pastAlertsTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("AdvancedPage", u"Destination Port", None));
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.alerts), QCoreApplication.translate("AdvancedPage", u"Alerts", None))
-        ___qtablewidgetitem13 = self.pastAlertsTable_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("AdvancedPage", u"Date", None));
-        ___qtablewidgetitem14 = self.pastAlertsTable_2.horizontalHeaderItem(1)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("AdvancedPage", u"Source IP", None));
-        ___qtablewidgetitem15 = self.pastAlertsTable_2.horizontalHeaderItem(2)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("AdvancedPage", u"Source Port", None));
-        ___qtablewidgetitem16 = self.pastAlertsTable_2.horizontalHeaderItem(3)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("AdvancedPage", u"Destination Port", None));
-        ___qtablewidgetitem17 = self.pastAlertsTable_2.horizontalHeaderItem(4)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("AdvancedPage", u"Suggested Actions", None));
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), QCoreApplication.translate("AdvancedPage", u"Actions", None))
-        self.label_3.setText(QCoreApplication.translate("AdvancedPage", u"<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>", None))
-        self.label_4.setText(QCoreApplication.translate("AdvancedPage", u"*Default Is 4*", None))
-        self.label_7.setText(QCoreApplication.translate("AdvancedPage", u"Allow Notifications", None))
-        self.checkBox.setText(QCoreApplication.translate("AdvancedPage", u"Yes", None))
-        self.checkBox_2.setText(QCoreApplication.translate("AdvancedPage", u"No", None))
-        self.label_8.setText(QCoreApplication.translate("AdvancedPage", u"*Default is Yes*", None))
-        self.label_5.setText(QCoreApplication.translate("AdvancedPage", u"Scanning Interface Option", None))
-        self.label_6.setText(QCoreApplication.translate("AdvancedPage", u"Notifications", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), QCoreApplication.translate("AdvancedPage", u"Settings", None))
-        self.dashboardButton.setText(QCoreApplication.translate("AdvancedPage", u"Back To Dashboard", None))
-    # retranslateUi
+        _translate = QtCore.QCoreApplication.translate
+        AdvancedPage.setWindowTitle(_translate("AdvancedPage", "Form"))
+        item = self.logTable.horizontalHeaderItem(0)
+        item.setText(_translate("AdvancedPage", "Date"))
+        item = self.logTable.horizontalHeaderItem(1)
+        item.setText(_translate("AdvancedPage", "Time"))
+        item = self.logTable.horizontalHeaderItem(2)
+        item.setText(_translate("AdvancedPage", "Packet"))
+        item = self.logTable.horizontalHeaderItem(3)
+        item.setText(_translate("AdvancedPage", "Details"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.log), _translate("AdvancedPage", "Logs"))
+        self.label.setText(_translate("AdvancedPage", "Active Alerts"))
+        item = self.activeAlertsTable.horizontalHeaderItem(0)
+        item.setText(_translate("AdvancedPage", "Date/Time"))
+        item = self.activeAlertsTable.horizontalHeaderItem(1)
+        item.setText(_translate("AdvancedPage", "Source IP"))
+        item = self.activeAlertsTable.horizontalHeaderItem(2)
+        item.setText(_translate("AdvancedPage", "Source Port"))
+        item = self.activeAlertsTable.horizontalHeaderItem(3)
+        item.setText(_translate("AdvancedPage", "Destination Port"))
+        item = self.activeAlertsTable.horizontalHeaderItem(4)
+        item.setText(_translate("AdvancedPage", "Move To Past"))
+        self.label_2.setText(_translate("AdvancedPage", "Past Alerts"))
+        item = self.pastAlertsTable.horizontalHeaderItem(0)
+        item.setText(_translate("AdvancedPage", "Date/Time"))
+        item = self.pastAlertsTable.horizontalHeaderItem(1)
+        item.setText(_translate("AdvancedPage", "Source IP"))
+        item = self.pastAlertsTable.horizontalHeaderItem(2)
+        item.setText(_translate("AdvancedPage", "Source Port"))
+        item = self.pastAlertsTable.horizontalHeaderItem(3)
+        item.setText(_translate("AdvancedPage", "Destination Port"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.alerts), _translate("AdvancedPage", "Alerts"))
+        self.textBrowser.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">If you feel the threat is LOW Level:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">        Inital Investigation:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Analyze the network traffic or system logs associated with the alert.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Check for any signs of suspicious activity or anomalies.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Consult additional security tools or resources if necessary.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">        </span><span style=\" font-size:11pt; font-weight:600;\">Response:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">    </span><span style=\" font-size:11pt;\">If the alert is confirmed to be a false positive, diregard the alert and move it to the past alerts table.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    If there\'s evidence of a security threat, implement any necessary mitigations or countermeasures to address the threat.</span></p></body></html>"))
+        self.textBrowser_2.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">If you feel the threat is MEDIUM Level:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">        Inital Investigation:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Review the alert details promptly to understand the potential threat.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">        </span><span style=\" font-size:11pt; font-weight:600;\">Response:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Conduct a thorough analysis of the network or system logs associated with the alert.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Look for indicators of compromise (IOCs) and any potential security breaches.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Take immediate action to contain the threat and prevent further damage.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Isolate affected systems and block malicious IP addresses.</span></p></body></html>"))
+        self.textBrowser_3.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">If you feel the threat is HIGH Level:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">        Immediate Response:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Contain the threat and prevent further damage or compromise.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Isolate affected systems or segments of the network to stop the spread of the attack.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Conduct a detailed forensic analysis of the affected systems to understand the extent of the breach.</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:11pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">        </span><span style=\" font-size:11pt; font-weight:600;\">Recovery:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Work towards restoring normal operations while ensuring that the security posture is strengthened to prevent similar </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    incidents in the future.</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">    Implement comprehensive security measures.</span></p></body></html>"))
+        self.label_9.setText(_translate("AdvancedPage", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-style:italic;\">**Please read the Disclaimer on the settings page.**</span></p></body></html>"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("AdvancedPage", "Actions"))
+        self.label_3.setText(_translate("AdvancedPage", "<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>"))
+        self.label_4.setText(_translate("AdvancedPage", "*Defaule Is 4*"))
+        self.label_7.setText(_translate("AdvancedPage", "Allow Notifications"))
+        self.checkBox.setText(_translate("AdvancedPage", "Yes"))
+        self.checkBox_2.setText(_translate("AdvancedPage", "No"))
+        self.label_8.setText(_translate("AdvancedPage", "*Default is Yes*"))
+        self.label_5.setText(_translate("AdvancedPage", "Scanning Interface Option"))
+        self.label_6.setText(_translate("AdvancedPage", "Notifications"))
+        self.textBrowser_4.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt; font-weight:600;\">Disclaimer: </span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">We operate as an Intrusion Detection System (IDS) and do not possess decision-making capabilities on behalf of users. Our primary function is to detect and alert users about potential security breaches or anomalies within the system. While we provide valuable insights, it is ultimately the responsibility of users to interpret and act upon the information provided by the IDS.</span></p></body></html>"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.settings), _translate("AdvancedPage", "Settings"))
+        self.dashboardButton.setText(_translate("AdvancedPage", "Back To Dashboard"))
 
 
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    AdvancedPage = QtWidgets.QWidget()
+    ui = Ui_AdvancedPage()
+    ui.setupUi(AdvancedPage)
+    AdvancedPage.show()
+    sys.exit(app.exec_())
