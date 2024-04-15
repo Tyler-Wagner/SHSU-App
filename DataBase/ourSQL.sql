@@ -19,6 +19,17 @@ CREATE TABLE pastAlerts(
     destP VARChAR
 );
 
+CREATE TABLE curretnAlertsCount(
+    ID INTEGER PRIMARY KEY NOT NULL,
+    count INTEGER
+);
+
+DROP Table pastAlertsCounter;
+
+INSERT INTO curretnAlertsCount (ID, count) VALUES(1, 0);
+
+UPDATE pastAlertsCounter SET count=5 WHERE ID=1;
+
 UPDATE settingsInfo 
 SET interface = 4, 
     notifications = 'T'
