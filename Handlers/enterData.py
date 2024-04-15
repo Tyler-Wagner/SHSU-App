@@ -4,6 +4,8 @@ from PyQt5.QtCore import pyqtSignal, Qt, QObject
 from datetime import datetime
 from Handlers.dbHandle import updatePastAlerts as dbhandeler
 
+counter = 0
+
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
@@ -62,36 +64,42 @@ class EnterDataHandler(QObject):
         self.tabs_ui.logTable.setItem(0, 3, details_item)
 
     def tableWidgetRow(self, sourceIP, sourceP, destP):
+        global counter
         # print(f"Received log data: {log_entry}") #for Debug
-        
-        current_datetime = datetime.now()
-        dtEntry = current_datetime.strftime("%H:%M:%S")
+        if counter != 100:
+            counter += 1
+        else:
+            current_datetime = datetime.now()
+            dtEntry = current_datetime.strftime("%H:%M:%S")
 
-        self.dash_ui.tableWidget.insertRow(0)
+            self.dash_ui.tableWidget.insertRow(0)
 
-        # Add items to each cell in the new row
-        dateTime_item = QTableWidgetItem(dtEntry)
-        sIP_item = QTableWidgetItem(sourceIP)
-        sP_item = QTableWidgetItem(str(sourceP))
-        dPort_item = QTableWidgetItem(str(destP))
-         
-        print(sourceIP)
-         
-        # Set font and alignment for each item
-        font = QFont()
-        font.setPointSize(14)
-        font.setBold(True)
+            # Add items to each cell in the new row
+            dateTime_item = QTableWidgetItem(dtEntry)
+            sIP_item = QTableWidgetItem(sourceIP)
+            if sourceP == -1 or destP == -1:
+                sP_item = QTableWidgetItem("N/A")
+                dPort_item = QTableWidgetItem("N/A")
+            else:
+                sP_item = QTableWidgetItem(str(sourceP))
+                dPort_item = QTableWidgetItem(str(destP))
+            
+            # Set font and alignment for each item
+            font = QFont()
+            font.setPointSize(14)
+            font.setBold(True)
 
-        for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
-            item.setFont(font)
-            item.setTextAlignment(Qt.AlignCenter)
-            item.setForeground(QColor('red'))
+            for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+                item.setFont(font)
+                item.setTextAlignment(Qt.AlignCenter)
+                item.setForeground(QColor('red'))
 
-        # Set items in the new row
-        self.dash_ui.tableWidget.setItem(0, 0, dateTime_item)
-        self.dash_ui.tableWidget.setItem(0, 1, sIP_item)
-        self.dash_ui.tableWidget.setItem(0, 2, sP_item)
-        self.dash_ui.tableWidget.setItem(0, 3, dPort_item)
+            # Set items in the new row
+            self.dash_ui.tableWidget.setItem(0, 0, dateTime_item)
+            self.dash_ui.tableWidget.setItem(0, 1, sIP_item)
+            self.dash_ui.tableWidget.setItem(0, 2, sP_item)
+            self.dash_ui.tableWidget.setItem(0, 3, dPort_item)
+            counter = 1
         
 
     def add_table_row_cAlerts(self, sourceIP, sourceP, destP):
