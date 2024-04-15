@@ -1,9 +1,12 @@
+import sys
+import os
 import psutil
 import scapy.all as scapy
 from Backend.tcp_handler import CheckTCP
 from Backend.udp_handler import CheckUDP
-from Backend.arp_handler import CheckARP
 from Backend.icmp_handler import CheckICMP
+from Backend.arp_handler import CheckARP
+from Handlers.sendNotification import sendnotification
 
 def list_network_devices():
     # Get a list of all network devices using psutil
@@ -29,7 +32,7 @@ def process_packet(packet, data_handler):
             dst_port = packet[scapy.TCP].dport
             tcp_packet_check = CheckTCP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             tcp_packet_check.handle_tcp_packet() # calls instance
-            data_handler.add_log_row("UDP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
+            data_handler.add_log_row("TCP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
 
 
         elif packet.haslayer(scapy.UDP):
@@ -45,6 +48,7 @@ def process_packet(packet, data_handler):
             data_handler.add_log_row("ICMP", f"Packet: {src_ip} -> {dst_ip}") # ICMP does not have ports
             # Call any other processing function for ICMP packets here if needed
             ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
+            data_handler.add_log_row("ARP", f"sIP: {src_ip} dIP: {dst_ip} sMAC: {src_mac}")
             ICMP_packet_check.handle_icmp_packet() # calls instance
 
 
@@ -61,21 +65,3 @@ def process_packet(packet, data_handler):
 def capture_packets(interface, data_handler):
     print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))
-
-def main():
-    list_network_devices()
-
-    # Prompt the user to choose a network device
-    choice = int(input("Enter the number of the interface you want to capture packets on: "))
-
-    # Get a list of all network devices again
-    devices = list(psutil.net_if_addrs().keys())
-
-    if 1 <= choice <= len(devices):
-        selected_interface = devices[choice - 1]
-        capture_packets(selected_interface)
-    else:
-        print("Invalid choice. Please choose a valid interface.")
-
-if __name__ == "__main__":
-    main()
