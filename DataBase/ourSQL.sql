@@ -19,28 +19,7 @@ CREATE TABLE pastAlerts(
     destP VARChAR
 );
 
-CREATE TRIGGER prevent_delete
-BEFORE DELETE ON pastAlerts
-FOR EACH ROW
-WHEN OLD.id = 1
-BEGIN
-    SELECT RAISE(ABORT, 'Deletion is not allowed for this row');
-END;
--- DROP TABLE ipInfo;
--- DROP TABLE settingsInfo;
--- DROP TABLE pastAlerts;
-
-INSERT INTO settingsInfo (id, interface, notifications) VALUES (1, 4,'T'); 
-
--- ############## DEMO ############## --
--- UPDATE settingsInfo SET interface=4;
--- UPDATE settingsInfo SET notifications='T';
--- SELECT * FROM settingsInfo;
--- ##############      ############## --
-
--- Here I have made the DEFAULT settings entery for each user.
-
--- INSERT INTO settingsInfo(id, interface, notifications) VALUES (1, 2, 'T');
-
--- DELETE FROM settingsInfo; --clear table
---  SELECT * FROM settingsInfo;
+UPDATE settingsInfo 
+SET interface = 4, 
+    notifications = 'T'
+WHERE id = 1;

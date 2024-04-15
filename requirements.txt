@@ -1,8 +1,7 @@
-pyqt5
-PyQt5Designer
-pyzmp
+PyQt5
 scapy
 psutil
-plyer
 requests
 numpy
+python-dotenv
+matplotlib

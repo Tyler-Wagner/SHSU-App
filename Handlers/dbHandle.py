@@ -15,7 +15,6 @@ def importUserSettings(info):
     row = cursor.fetchone()
     if row:
         value = row[0]
-        print("User 1 Data Info:", value)
         if(value=="T"):
             value = True
         elif(value=="F"):
@@ -27,13 +26,6 @@ def importUserSettings(info):
     conn.close()
     return value
 
-# Table Info
-# CREATE TABLE settingsInfo(
-#     id INTEGER NOT NULL PRIMARY KEY,
-#     interface INTEGER, 
-#     notifications VARCHAR(1)
-# );
-
 def updateUserSettings(column, value):
     db_path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
     conn = sqlite3.connect(db_path)
@@ -43,14 +35,6 @@ def updateUserSettings(column, value):
     conn.commit()
     cursor.close()
     conn.close()
-
-# Table Info
-# CREATE TABLE settingsInfo(
-#     id INTEGER NOT NULL PRIMARY KEY,
-#     interface INTEGER, 
-#     notifications VARCHAR(1)
-# );
-
 
 def updatePastAlerts(date, sourceIP, sourceP, destP):
     conn = sqlite3.connect(path)
@@ -75,24 +59,3 @@ def importPastAlerts():
     conn.close()
     
     return rows
-
-# Table Info
-# CREATE TABLE pastAlerts(
-#     date INTEGER NOT NULL PRIMARY KEY,
-#     sourcePort VARCHAR(15),
-#     sourceIP VARCHAR(15),
-#     destP INTEGER
-# );
-
-
-
-################################################################################################
-# Testing
-# def main():
-#     value = "notifications"
-#     value = "interface"
-#     interface = importUserSettings(value)
-#     print(f'Interface: {interface}')
-    
-# if __name__ == "__main__":
-#     main()
