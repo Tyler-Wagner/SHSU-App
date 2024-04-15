@@ -3,3 +3,5 @@ scapy
 psutil
 requests
 numpy
+python-dotenv
+matplotlib
