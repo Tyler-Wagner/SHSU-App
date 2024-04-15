@@ -3,8 +3,11 @@ from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import pyqtSignal, Qt, QObject
 from datetime import datetime
 from Handlers.dbHandle import updatePastAlerts as dbhandeler
+from Handlers.dbHandle import updateCurrentAlertsCount
+from Handlers.dbHandle import importPastAlertsCount
 
 counter = 0
+curentThreats = 0;
 
 # Update the add_table_row method in EnterDataHandler
 class EnterDataHandler(QObject):
@@ -12,7 +15,8 @@ class EnterDataHandler(QObject):
     pAlerts_row_added = pyqtSignal(str, str, int, str)
     cAlerts_row_added = pyqtSignal(str, int, int)
     tableWidgetle_row_added = pyqtSignal(str, int, int)
-
+    pastcount_updated = pyqtSignal(int)
+    currentCount_updated=pyqtSignal(int)
 
     def __init__(self, dash_ui, tabs_ui, parent=None):
         super().__init__(parent)
@@ -31,6 +35,7 @@ class EnterDataHandler(QObject):
     def add_current_alerts_row(self, sourceIP, sourceP, destP):
         self.cAlerts_row_added.emit(sourceIP, sourceP, destP)
 
+    #LOG TABLE
     def add_table_row(self, packet, details):
         
         # print(f"Received log data: {log_entry}") #for Debug
@@ -63,6 +68,7 @@ class EnterDataHandler(QObject):
         self.tabs_ui.logTable.setItem(0, 2, packet_item)
         self.tabs_ui.logTable.setItem(0, 3, details_item)
 
+    #DASHBOARD TABLE
     def tableWidgetRow(self, sourceIP, sourceP, destP):
         global counter
         # print(f"Received log data: {log_entry}") #for Debug
@@ -100,11 +106,18 @@ class EnterDataHandler(QObject):
             self.dash_ui.tableWidget.setItem(0, 2, sP_item)
             self.dash_ui.tableWidget.setItem(0, 3, dPort_item)
             counter = 1
-        
-
+       
+    #CURRENT ALERTS TABLE    
     def add_table_row_cAlerts(self, sourceIP, sourceP, destP):
-        # print(f"Received log data: {log_entry}") #for Debug
+
+        #UPDATE DASH COUNTERS
+        global curentThreats
+        curentThreats+=1
+        updateCurrentAlertsCount(curentThreats)
         
+        self.currentCount_updated.emit(curentThreats) 
+        
+        #UPDATE TABLE
         current_datetime = datetime.now()
         dtEntry = current_datetime.strftime("%Y-%m-%d/%H:%M:%S")
 
@@ -137,7 +150,17 @@ class EnterDataHandler(QObject):
         button.clicked.connect(lambda: self.add_table_row_pAlerts(dtEntry, sourceIP, str(sourceP), str(destP)))
         self.tabs_ui.activeAlertsTable.setCellWidget(0, 4, button)
 
+    #PAST ALERTS TABLE
     def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
+        #UPDATE DASH COUNTERS
+        global curentThreats
+        curentThreats-=1
+        updateCurrentAlertsCount(curentThreats)
+        
+        self.pastcount_updated.emit(importPastAlertsCount())
+        self.currentCount_updated.emit(curentThreats)
+    
+        #UPDATE PAST ALERTS DB
         dbhandeler(date, sourceIP, sourceP, destP)
         
         #Finding and removeing the Row in cAlerts Table
@@ -171,8 +194,8 @@ class EnterDataHandler(QObject):
         self.tabs_ui.pastAlertsTable.setItem(0, 2, sP_item)
         self.tabs_ui.pastAlertsTable.setItem(0, 3, dPort_item)
     
+    #LOAD PASTALERTS ON START OF PROGRAM
     def add_table_row_pAlerts_ONSTART(self, date, sourceIP, sourceP, destP):
-        # dbhandeler(date, sourceIP, sourceP, destP)
         
         #Finding and removeing the Row in cAlerts Table
         row_count = self.tabs_ui.activeAlertsTable.rowCount()

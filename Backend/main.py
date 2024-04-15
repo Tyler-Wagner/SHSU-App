@@ -66,5 +66,11 @@ def process_packet(packet, data_handler):
 
 # Modify the call to process_packet in capture_packets
 def capture_packets(interface, data_handler):
+    
+    #### TEST ATTACK########################################
+    data_handler.add_current_alerts_row('123456789', 22,22)
+    sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
+    #### TEST ATTACK########################################
+    
     print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))

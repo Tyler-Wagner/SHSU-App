@@ -7,7 +7,7 @@ def sendnotification(title, message):
     if userSettings:
         notification.notify(
             title=title,
-            message=message,
+            message=message+"\nPLEASE VIEW THE ALERTS PAGE!!",
             timeout=10  # Display duration in seconds
         )
     else:

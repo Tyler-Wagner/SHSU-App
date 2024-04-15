@@ -25,6 +25,8 @@ data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the
 data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # connects to the Past Alerts Table
 data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
 data_handler.tableWidgetle_row_added.connect(data_handler.tableWidgetRow)
+data_handler.pastcount_updated.connect(Dash_ui.update_past_alerts_count)
+data_handler.currentCount_updated.connect(Dash_ui.update_current_alerts_count)
 
 real_time_graph = RealTimeGraph()
 real_time_graph.setFixedSize(1381, 471)
