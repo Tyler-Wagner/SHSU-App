@@ -66,8 +66,8 @@ def process_packet(packet, data_handler):
 def capture_packets(interface, data_handler):
     print(f"\nCapturing packets on {interface}...\n")
     #TEST ATTACK##############################################################################################################
-    # data_handler.add_current_alerts_row("1234556789",22,22)
-    #sendnotification("Attack Detected", f"Please see ALerts Page for the following attack\nIP: 1234556789 SrcP: 22 dstP: 22")
+    data_handler.add_current_alerts_row("1234556789",22,22)
+    sendnotification("Attack Detected", f"Please see ALerts Page for the following attack\nIP: 1234556789 SrcP: 22 dstP: 22")
     ##########################################################################################################################
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))
 

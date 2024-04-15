@@ -133,14 +133,14 @@ class EnterDataHandler(QObject):
         dbhandeler(date, sourceIP, sourceP, destP)
         
         #Finding and removeing the Row in cAlerts Table
-        row_count = self.ui.activeAlertsTable.rowCount()
+        row_count = self.tabs_ui.activeAlertsTable.rowCount()
         for i in range(row_count):
             if self.tabs_ui.activeAlertsTable.item(i, 0).text() == date:
                 # Remove the row from CAlerts
                 self.tabs_ui.activeAlertsTable.removeRow(i)
                 break
         
-        self.ui.pastAlertsTable.insertRow(0)
+        self.tabs_ui.pastAlertsTable.insertRow(0)
 
         # Add items to each cell in the new row
         dateTime_item = QTableWidgetItem(date)
