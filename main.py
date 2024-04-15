@@ -57,7 +57,7 @@ def process_packet(packet, data_handler):
         dst_ip = packet[scapy.ARP].pdst
         src_mac = packet[scapy.ARP].hwsrc
         dst_mac = packet[scapy.ARP].hwdst
-        ARP_packet_check = CheckARP(packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
+        ARP_packet_check = CheckARP(data_handler, packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
         data_handler.add_log_row("ARP", f"{src_ip}:{src_port} -> {dst_ip}:{dst_port}")
         # data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)# sends to data handler
 
