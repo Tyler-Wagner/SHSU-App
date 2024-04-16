@@ -16,6 +16,7 @@ class AbuseIPDBClient:
         self.base_url = "https://api.abuseipdb.com/api/v2"
 
     def query_ip(self, ip_address):
+        api_couter = 1000
         headers = {
             "Key": self.api_key,
             "Accept": "application/json"
@@ -25,7 +26,9 @@ class AbuseIPDBClient:
         url = self.base_url + endpoint
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            return response.json()
+            #subtract the amount of api tokens we have left
+            api_couter = api_couter - 1
+            return response.json(), api_couter
         else:
             print(f"Error querying IP: {response.status_code}")
             return None
