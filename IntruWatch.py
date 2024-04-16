@@ -6,9 +6,10 @@ from PyQt5.QtCore import *
 from Frontend.Ui_Dashboard import Ui_Dashboard, RealTimeGraph
 from Frontend.Ui_Tabspage import Ui_TabsPage
 from Handlers.enterData import EnterDataHandler
-from Backend.main import list_network_devices, capture_packets
+from Backend.main import capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
+from Handlers.sendNotification import sendnotification
 
 app = QApplication([])
 
@@ -68,7 +69,7 @@ def list_network_devices():
     devices = psutil.net_if_addrs()
     device_list = []
     i=1
-    for name, addresses in devices.items():
+    for name in devices.items():
         device_list.append(f"{i}: {name}")
         i+=1
     return device_list
@@ -94,7 +95,6 @@ def showTabs():
 def main():
     DashPage.show()
     data_thread = DataEntryThread(data_handler)
-    data_thread.start()
     advanced_button = DashPage.findChild(QPushButton, "pushButton")
     dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
     advanced_button.clicked.connect(lambda: showTabs())
@@ -110,7 +110,11 @@ def main():
         item.setFont(font)
         tabs_ui.listWidget.addItem(item)
     loadPastAlerts()
-    
+    data_thread.start()
+    #### TEST ATTACK########################################
+    data_handler.add_current_alerts_row('123456789', 22,22)
+    sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
+    #### TEST ATTACK########################################
     app.exec_()
 
 if __name__ == "__main__":

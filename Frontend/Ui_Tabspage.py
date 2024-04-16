@@ -1,5 +1,4 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
 from Handlers.dbHandle import importUserSettings as getUser
 from Handlers.dbHandle import updateUserSettings as setUser
 

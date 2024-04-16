@@ -1,23 +1,19 @@
-import sys
-import os
-import psutil
 import scapy.all as scapy
 from Backend.tcp_handler import CheckTCP
 from Backend.udp_handler import CheckUDP
 from Backend.icmp_handler import CheckICMP
 from Backend.arp_handler import CheckARP
-from Handlers.sendNotification import sendnotification
 
-def list_network_devices():
-    # Get a list of all network devices using psutil
-    devices = psutil.net_if_addrs()
+# def list_network_devices():
+#     # Get a list of all network devices using psutil
+#     devices = psutil.net_if_addrs()
     
-    print("Network Devices:")
-    for index, (name, addresses) in enumerate(devices.items()):
-        print(f"{index + 1}. {name}")
-        print("   Addresses:")
-        for addr in addresses:
-            print(f"      {addr.family.name}: {addr.address}")
+#     print("Network Devices:")
+#     for index, (name, addresses) in enumerate(devices.items()):
+#         print(f"{index + 1}. {name}")
+#         print("   Addresses:")
+#         for addr in addresses:
+#             print(f"      {addr.family.name}: {addr.address}")
     
 
 def process_packet(packet, data_handler):
@@ -66,11 +62,6 @@ def process_packet(packet, data_handler):
 
 # Modify the call to process_packet in capture_packets
 def capture_packets(interface, data_handler):
-    
-    #### TEST ATTACK########################################
-    data_handler.add_current_alerts_row('123456789', 22,22)
-    sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
-    #### TEST ATTACK########################################
     
     print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))
