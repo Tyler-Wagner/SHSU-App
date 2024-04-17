@@ -20,6 +20,9 @@ class Ui_Dashboard(object):
         if Dashboard.objectName():
             Dashboard.setObjectName(u"Dashboard")
         Dashboard.resize(1600, 900)
+        Dashboard.setFixedSize(QSize(1600, 900))
+        #Dashboard.setMinSize(QSize(1600, 900))
+        #Dashboard.setMaxSize(QSize(1600, 900))
         Dashboard.setAutoFillBackground(False)
         Dashboard.setStyleSheet(u"color:rgb(0,0,0);")
         Dashboard.setAnimated(True)

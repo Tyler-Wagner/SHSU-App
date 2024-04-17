@@ -7,6 +7,7 @@ class Ui_TabsPage(object):
     def setupUi(self, AdvancedPage):
         AdvancedPage.setObjectName("AdvancedPage")
         AdvancedPage.resize(1600, 900)
+        AdvancedPage.setFixedSize(QtCore.QSize(1600, 900))
         self.tabWidget = QtWidgets.QTabWidget(AdvancedPage)
         self.tabWidget.setGeometry(QtCore.QRect(135, 45, 1321, 721))
         font = QtGui.QFont()
