@@ -156,13 +156,12 @@ class EnterDataHandler(QObject):
         global curentThreats
         curentThreats-=1
         updateCurrentAlertsCount(curentThreats)
-        
-        self.pastcount_updated.emit(importPastAlertsCount())
-        self.currentCount_updated.emit(curentThreats)
-    
+
         #UPDATE PAST ALERTS DB
         dbhandeler(date, sourceIP, sourceP, destP)
         
+        self.pastcount_updated.emit(importPastAlertsCount())
+        self.currentCount_updated.emit(curentThreats)
         #Finding and removeing the Row in cAlerts Table
         row_count = self.tabs_ui.activeAlertsTable.rowCount()
         for i in range(row_count):
