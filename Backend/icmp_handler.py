@@ -14,7 +14,7 @@ class CheckICMP():
             icmp_layer = self.packet[scapy.ICMP]
 
             #displaying information to the CONSOLE
-            print(f"ICMP: {self.src_ip} -> {self.dst_ip}")
+            # print(f"ICMP: {self.src_ip} -> {self.dst_ip}")
 
             
 

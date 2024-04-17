@@ -74,5 +74,5 @@ def process_packet(packet, data_handler):
 # Modify the call to process_packet in capture_packets
 def capture_packets(interface, data_handler):
     
-    print(f"\nCapturing packets on {interface}...\n")
+    # print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))

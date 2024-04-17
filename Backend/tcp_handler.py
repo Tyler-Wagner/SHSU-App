@@ -25,10 +25,10 @@ class CheckTCP:
             
 
             #displaying information to the CONSOLE
-            print(f"TCP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
-            print(f"Sequence Number: {seq_number}")
-            print(f"Acknowledgement Number: {ack_number}")
-            print(f"Flags: {flags}")
+            # print(f"TCP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
+            # print(f"Sequence Number: {seq_number}")
+            # print(f"Acknowledgement Number: {ack_number}")
+            # print(f"Flags: {flags}")
 
         else:
             print("Not seeing TCP")
@@ -65,6 +65,8 @@ class CheckTCP:
                 n_flag = 'SYNACK'
             case 'RA':
                 n_flag = 'RSTACK'
+            case 'FPA':
+                n_flag = 'FINPSHACK'
             case _:
                 print(f"TCP flag, {raw_flag} not implemented yet")
         return n_flag

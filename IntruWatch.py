@@ -114,7 +114,7 @@ def main():
     loadPastAlerts()
     data_thread.start()
     #### TEST ATTACK########################################
-    data_handler.add_current_alerts_row('123456789', 22,22)
+    data_handler.add_current_alerts_row('104.250.49.205', 22,22)
     sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
     #### TEST ATTACK########################################
     app.exec_()
