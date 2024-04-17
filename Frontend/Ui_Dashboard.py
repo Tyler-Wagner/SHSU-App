@@ -1,6 +1,6 @@
 import sys
+import os
 import matplotlib.pyplot as plt
-from Backend.arp_handler import ARPcount
 from Backend.icmp_handler import ICMPcount
 from Backend.tcp_handler import TCPcount
 from Backend.udp_handler import UDPcount
@@ -196,11 +196,11 @@ class RealTimeGraph(QWidget):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
         self.TCP_data.append(TCPcount)
-        print(TCPcount)
+        #print(TCPcount)
         self.UDP_data.append(UDPcount)
-        print(UDPcount)
+        #print(UDPcount)
         self.ICMP_data.append(ICMPcount)
-        print(ICMPcount)
+        #print(ICMPcount)
         
         
 
