@@ -21,7 +21,7 @@ class Ui_Dashboard(object):
             Dashboard.setObjectName(u"Dashboard")
         Dashboard.resize(1600, 900)
         Dashboard.setAutoFillBackground(False)
-        Dashboard.setStyleSheet(u"color:rgb(255,0,0);")
+        Dashboard.setStyleSheet(u"color:rgb(0,0,0);")
         Dashboard.setAnimated(True)
         self.centralwidget = QWidget(Dashboard)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -36,7 +36,7 @@ class Ui_Dashboard(object):
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet(u"QPushButton{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 14pt;\n"
 "border-radius: 20px;\n"
@@ -62,7 +62,7 @@ class Ui_Dashboard(object):
         self.label_2.setFont(font1)
         self.label_2.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 8pt;\n"
 "border-radius: 20px;\n"
@@ -89,7 +89,7 @@ class Ui_Dashboard(object):
         self.label_3.setFont(font1)
         self.label_3.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 8pt;\n"
 "border-radius: 20px;\n"
@@ -138,7 +138,7 @@ class Ui_Dashboard(object):
         self.label.setAutoFillBackground(False)
         self.label.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 36pt;\n"
 "border-radius: 20px;\n"
@@ -203,7 +203,7 @@ class RealTimeGraph(QWidget):
         self.dates.append(date_px)
         self.TCP_data.append(random.randint(0, 1000))
         self.UDP_data.append(random.randint(0, 1000))
-        self.ICMP_data.append(random.randint(0, 1000))
+        self.ICMP_data.append(random.randint(0, 10))
 
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
