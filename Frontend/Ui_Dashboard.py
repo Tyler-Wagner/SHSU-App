@@ -1,9 +1,9 @@
 import sys
 import os
 import matplotlib.pyplot as plt
-from Backend.icmp_handler import ICMPcount
-from Backend.tcp_handler import TCPcount
-from Backend.udp_handler import UDPcount
+#from Backend.icmp_handler import ICMPcount
+#from Backend.tcp_handler import TCPcount
+#from Backend.udp_handler import UDPcount
 from datetime import datetime, timezone
 from random import randint
 from typing import Optional
@@ -13,6 +13,12 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+<<<<<<< Updated upstream
+=======
+from Handlers.dbHandle import importPastAlertsCount
+import random
+
+>>>>>>> Stashed changes
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
@@ -195,14 +201,9 @@ class RealTimeGraph(QWidget):
     def update(self, frame):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
-        self.TCP_data.append(TCPcount)
-        #print(TCPcount)
-        self.UDP_data.append(UDPcount)
-        #print(UDPcount)
-        self.ICMP_data.append(ICMPcount)
-        #print(ICMPcount)
-        
-        
+        self.TCP_data.append(random.randint(0, 1000))
+        self.UDP_data.append(random.randint(0, 1000))
+        self.ICMP_data.append(random.randint(0, 1000))
 
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
@@ -212,4 +213,4 @@ class RealTimeGraph(QWidget):
         self.ax.set_ylim(0, max_value)  # Add some margin for better visualization
 
         self.ax.relim()
-        self.ax.autoscale_view(True,True,True,True)
+        self.ax.autoscale_view(True,True,True)
