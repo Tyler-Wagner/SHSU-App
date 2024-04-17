@@ -1,9 +1,13 @@
+import sys
+import os
 import matplotlib.pyplot as plt
+from Backend.icmp_handler import ICMPcount
+from Backend.tcp_handler import TCPcount
+from Backend.udp_handler import UDPcount
 from datetime import datetime, timezone
-from random import randint
 from typing import Optional
 from matplotlib.animation import FuncAnimation
-from PyQt5.QtWidgets import QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -145,12 +149,6 @@ class Ui_Dashboard(object):
         Dashboard.setCentralWidget(self.centralwidget)
         self.retranslateUi(Dashboard)
     # setupUi
-    
-    def update_past_alerts_count(self, count):
-        self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
-    def update_current_alerts_count(self, count):
-        self.label_5.setText(QCoreApplication.translate("Dashboard", str(count), None))
-
 
     def retranslateUi(self, Dashboard):
         Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
@@ -168,7 +166,12 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
-    # retranslateUi
+        
+        
+    def update_past_alerts_count(self, count):
+        self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
+    def update_current_alerts_count(self, count):
+        self.label_5.setText(QCoreApplication.translate("Dashboard", str(count), None))
 ###################################################################################################################################
 
 class RealTimeGraph(QWidget):
@@ -198,17 +201,21 @@ class RealTimeGraph(QWidget):
     def update(self, frame):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
-        self.TCP_data.append(randint(0,1000))
-        self.UDP_data.append(randint(0,1000))
-        self.ICMP_data.append(randint(0,1000))
+        self.TCP_data.append(TCPcount)
+        #print(TCPcount)
+        self.UDP_data.append(UDPcount)
+        #print(UDPcount)
+        self.ICMP_data.append(ICMPcount)
+        #print(ICMPcount)
+        
+        
 
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
         self.ICMP_dataset.set_data(self.dates, self.ICMP_data)
-
         # Set Y-axis limits dynamically based on the maximum values of the data
         max_value = max(max(self.TCP_data), max(self.UDP_data), max(self.ICMP_data))
         self.ax.set_ylim(0, max_value)  # Add some margin for better visualization
 
         self.ax.relim()
-        self.ax.autoscale_view(True,True,True)
+        self.ax.autoscale_view(True,True,True,True)

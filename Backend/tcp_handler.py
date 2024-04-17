@@ -1,5 +1,5 @@
 import scapy.all as scapy
-
+TCPcount = 0
 class CheckTCP:
     def __init__(self, packet, src_ip, src_port, dst_ip, dst_port):
         self.packet = packet
@@ -10,7 +10,8 @@ class CheckTCP:
 
     def handle_tcp_packet(self):
         #print("Got packet")# used for debugging
-
+        global TCPcount
+        TCPcount+=1
         # check to see if I sent the right layer through
         if self.packet.haslayer(scapy.TCP):
             # Extracting the TCP information
