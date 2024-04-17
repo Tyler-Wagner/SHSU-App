@@ -5,6 +5,7 @@ from datetime import datetime
 from Handlers.dbHandle import updatePastAlerts as dbhandeler
 from Handlers.dbHandle import updateCurrentAlertsCount
 from Handlers.dbHandle import importPastAlertsCount
+from Handlers.scanner import query_ip
 
 counter = 0
 curentThreats = 0;
@@ -142,9 +143,11 @@ class EnterDataHandler(QObject):
         self.tabs_ui.activeAlertsTable.setItem(0, 0, dateTime_item)
         self.tabs_ui.activeAlertsTable.setItem(0, 1, sIP_item)
         self.tabs_ui.activeAlertsTable.setItem(0, 2, sP_item)
-        self.tabs_ui.activeAlertsTable.setItem(0, 3, dPort_item)
         
-
+        
+        APIbutton = QPushButton("Send To API")
+        APIbutton.clicked.connect(lambda: query_ip(sourceIP))
+        self.tabs_ui.activeAlertsTable.setCellWidget(0, 3, APIbutton)
         # Create a button and set it in the row
         button = QPushButton("Add to Past Alerts")
         button.clicked.connect(lambda: self.add_table_row_pAlerts(dtEntry, sourceIP, str(sourceP), str(destP)))

@@ -492,7 +492,7 @@ class Ui_TabsPage(object):
         item = self.activeAlertsTable.horizontalHeaderItem(2)
         item.setText(_translate("AdvancedPage", "Source Port"))
         item = self.activeAlertsTable.horizontalHeaderItem(3)
-        item.setText(_translate("AdvancedPage", "Destination Port"))
+        item.setText(_translate("AdvancedPage", "Send To Virus Total"))
         item = self.activeAlertsTable.horizontalHeaderItem(4)
         item.setText(_translate("AdvancedPage", "Move To Past"))
         self.label_2.setText(_translate("AdvancedPage", "Past Alerts"))
