@@ -10,6 +10,7 @@ from Backend.main import capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.sendNotification import sendnotification
+from Handlers.dbHandle import clearCounterDB
 
 app = QApplication([])
 
@@ -93,6 +94,7 @@ def showTabs():
     TabsPage.show()
     pass
 def main():
+    
     DashPage.show()
     data_thread = DataEntryThread(data_handler)
     advanced_button = DashPage.findChild(QPushButton, "pushButton")
@@ -118,4 +120,5 @@ def main():
     app.exec_()
 
 if __name__ == "__main__":
-     main()
+    clearCounterDB()
+    main()

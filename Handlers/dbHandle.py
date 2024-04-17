@@ -5,6 +5,45 @@ import os
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
 
+#COUNTER DB
+
+def clearCounterDB():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("UPDATE packetCounters SET packetNumber = 0")
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def setPacketCounter(packetName, packetCount):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("UPDATE packetCounters SET packetNumber=? WHERE packetName=?", (packetCount, packetName,))
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+def getPacketCounter(packetName):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("SELECT packetNumber FROM packetCounters WHERE packetName=?", (packetName,))
+   
+    row = cursor.fetchone()
+    if row:
+        packet_number = row[0]
+        return packet_number
+    else:
+        print(f"No packet found with name {packetName}")
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 #USER SETTINGS DB INFO
 
 #GETS USER SETTINGS ON START OF PROGRAM

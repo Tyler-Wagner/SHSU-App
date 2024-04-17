@@ -14,7 +14,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import random
-from Handlers.dbHandle import importPastAlertsCount
+from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
@@ -201,9 +201,9 @@ class RealTimeGraph(QWidget):
     def update(self, frame):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
-        self.TCP_data.append(random.randint(0, 1000))
-        self.UDP_data.append(random.randint(0, 1000))
-        self.ICMP_data.append(random.randint(0, 10))
+        self.TCP_data.append(int(getPacketCounter("TCP")))
+        self.UDP_data.append(int(getPacketCounter("UDP")))
+        self.ICMP_data.append(int(getPacketCounter("ICMP")))
 
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
