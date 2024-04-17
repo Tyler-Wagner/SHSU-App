@@ -201,16 +201,36 @@ class RealTimeGraph(QWidget):
     def update(self, frame):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
-        self.TCP_data.append(int(getPacketCounter("TCP")))
-        self.UDP_data.append(int(getPacketCounter("UDP")))
-        self.ICMP_data.append(int(getPacketCounter("ICMP")))
+        
+        # Fetch packet counts for TCP, UDP, and ICMP
+        tcp_count = int(getPacketCounter("TCP") or 0)
+        udp_count = int(getPacketCounter("UDP") or 0)
+        icmp_count = int(getPacketCounter("ICMP") or 0)
+        
+        # Append counts to data lists
+        self.TCP_data.append(tcp_count)
+        self.UDP_data.append(udp_count)
+        self.ICMP_data.append(icmp_count)
 
+        # Update dataset with new data
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
         self.ICMP_dataset.set_data(self.dates, self.ICMP_data)
+        
         # Set Y-axis limits dynamically based on the maximum values of the data
-        max_value = max(max(self.TCP_data), max(self.UDP_data), max(self.ICMP_data))
-        self.ax.set_ylim(0, max_value)  # Add some margin for better visualization
+        max_tcp = max(self.TCP_data, default=0)
+        max_udp = max(self.UDP_data, default=0)
+        max_icmp = max(self.ICMP_data, default=0)
+        max_value = max(max_tcp, max_udp, max_icmp)
+        
+        # Add buffer space (0.5) to the top and bottom
+        buffer_space = 0.5
+        min_y = min(0, max_value - buffer_space)
+        max_y = max_value + buffer_space
+        
+        # Set y-axis limits with buffer space
+        self.ax.set_ylim(min_y, max_y)
 
+        # Redraw the graph
         self.ax.relim()
-        self.ax.autoscale_view(True,True,True)
+        self.ax.autoscale_view(True, True, True)

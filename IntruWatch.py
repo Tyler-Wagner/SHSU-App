@@ -70,7 +70,7 @@ def list_network_devices():
     devices = psutil.net_if_addrs()
     device_list = []
     i=1
-    for name in devices.items():
+    for name, address in devices.items():
         device_list.append(f"{i}: {name}")
         i+=1
     return device_list
