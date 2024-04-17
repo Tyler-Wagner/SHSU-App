@@ -13,7 +13,7 @@ from Handlers.sendNotification import sendnotification
 from Handlers.dbHandle import clearCounterDB
 
 app = QApplication([])
-
+app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 DashPage = QMainWindow()
 Dash_ui = Ui_Dashboard()
 Dash_ui.setupUi(DashPage)
