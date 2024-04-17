@@ -154,15 +154,16 @@ class EnterDataHandler(QObject):
     def add_table_row_pAlerts(self, date, sourceIP, sourceP, destP):
         #UPDATE DASH COUNTERS
         global curentThreats
+        
+    
+        #UPDATE PAST ALERTS DB
+        dbhandeler(date, sourceIP, sourceP, destP)
+        
         curentThreats-=1
         updateCurrentAlertsCount(curentThreats)
         
         self.pastcount_updated.emit(importPastAlertsCount())
         self.currentCount_updated.emit(curentThreats)
-    
-        #UPDATE PAST ALERTS DB
-        dbhandeler(date, sourceIP, sourceP, destP)
-        
         #Finding and removeing the Row in cAlerts Table
         row_count = self.tabs_ui.activeAlertsTable.rowCount()
         for i in range(row_count):
