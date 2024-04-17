@@ -13,12 +13,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-<<<<<<< Updated upstream
-=======
-from Handlers.dbHandle import importPastAlertsCount
 import random
-
->>>>>>> Stashed changes
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():

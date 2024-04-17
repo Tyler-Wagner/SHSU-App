@@ -10,13 +10,8 @@ class CheckTCP:
         self.dst_port = dst_port
         
     def handle_tcp_packet(self):
-        TCPcount + 1
         #print("Got packet")# used for debugging
-<<<<<<< Updated upstream
-
-=======
         #TCPcount+=1
->>>>>>> Stashed changes
         # check to see if I sent the right layer through
         if self.packet.haslayer(scapy.TCP):
             # Extracting the TCP information
@@ -73,11 +68,6 @@ class CheckTCP:
             case _:
                 print(f"TCP flag, {raw_flag} not implemented yet")
         return n_flag
-<<<<<<< Updated upstream
-    def TCPPacketCount(self):
-        return TCPcount
-=======
     #def get_TCP_count(self):
         #return TCPcount
->>>>>>> Stashed changes
 #FORCING AN UPDATE

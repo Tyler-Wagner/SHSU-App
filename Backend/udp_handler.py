@@ -1,10 +1,6 @@
 import scapy.all as scapy
-<<<<<<< Updated upstream
-UDPcount = 0
-=======
 #global UDPcount
 #UDPcount = 0
->>>>>>> Stashed changes
 class CheckUDP:
 
     def __init__(self, packet, src_ip, src_port, dst_ip, dst_port):
@@ -15,12 +11,9 @@ class CheckUDP:
         self.dst_port = dst_port
         
     def handle_udp_packet(self):
-        UDPcount + 1
+        #UDPcount + 1
         #print("Got packet")# used for debugging
-<<<<<<< Updated upstream
-=======
         #UDP_count+=1
->>>>>>> Stashed changes
 
         # check to see if I sent the right layer through
         if self.packet.haslayer(scapy.UDP):
@@ -32,11 +25,6 @@ class CheckUDP:
 
         else:
             print("Not seeing UDP")
-<<<<<<< Updated upstream
-    def UDPPacketCount(self):
-        return UDPcount
-=======
    #def get_UDPcount(UDPcount):
         #return UDPcount
->>>>>>> Stashed changes
 #FORCING AN UPDATE
