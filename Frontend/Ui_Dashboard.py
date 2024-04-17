@@ -14,6 +14,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import random
+from Handlers.dbHandle import importPastAlertsCount
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
@@ -154,7 +155,7 @@ class Ui_Dashboard(object):
         Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
         self.pushButton.setText(QCoreApplication.translate("Dashboard", u"Advanced", None))
         self.label_2.setText(QCoreApplication.translate("Dashboard", u"Packets Scanned", None))
-        self.label_4.setText(QCoreApplication.translate("Dashboard", u"PSCounter", None))
+        self.label_4.setText(QCoreApplication.translate("Dashboard", str(importPastAlertsCount()), None))
         self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
         self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
@@ -166,6 +167,10 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
+    def update_past_alerts_count(self, count):
+        self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
+    def update_current_alerts_count(self, count):
+        self.label_5.setText(QCoreApplication.translate("Dashboard", str(count), None))
     # retranslateUi
 ###################################################################################################################################
 
