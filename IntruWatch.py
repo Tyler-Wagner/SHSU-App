@@ -10,7 +10,7 @@ from Backend.main import capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.sendNotification import sendnotification
-from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate
+from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate, setFirstRun, getFirstRun, updateFirstRun
 from Frontend.Ui_vTotalReturn import Ui_Form
 from datetime import datetime
 
@@ -107,6 +107,8 @@ def closeVTotal():
     pass
 def main():
     DashPage.show()
+    clearCounterDB()
+    
     #Button setup
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
@@ -131,15 +133,22 @@ def main():
     #Check api Date and reset counter if needed
     date = datetime.now()
     currentDate = date.strftime("%Y-%m-%d")
+    
     if checkDate() == None:
         setDate(currentDate)
     if currentDate != checkDate():
         updateCount(1000)
         updateDate(currentDate)
         updateCount(1000)
-
         
-    
+    if getFirstRun == None:
+        #IF THERE IS NO DATA SET TO TRUE
+        setFirstRun()
+    if getFirstRun() == 1:
+        #TODO
+        #RUN WIZ 
+        updateFirstRun()# sets First run to 0
+
     data_thread.start()
     #### TEST ATTACK########################################
     data_handler.add_current_alerts_row('123456789', 22,22)

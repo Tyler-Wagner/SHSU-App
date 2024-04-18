@@ -5,6 +5,45 @@ import os
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
 
+#DETERMINE IF FIRSTRUN FOR SETUP WIZ
+def getFirstRun():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT ans FROM firstRun")
+    
+    row = cursor.fetchone()
+    
+    if row:
+        ans = int(row[0])
+    else:
+        ans = None
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return ans
+
+def setFirstRun(): #SET THE VALUE TO TRUE IF THERE IS NONE IN THE DB
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("INSERT INTO firstRun VALUES (1)")
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+def updateFirstRun():#SET VALUE TO FALSE AFTER FIRST RUN
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("UPDATE firstRun SET ans=0")
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 #API COUNTER AND DATE
 def setDate(date):
