@@ -578,6 +578,8 @@ class Ui_TabsPage(object):
             self.checkBox_2.setChecked(True)
         setUser('notifications', 'T')
 
+    def resetInterfaceBox(self):
+            self.interfaceSelectionBox.setProperty("value", getUser('interface'))
                 
 
     def updateDatabase_INTERFACE(self, table, info):

@@ -175,7 +175,7 @@ def updateUserSettings(column, value):
     conn = sqlite3.connect(path)
     cursor = conn.cursor() 
     
-    if importUserSettings()==None:
+    if importUserSettings(column)==None:
         cmd = f'INSERT INTO settingsInfo (id, {column}) VALUES (1, ?)'  
     else:
         cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  

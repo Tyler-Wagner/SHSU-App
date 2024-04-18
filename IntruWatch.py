@@ -9,8 +9,10 @@ from Handlers.enterData import EnterDataHandler
 from Backend.main import capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
+from Handlers.dbHandle import updateUserSettings
 from Handlers.sendNotification import sendnotification
 from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate, setFirstRun, getFirstRun, updateFirstRun
+
 from Frontend.Ui_vTotalReturn import Ui_Form
 from Frontend.Ui_wizard import Ui_Wiz
 from datetime import datetime
@@ -67,6 +69,9 @@ class DataEntryThread(threading.Thread):
         self.data_handler = data_handler
 
     def run(self):
+        if getFirstRun()==1:
+            updateUserSettings('interface', -1)
+        
         devices = list(psutil.net_if_addrs().keys())
         
         choice = dbhandle_SETTINGS('interface')
@@ -112,63 +117,65 @@ def closeVTotal():
     pass
 def closeWiz():
     wizardPage.close()
-    DashPage.show()
+    Ui_TabsPage.resetInterfaceBox(tabs_ui)
+    main()
 def openWiz():
     wizardPage.show()
-    DashPage.hide()
-    TabsPage.hide()
-    
+
 def main():
     if getFirstRun == None:
-        #IF THERE IS NO DATA SET TO TRUE
+        # IF THERE IS NO DATA SET TO TRUE
         setFirstRun()
     if getFirstRun() == 1:
-        #TODO
-        #RUN WIZ 
+        # RUN WIZARD IF IT'S THE FIRST RUN
+        updateUserSettings('interface', -1)
         wizButton = wizardPage.findChild(QPushButton, "pushButton")
         wizButton.clicked.connect(lambda: closeWiz())
-        # updateFirstRun()# sets First run to 0 
+        updateFirstRun()# sets First run to 0 
         wizardPage.show()
+        return
+    if getFirstRun() == 0:      
+        data_thread = DataEntryThread(data_handler)
+        data_thread.start()
+        clearCounterDB()
+        DashPage.show()
         
-    clearCounterDB()
-    # DashPage.show()
-    
-    #Button setup
-    data_thread = DataEntryThread(data_handler)
-    data_thread.start()
-    advanced_button = DashPage.findChild(QPushButton, "pushButton")
-    dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
-    vTotalButton = vTotalPage.findChild(QPushButton, "closeButton")
-    advanced_button.clicked.connect(lambda: showTabs())
-    dashboard_button.clicked.connect(lambda: showDash())
-    vTotalButton.clicked.connect(lambda: closeVTotal())
-    #gen Device list
-    devices = list_network_devices()
-    for device in devices:
-        item = QListWidgetItem(device)
-        # Create a QFont object for bold text with 10pt size
-        font = QFont()
-        font.setBold(True)
-        font.setPointSize(10)  # Set the point size to 10
-        item.setFont(font)
-        tabs_ui.listWidget.addItem(item)
-    loadPastAlerts()
-    
-    #Check api Date and reset counter if needed
-    date = datetime.now()
-    currentDate = date.strftime("%Y-%m-%d")
-    
-    if checkDate() == None:
-        setDate(currentDate)
-    if currentDate != checkDate():
-        updateCount(1000)
-        updateDate(currentDate)
+        # Button setup
+        advanced_button = DashPage.findChild(QPushButton, "pushButton")
+        dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
+        vTotalButton = vTotalPage.findChild(QPushButton, "closeButton")
+        advanced_button.clicked.connect(lambda: showTabs())
+        dashboard_button.clicked.connect(lambda: showDash())
+        vTotalButton.clicked.connect(lambda: closeVTotal())
+        # Generate Device list
+        devices = list_network_devices()
+        for device in devices:
+            item = QListWidgetItem(device)
+            # Create a QFont object for bold text with 10pt size
+            font = QFont()
+            font.setBold(True)
+            font.setPointSize(10)  # Set the point size to 10
+            item.setFont(font)
+            tabs_ui.listWidget.addItem(item)
+        loadPastAlerts()
+        
+        # Check API Date and reset counter if needed
+        date = datetime.now()
+        currentDate = date.strftime("%Y-%m-%d")
+        
+        if checkDate() == None:
+            setDate(currentDate)
+        if currentDate != checkDate():
+            updateCount(1000)
+            updateDate(currentDate)
 
-    #### TEST ATTACK########################################
-    data_handler.add_current_alerts_row('104.250.49.205', 22,22)
-    # sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
-    #### TEST ATTACK########################################    
-    app.exec_()
+        #### TEST ATTACK########################################
+        data_handler.add_current_alerts_row('104.250.49.205', 22,22)
+        # sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
+        #### TEST ATTACK########################################    
 
 if __name__ == "__main__":
-     main()
+    if getFirstRun() == 1:
+        updateUserSettings('interface', -1)
+    main()
+    app.exec_()

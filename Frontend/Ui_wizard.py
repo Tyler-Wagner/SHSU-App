@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Handlers.dbHandle import updateUserSettings as setUserSettings  
 
 
 class Ui_Wiz(object):
@@ -98,9 +99,21 @@ class Ui_Wiz(object):
         self.pushButton.setObjectName("pushButton")
         self.gridLayout_2.addWidget(self.pushButton, 5, 2, 1, 1)
         self.gridLayout.addWidget(self.widget, 0, 0, 1, 1)
+        
+        self.checkBox.stateChanged.connect(self.setNotifications)
+        self.spinBox.valueChanged.connect(lambda value: self.setDatabase_INTERFACE('interface', value))
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
+        
+    def setNotifications(self, state):
+        if state == QtCore.Qt.Checked:
+            setUserSettings('notifications','T')
+        else:
+            setUserSettings('notifications', 'F')
+
+    def setDatabase_INTERFACE(self, table, info):
+        setUserSettings(table, info)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
