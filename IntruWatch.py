@@ -11,7 +11,8 @@ from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.sendNotification import sendnotification
 from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate, setFirstRun, getFirstRun, updateFirstRun
-from Frontend.Ui_vTotalReturn import Ui_Form, Ui_Wiz
+from Frontend.Ui_vTotalReturn import Ui_Form
+from Frontend.Ui_wizard import Ui_Wiz
 from datetime import datetime
 
 app = QApplication([])
@@ -29,7 +30,9 @@ vTotalPage = QWidget()
 vTotal_ui=Ui_Form() 
 vTotal_ui.setupUi(vTotalPage)
 
-wizardPage = 
+wizardPage = QWidget()
+wizard_ui = Ui_Wiz()
+wizard_ui.setupUi(wizardPage)
 
 # Instantiate the EnterDataHandler class with references to UI objects
 data_handler = EnterDataHandler(Dash_ui, tabs_ui, vTotal_ui, DashPage, TabsPage, vTotalPage)
@@ -94,7 +97,7 @@ def loadPastAlerts():
         # Add the past alert to the data handler
         data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
 
-    pass
+
 def showDash():
     TabsPage.hide()
     DashPage.show()
@@ -107,9 +110,28 @@ def closeVTotal():
     vTotalPage.close()
     TabsPage.show()
     pass
-def main():
+def closeWiz():
+    wizardPage.close()
     DashPage.show()
+def openWiz():
+    wizardPage.show()
+    DashPage.hide()
+    TabsPage.hide()
+    
+def main():
+    # if getFirstRun == None:
+    #     #IF THERE IS NO DATA SET TO TRUE
+    #     setFirstRun()
+    # if getFirstRun() == 1:
+    #     #TODO
+    #     #RUN WIZ 
+    #     wizButton = wizardPage.findChild(QPushButton, "pushButton")
+    #     wizButton.clicked.connect(lambda: closeWiz())
+    #     # updateFirstRun()# sets First run to 0 
+    #     wizardPage.show()
+        
     clearCounterDB()
+    DashPage.show()
     
     #Button setup
     data_thread = DataEntryThread(data_handler)
@@ -141,22 +163,11 @@ def main():
     if currentDate != checkDate():
         updateCount(1000)
         updateDate(currentDate)
-        updateCount(1000)
-        
-    if getFirstRun == None:
-        #IF THERE IS NO DATA SET TO TRUE
-        setFirstRun()
-    if getFirstRun() == 1:
-        #TODO
-        #RUN WIZ 
-        updateFirstRun()# sets First run to 0
 
-    data_thread.start()
     #### TEST ATTACK########################################
-    data_handler.add_current_alerts_row('123456789', 22,22)
-    sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
-    #### TEST ATTACK########################################
-    
+    data_handler.add_current_alerts_row('104.250.49.205', 22,22)
+    # sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")
+    #### TEST ATTACK########################################    
     app.exec_()
 
 if __name__ == "__main__":

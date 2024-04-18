@@ -18,8 +18,7 @@ def getFirstRun():
         ans = int(row[0])
     else:
         ans = None
-    
-    conn.commit()
+
     cursor.close()
     conn.close()
     return ans
@@ -68,7 +67,6 @@ def checkCount():
     else: 
         number = None
         
-    conn.commit()
     cursor.close()
     conn.close()
     return int(number)
@@ -96,7 +94,6 @@ def checkDate():
     else:
         date = None
         
-    conn.commit()
     cursor.close()
     conn.close()
     return str(date)
@@ -146,7 +143,6 @@ def getPacketCounter(packetName):
     else:
         print(f"No packet found with name {packetName}")
    
-    conn.commit()
     cursor.close()
     conn.close()
 
@@ -167,7 +163,7 @@ def importUserSettings(info):
         elif(value=="F"):
             value = False
     else:
-        print("No data found")
+        # print("No data found")
         value = None
     
     cursor.close()
@@ -179,7 +175,11 @@ def updateUserSettings(column, value):
     conn = sqlite3.connect(path)
     cursor = conn.cursor() 
     
-    cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  
+    if importUserSettings()==None:
+        cmd = f'INSERT INTO settingsInfo (id, {column}) VALUES (1, ?)'  
+    else:
+        cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  
+    
     cursor.execute(cmd, (value,))
     
     conn.commit()
@@ -208,11 +208,13 @@ def importPastAlerts():
     
     rows = cursor.fetchall()
     
-    conn.commit()
     cursor.close()
     conn.close()
     
-    return rows
+    if rows:
+        return rows
+    else:
+        return None
 
 #GETS THE PAST ALERTS COUNT
 def importPastAlertsCount():
@@ -236,8 +238,16 @@ def updateCurrentAlertsCount(value):
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
     
-    cursor.execute("UPDATE curretnAlertsCount SET count=? WHERE ID=1", (value,))  
+    cursor.execute("SELECT count(*) FROM curretnAlertsCount")
+    result = cursor.fetchone()
+    if result[0] > 0: 
+        cursor.execute("UPDATE curretnAlertsCount SET count=? WHERE ID=1", (value,))
+        conn.commit()
+    else:
+        cursor.execute("INSERT INTO curretnAlertsCount (ID, count) VALUES (1, 0)")  # Corrected typo
+        conn.commit()
     
-    conn.commit()
     cursor.close()
-    conn.close()  
+    conn.close()
+
+  

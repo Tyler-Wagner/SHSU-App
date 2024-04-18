@@ -1,5 +1,4 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
 from Handlers.dbHandle import importUserSettings as getUser
 from Handlers.dbHandle import updateUserSettings as setUser
 
@@ -8,6 +7,7 @@ class Ui_TabsPage(object):
     def setupUi(self, AdvancedPage):
         AdvancedPage.setObjectName("AdvancedPage")
         AdvancedPage.resize(1600, 900)
+        AdvancedPage.setFixedSize(QtCore.QSize(1600, 900))
         self.tabWidget = QtWidgets.QTabWidget(AdvancedPage)
         self.tabWidget.setGeometry(QtCore.QRect(135, 45, 1321, 721))
         font = QtGui.QFont()
@@ -34,7 +34,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: red;\n"
+"    border-color: black;\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -75,7 +75,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: red;\n"
+"    border-color: black;\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -92,7 +92,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabWidget:pane {\n"
-"    border: 2px solid red; /* Set the border color for the outline of the QTabWidget */\n"
+"    border: 2px solid black; /* Set the border color for the outline of the QTabWidget */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
@@ -125,7 +125,7 @@ class Ui_TabsPage(object):
 "    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
-"    background-color: rgba(255,0,0,90);\n"
+"    background-color: rgba(0,0,0,90);\n"
 "    color: black;\n"
 "}\n"
 "")
@@ -415,7 +415,7 @@ class Ui_TabsPage(object):
         self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.frame_3)
         self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.label_8.setStyleSheet("font-color: red;")
+        self.label_8.setStyleSheet("font-color: black;")
         self.label_8.setAlignment(QtCore.Qt.AlignCenter)
         self.label_8.setObjectName("label_8")
         self.gridLayout_3.addWidget(self.label_8, 1, 0, 1, 2)
@@ -452,7 +452,7 @@ class Ui_TabsPage(object):
         self.dashboardButton.setFont(font)
         self.dashboardButton.setStyleSheet("QPushButton{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 8pt;\n"
 "border-radius: 20px;\n"
@@ -492,7 +492,7 @@ class Ui_TabsPage(object):
         item = self.activeAlertsTable.horizontalHeaderItem(2)
         item.setText(_translate("AdvancedPage", "Source Port"))
         item = self.activeAlertsTable.horizontalHeaderItem(3)
-        item.setText(_translate("AdvancedPage", "Destination Port"))
+        item.setText(_translate("AdvancedPage", "Send To Virus Total"))
         item = self.activeAlertsTable.horizontalHeaderItem(4)
         item.setText(_translate("AdvancedPage", "Move To Past"))
         self.label_2.setText(_translate("AdvancedPage", "Past Alerts"))

@@ -1,10 +1,11 @@
 import sys
 import os
 import matplotlib.pyplot as plt
-from Backend.icmp_handler import ICMPcount
-from Backend.tcp_handler import TCPcount
-from Backend.udp_handler import UDPcount
+#from Backend.icmp_handler import ICMPcount
+#from Backend.tcp_handler import TCPcount
+#from Backend.udp_handler import UDPcount
 from datetime import datetime, timezone
+from random import randint
 from typing import Optional
 from matplotlib.animation import FuncAnimation
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
@@ -12,15 +13,18 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from Handlers.dbHandle import importPastAlertsCount
-
+import random
+from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
             Dashboard.setObjectName(u"Dashboard")
         Dashboard.resize(1600, 900)
+        Dashboard.setFixedSize(QSize(1600, 900))
+        #Dashboard.setMinSize(QSize(1600, 900))
+        #Dashboard.setMaxSize(QSize(1600, 900))
         Dashboard.setAutoFillBackground(False)
-        Dashboard.setStyleSheet(u"color:rgb(255,0,0);")
+        Dashboard.setStyleSheet(u"color:rgb(0,0,0);")
         Dashboard.setAnimated(True)
         self.centralwidget = QWidget(Dashboard)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -35,7 +39,7 @@ class Ui_Dashboard(object):
         self.pushButton.setFont(font)
         self.pushButton.setStyleSheet(u"QPushButton{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 14pt;\n"
 "border-radius: 20px;\n"
@@ -61,7 +65,7 @@ class Ui_Dashboard(object):
         self.label_2.setFont(font1)
         self.label_2.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 8pt;\n"
 "border-radius: 20px;\n"
@@ -88,7 +92,7 @@ class Ui_Dashboard(object):
         self.label_3.setFont(font1)
         self.label_3.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 8pt;\n"
 "border-radius: 20px;\n"
@@ -137,7 +141,7 @@ class Ui_Dashboard(object):
         self.label.setAutoFillBackground(False)
         self.label.setStyleSheet(u"QLabel{\n"
 "border: 2px outset black;\n"
-"background:red;\n"
+"background:blue;\n"
 "color: white;\n"
 "font: bold 36pt;\n"
 "border-radius: 20px;\n"
@@ -153,10 +157,10 @@ class Ui_Dashboard(object):
     def retranslateUi(self, Dashboard):
         Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
         self.pushButton.setText(QCoreApplication.translate("Dashboard", u"Advanced", None))
-        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Past Threats Detected", None))
+        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Packets Scanned", None))
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(importPastAlertsCount()), None))
-        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Current Threats", None))
-        self.label_5.setText(QCoreApplication.translate("Dashboard", "", None))
+        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
+        self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Time", None)); # 
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
@@ -166,12 +170,11 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
-        
-        
     def update_past_alerts_count(self, count):
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
     def update_current_alerts_count(self, count):
         self.label_5.setText(QCoreApplication.translate("Dashboard", str(count), None))
+    # retranslateUi
 ###################################################################################################################################
 
 class RealTimeGraph(QWidget):
@@ -201,21 +204,36 @@ class RealTimeGraph(QWidget):
     def update(self, frame):
         date_px = datetime.now().timestamp()
         self.dates.append(date_px)
-        self.TCP_data.append(TCPcount)
-        #print(TCPcount)
-        self.UDP_data.append(UDPcount)
-        #print(UDPcount)
-        self.ICMP_data.append(ICMPcount)
-        #print(ICMPcount)
         
+        # Fetch packet counts for TCP, UDP, and ICMP
+        tcp_count = int(getPacketCounter("TCP") or 0)
+        udp_count = int(getPacketCounter("UDP") or 0)
+        icmp_count = int(getPacketCounter("ICMP") or 0)
         
+        # Append counts to data lists
+        self.TCP_data.append(tcp_count)
+        self.UDP_data.append(udp_count)
+        self.ICMP_data.append(icmp_count)
 
+        # Update dataset with new data
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
         self.UDP_dataset.set_data(self.dates, self.UDP_data)
         self.ICMP_dataset.set_data(self.dates, self.ICMP_data)
+        
         # Set Y-axis limits dynamically based on the maximum values of the data
-        max_value = max(max(self.TCP_data), max(self.UDP_data), max(self.ICMP_data))
-        self.ax.set_ylim(0, max_value)  # Add some margin for better visualization
+        max_tcp = max(self.TCP_data, default=0)
+        max_udp = max(self.UDP_data, default=0)
+        max_icmp = max(self.ICMP_data, default=0)
+        max_value = max(max_tcp, max_udp, max_icmp)
+        
+        # Add buffer space (0.5) to the top and bottom
+        buffer_space = 0.5
+        min_y = min(0, max_value - buffer_space)
+        max_y = max_value + buffer_space
+        
+        # Set y-axis limits with buffer space
+        self.ax.set_ylim(min_y, max_y)
 
+        # Redraw the graph
         self.ax.relim()
-        self.ax.autoscale_view(True,True,True,True)
+        self.ax.autoscale_view(True, True, True)

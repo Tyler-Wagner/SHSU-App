@@ -7,6 +7,7 @@ from Handlers.dbHandle import updateCurrentAlertsCount
 from Handlers.dbHandle import importPastAlertsCount, checkCount, updateCount
 from Backend.active_scanning import AbuseIPDBClient
 from PyQt5.QtWidgets import QListWidgetItem
+from Backend.active_scanning import AbuseIPDBClient
 
 
 counter = 0
@@ -46,6 +47,7 @@ class EnterDataHandler(QObject):
 
 
     def add_vTotal(self, ip):
+        sendIP = AbuseIPDBClient()
         if checkCount() == 0:
             self.DashPage.hide()
             self.TabsPage.hide()
@@ -58,23 +60,26 @@ class EnterDataHandler(QObject):
             self.DashPage.hide()
             self.TabsPage.hide()
             self.vTotalPage.show()
-            ip_data = apiReturn.get('data', {})
-            if ip_data:
-                # Clear existing items in the list widget
-                self.vTotal_ui.listWidget.clear()
-                
-                for key, value in ip_data.items():
-                    if isinstance(value, list):
-                        for item in value:
-                            list_item = QListWidgetItem(f"{key}: {item}")
-                            self.vTotal_ui.listWidget.addItem(list_item)
-                    else:
-                        list_item = QListWidgetItem(f"{key}: {value}")
-                        self.vTotal_ui.listWidget.addItem(list_item)
+            if apiReturn.get('data',{}) == None:
+                list_item = QListWidgetItem(f"IP: {ip} has not been reported.")
+                self.vTotal_ui.vTotalList.addItem(list_item)
+            else:
+                ip_data = apiReturn.get('data', {})
+                if ip_data:
+                    # Clear existing items in the list widget
+                    self.vTotal_ui.vTotalList.clear()
                     
-                list_item = QListWidgetItem(f"Total Sends Left: {checkCount()}")
-                self.vTotal_ui.listWidget.addItem(list_item)
-
+                    for key, value in ip_data.items():
+                        if isinstance(value, list):
+                            for item in value:
+                                list_item = QListWidgetItem(f"{key}: {item}")
+                                self.vTotal_ui.vTotalList.addItem(list_item)
+                        else:
+                            list_item = QListWidgetItem(f"{key}: {value}")
+                            self.vTotal_ui.vTotalList.addItem(list_item)
+                        
+                    list_item = QListWidgetItem(f"Total Sends Left: {checkCount()}")
+                    self.vTotal_ui.vTotalList.addItem(list_item)
     
     #LOG TABLE
     def add_table_row(self, packet, details):

@@ -22,9 +22,9 @@ class Ui_Form(object):
         self.closeButton = QtWidgets.QPushButton(Form)
         self.closeButton.setGeometry(QtCore.QRect(270, 290, 221, 31))
         self.closeButton.setObjectName("closeButton")
-        self.listWidget = QtWidgets.QListWidget(Form)
-        self.listWidget.setGeometry(QtCore.QRect(20, 60, 471, 221))
-        self.listWidget.setObjectName("listWidget")
+        self.vTotalList = QtWidgets.QListWidget(Form)
+        self.vTotalList.setGeometry(QtCore.QRect(20, 60, 471, 221))
+        self.vTotalList.setObjectName("vTotalList")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -32,15 +32,5 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Virus Total Return</span></p></body></html>"))
+        self.label.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:14pt; font-weight:600;\">Virus Total</span></p></body></html>"))
         self.closeButton.setText(_translate("Form", "Close"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
