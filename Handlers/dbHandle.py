@@ -5,6 +5,112 @@ import os
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(parent_dir, '..', 'DataBase', 'ourDB.db')
 
+
+#API COUNTER AND DATE
+def setDate(date):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO dateCheck VALUES (?)", (date,))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()  
+    
+def checkCount():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT apiCount FROM apiCounter")
+    
+    row = cursor.fetchone()
+    
+    if row:
+        number = row[0]
+    else: 
+        number = None
+        
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return int(number)
+
+def updateCount(number):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("UPDATE apiCounter SET apiCount=?", (number,))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+
+def checkDate():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT date FROM dateCheck")
+    
+    row = cursor.fetchone()
+    if row:
+        date = row[0]
+    else:
+        date = None
+        
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return str(date)
+    
+
+def updateDate(date):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+    cursor.execute("UPDATE dateCheck SET date=?", (date,))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+
+#PACKET COUNTER DB
+def clearCounterDB():
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("UPDATE packetCounters SET packetNumber = 0")
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def setPacketCounter(packetName, packetCount):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("UPDATE packetCounters SET packetNumber=? WHERE packetName=?", (packetCount, packetName,))
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
+def getPacketCounter(packetName):
+    conn = sqlite3.connect(path)
+    cursor = conn.cursor()
+   
+    cursor.execute("SELECT packetNumber FROM packetCounters WHERE packetName=?", (packetName,))
+   
+    row = cursor.fetchone()
+    if row:
+        packet_number = row[0]
+        return packet_number
+    else:
+        print(f"No packet found with name {packetName}")
+   
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 #USER SETTINGS DB INFO
 
 #GETS USER SETTINGS ON START OF PROGRAM
@@ -34,7 +140,7 @@ def updateUserSettings(column, value):
     conn = sqlite3.connect(path)
     cursor = conn.cursor() 
     
-    cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  # Prevents SQL Injections
+    cmd = f'UPDATE settingsInfo SET {column}=? WHERE id=1'  
     cursor.execute(cmd, (value,))
     
     conn.commit()

@@ -10,18 +10,27 @@ from Backend.main import capture_packets
 from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.sendNotification import sendnotification
+from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate
+from Frontend.Ui_vTotalReturn import Ui_Form
+from datetime import datetime
 
 app = QApplication([])
+app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 
 DashPage = QMainWindow()
 Dash_ui = Ui_Dashboard()
 Dash_ui.setupUi(DashPage)
+
 TabsPage = QWidget()
 tabs_ui = Ui_TabsPage()
 tabs_ui.setupUi(TabsPage)
 
+vTotalPage = QWidget()
+vTotal_ui=Ui_Form() 
+vTotal_ui.setupUi(vTotalPage)
+
 # Instantiate the EnterDataHandler class with references to UI objects
-data_handler = EnterDataHandler(Dash_ui, tabs_ui)
+data_handler = EnterDataHandler(Dash_ui, tabs_ui, vTotal_ui, DashPage, TabsPage, vTotalPage)
 data_handler.log_row_added.connect(data_handler.add_table_row) # connects to the log table
 data_handler.pAlerts_row_added.connect(data_handler.add_table_row_pAlerts) # connects to the Past Alerts Table
 data_handler.cAlerts_row_added.connect(data_handler.add_table_row_cAlerts) # connects to the Current Alerts Table
@@ -92,15 +101,22 @@ def showTabs():
     DashPage.hide()
     TabsPage.show()
     pass
+def closeVTotal():
+    vTotalPage.close()
+    TabsPage.show()
+    pass
 def main():
     DashPage.show()
+    #Button setup
     data_thread = DataEntryThread(data_handler)
     data_thread.start()
     advanced_button = DashPage.findChild(QPushButton, "pushButton")
     dashboard_button = TabsPage.findChild(QPushButton, "dashboardButton")
+    vTotalButton = vTotalPage.findChild(QPushButton, "closeButton")
     advanced_button.clicked.connect(lambda: showTabs())
     dashboard_button.clicked.connect(lambda: showDash())
-    DashPage.show()
+    vTotalButton.clicked.connect(lambda: closeVTotal())
+    #gen Device list
     devices = list_network_devices()
     for device in devices:
         item = QListWidgetItem(device)
@@ -111,6 +127,20 @@ def main():
         item.setFont(font)
         tabs_ui.listWidget.addItem(item)
     loadPastAlerts()
+    
+    #Check api Date and reset counter if needed
+    date = datetime.now()
+    currentDate = date.strftime("%Y-%m-%d")
+    if checkDate() == None:
+        setDate(currentDate)
+    if currentDate != checkDate():
+        updateCount(1000)
+        updateDate(currentDate)
+        updateCount(1000)
+
+        
+    
+    data_thread.start()
     #### TEST ATTACK########################################
     data_handler.add_current_alerts_row('123456789', 22,22)
     sendnotification("TEST ATTACK", f"Source IP: 123456789 Source port: 22 Dest port: 22")

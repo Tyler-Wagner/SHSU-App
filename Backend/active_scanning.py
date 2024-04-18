@@ -8,7 +8,6 @@ import os
 from dotenv import load_dotenv
 
 env_file = 'api.env'
-
 load_dotenv(dotenv_path=env_file)
 class AbuseIPDBClient:
     def __init__(self):
@@ -20,7 +19,6 @@ class AbuseIPDBClient:
             "Key": self.api_key,
             "Accept": "application/json"
         }
-
         endpoint = f"/check?ipAddress={ip_address}"
         url = self.base_url + endpoint
         response = requests.get(url, headers=headers)
@@ -29,4 +27,5 @@ class AbuseIPDBClient:
         else:
             print(f"Error querying IP: {response.status_code}")
             return None
-
+        
+        
