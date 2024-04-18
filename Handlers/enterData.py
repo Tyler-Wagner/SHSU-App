@@ -18,7 +18,7 @@ class EnterDataHandler(QObject):
     log_row_added = pyqtSignal(str, str)
     pAlerts_row_added = pyqtSignal(str, str, int, str)
     cAlerts_row_added = pyqtSignal(str, int, int)
-    tableWidgetle_row_added = pyqtSignal(str, int, int)
+    tableWidgetle_row_added = pyqtSignal(str, int, str)
     pastcount_updated = pyqtSignal(int)
     currentCount_updated=pyqtSignal(int)
     vTotalConnected = pyqtSignal(str)
@@ -36,8 +36,8 @@ class EnterDataHandler(QObject):
     def add_log_row(self, category, message):
         self.log_row_added.emit(category, message)
 
-    def add_tableWidgetle_row(self, sourceIP, sourceP, destP):
-        self.tableWidgetle_row_added.emit(sourceIP, sourceP, destP)
+    def add_tableWidgetle_row(self, sourceIP, sourceP, packetType):
+        self.tableWidgetle_row_added.emit(sourceIP, sourceP, packetType)
 
     def add_past_alerts_row(self, date, sourceIP, sourceP, destP):
         self.pAlerts_row_added.emit(date, sourceIP, sourceP, destP)
@@ -115,7 +115,7 @@ class EnterDataHandler(QObject):
         self.tabs_ui.logTable.setItem(0, 3, details_item)
 
     #DASHBOARD TABLE
-    def tableWidgetRow(self, sourceIP, sourceP, destP):
+    def tableWidgetRow(self, sourceIP, sourceP, packetType):
         global counter
         # print(f"Received log data: {log_entry}") #for Debug
         if counter != 100:
@@ -129,28 +129,28 @@ class EnterDataHandler(QObject):
             # Add items to each cell in the new row
             dateTime_item = QTableWidgetItem(dtEntry)
             sIP_item = QTableWidgetItem(sourceIP)
-            if sourceP == -1 or destP == -1:
+            
+            if sourceP == -1:
                 sP_item = QTableWidgetItem("N/A")
-                dPort_item = QTableWidgetItem("N/A")
             else:
                 sP_item = QTableWidgetItem(str(sourceP))
-                dPort_item = QTableWidgetItem(str(destP))
-            
+                
+            packet_item = QTableWidgetItem(str(packetType))
             # Set font and alignment for each item
             font = QFont()
             font.setPointSize(14)
             font.setBold(True)
 
-            for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
+            for item in [dateTime_item, sIP_item, sP_item, packet_item]:
                 item.setFont(font)
                 item.setTextAlignment(Qt.AlignCenter)
-                item.setForeground(QColor('red'))
+                item.setForeground(QColor('blue'))
 
             # Set items in the new row
             self.dash_ui.tableWidget.setItem(0, 0, dateTime_item)
             self.dash_ui.tableWidget.setItem(0, 1, sIP_item)
             self.dash_ui.tableWidget.setItem(0, 2, sP_item)
-            self.dash_ui.tableWidget.setItem(0, 3, dPort_item)
+            self.dash_ui.tableWidget.setItem(0, 3, packet_item)
             counter = 1
        
     #CURRENT ALERTS TABLE    
@@ -175,15 +175,14 @@ class EnterDataHandler(QObject):
         sP_item = QTableWidgetItem(str(sourceP))
         dPort_item = QTableWidgetItem(str(destP))
 
-        # Set font and alignment for each item
         font = QFont()
         font.setPointSize(14)
         font.setBold(True)
-
+        # Apply font and text color to each item in the loop
         for item in [dateTime_item, sIP_item, sP_item, dPort_item]:
             item.setFont(font)
             item.setTextAlignment(Qt.AlignCenter)
-
+            
         # Set items in the new row
         self.tabs_ui.activeAlertsTable.setItem(0, 0, dateTime_item)
         self.tabs_ui.activeAlertsTable.setItem(0, 1, sIP_item)

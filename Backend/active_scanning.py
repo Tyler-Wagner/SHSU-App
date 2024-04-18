@@ -27,5 +27,5 @@ class AbuseIPDBClient:
         if response.status_code == 200:
             return response.json()
         else:
-            print(f"Error querying IP: {response.status_code}")
+            # print(f"Error querying IP: {response.status_code}")
             return None

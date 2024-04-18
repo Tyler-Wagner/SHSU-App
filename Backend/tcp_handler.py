@@ -25,13 +25,14 @@ class CheckTCP:
             
 
             #displaying information to the CONSOLE
-            print(f"TCP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
-            print(f"Sequence Number: {seq_number}")
-            print(f"Acknowledgement Number: {ack_number}")
-            print(f"Flags: {flags}")
+            # print(f"TCP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
+            # print(f"Sequence Number: {seq_number}")
+            # print(f"Acknowledgement Number: {ack_number}")
+            # print(f"Flags: {flags}")
 
         else:
-            print("Not seeing TCP")
+            # print("Not seeing TCP")
+            pass
 
     """
     Takes the information from scapy's flag and makes it easier for us to read
@@ -66,7 +67,8 @@ class CheckTCP:
             case 'RA':
                 n_flag = 'RSTACK'
             case _:
-                print(f"TCP flag, {raw_flag} not implemented yet")
+                # print(f"TCP flag, {raw_flag} not implemented yet")
+                pass
         return n_flag
 
 #FORCING AN UPDATE

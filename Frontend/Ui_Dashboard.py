@@ -1,19 +1,14 @@
-import sys
-import os
+
 import matplotlib.pyplot as plt
-#from Backend.icmp_handler import ICMPcount
-#from Backend.tcp_handler import TCPcount
-#from Backend.udp_handler import UDPcount
 from datetime import datetime, timezone
-from random import randint
 from typing import Optional
 from matplotlib.animation import FuncAnimation
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import  QVBoxLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-import random
+
 from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
@@ -21,8 +16,6 @@ class Ui_Dashboard(object):
             Dashboard.setObjectName(u"Dashboard")
         Dashboard.resize(1600, 900)
         Dashboard.setFixedSize(QSize(1600, 900))
-        #Dashboard.setMinSize(QSize(1600, 900))
-        #Dashboard.setMaxSize(QSize(1600, 900))
         Dashboard.setAutoFillBackground(False)
         Dashboard.setStyleSheet(u"color:rgb(0,0,0);")
         Dashboard.setAnimated(True)
@@ -168,7 +161,7 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Dashboard", u"Source Port", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Packet Type", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
     def update_past_alerts_count(self, count):
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))

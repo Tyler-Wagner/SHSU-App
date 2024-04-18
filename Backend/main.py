@@ -31,7 +31,7 @@ def process_packet(packet, data_handler):
             TCPcount+=1
             setPacketCounter("TCP", TCPcount)
             data_handler.add_log_row("TCP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")# sends to data handler
-            data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)
+            data_handler.add_tableWidgetle_row(src_ip, src_port, "TCP")
 
 
         elif packet.haslayer(scapy.UDP):
@@ -44,7 +44,7 @@ def process_packet(packet, data_handler):
             udp_packet_check = CheckUDP(packet, src_ip, src_port, dst_ip, dst_port)# creates instance
             udp_packet_check.handle_udp_packet() # calls instance
             data_handler.add_log_row("UDP", f"Packet: {src_ip}:{src_port} -> {dst_ip}:{dst_port}")
-            data_handler.add_tableWidgetle_row(src_ip, src_port, dst_port)
+            data_handler.add_tableWidgetle_row(src_ip, src_port, "UDP")
 
         elif packet.haslayer(scapy.ICMP):
             icmp_type = packet[scapy.ICMP].type
@@ -55,7 +55,7 @@ def process_packet(packet, data_handler):
             setPacketCounter("ICMP", ICMPcount)
             ICMP_packet_check = CheckICMP(packet, src_ip, icmp_type)# creates instance
             ICMP_packet_check.handle_icmp_packet() # calls instance
-            data_handler.add_tableWidgetle_row(src_ip, -1, -1)
+            data_handler.add_tableWidgetle_row(src_ip, -1, "ICMP")
 
     elif packet.haslayer(scapy.ARP):
         src_ip = packet[scapy.ARP].psrc
@@ -67,7 +67,7 @@ def process_packet(packet, data_handler):
         setPacketCounter("ARP", ARPcount)
         ARP_packet_check = CheckARP(data_handler, packet, src_ip, src_mac, dst_ip, dst_mac)# creates instance
         data_handler.add_log_row("ARP", f"sIP: {src_ip} dIP: {dst_ip} sMAC: {src_mac}")
-        data_handler.add_tableWidgetle_row(src_ip, -1, -1)
+        data_handler.add_tableWidgetle_row(src_ip, -1, "ARP")
         ARP_packet_check.handle_arp_packet() # calls instance
 
 

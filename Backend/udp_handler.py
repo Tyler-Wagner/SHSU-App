@@ -22,9 +22,10 @@ class CheckUDP:
             udp_layer = self.packet[scapy.UDP]
 
             #displaying information to the CONSOLE
-            print(f"UDP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
+            # print(f"UDP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
 
         else:
-            print("Not seeing UDP")
+            # print("Not seeing UDP")
+            pass
 
 #FORCING AN UPDATE

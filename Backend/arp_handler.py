@@ -34,4 +34,5 @@ class CheckARP:
                 sendnotification(title, msg)
 
         else:
-            print("Not seeing ARP")
+            # print("Not seeing ARP")
+            pass

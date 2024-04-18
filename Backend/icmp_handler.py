@@ -1,5 +1,5 @@
 import scapy.all as scapy
-#ICMPcount = 0
+
 class CheckICMP():
     def __init__(self, packet, src_ip, dst_ip):
         self.packet = packet
@@ -19,7 +19,8 @@ class CheckICMP():
             
 
         else:
-            print("Not seeing ICMP")
+            # print("Not seeing ICMP")
+            pass
             
     #def get_ICMP_count():
         #return ICMPcount

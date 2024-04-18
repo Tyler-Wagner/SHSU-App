@@ -8,6 +8,7 @@ class Ui_TabsPage(object):
         AdvancedPage.setObjectName("AdvancedPage")
         AdvancedPage.resize(1600, 900)
         AdvancedPage.setFixedSize(QtCore.QSize(1600, 900))
+        AdvancedPage.setStyleSheet("background-color:white;")
         self.tabWidget = QtWidgets.QTabWidget(AdvancedPage)
         self.tabWidget.setGeometry(QtCore.QRect(135, 45, 1321, 721))
         font = QtGui.QFont()
@@ -34,7 +35,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: black;\n"
+"    border-color: blue;\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -45,17 +46,18 @@ class Ui_TabsPage(object):
 "    margin-top: 2px;\n"
 "    background-color: white;\n"
 "    border-bottom:0px;\n"
-"    border-color: black;\n"
+"    border-color: blue;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}\n"
 "\n"
 "QTabWidget:pane  {\n"
-"    border: 2px solid black; /* Set the border color for the content area */\n"
+"    border: 2px solid rgb(0,0,225); /* Set the border color for the content area */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
+"    background-color:white;\n   "
 "}\n"
 "QTabWidget::tab-bar {\n"
 "    alignment: center;\n"
@@ -75,7 +77,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: black;\n"
+"    border-color:rgb(0,0,225);\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -86,13 +88,13 @@ class Ui_TabsPage(object):
 "    margin-top: 2px;\n"
 "    background-color: white;\n"
 "    border-bottom: 0px;\n"
-"    border-color: black;\n"
+"    border-color: rgb(0,0,225);\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}\n"
 "\n"
 "QTabWidget:pane {\n"
-"    border: 2px solid black; /* Set the border color for the outline of the QTabWidget */\n"
+"    border: 5px solid rgb(0,0,225); /* Set the border color for the outline of the QTabWidget */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
@@ -125,7 +127,7 @@ class Ui_TabsPage(object):
 "    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
-"    background-color: rgba(0,0,0,90);\n"
+"    background-color: rgba(0,0,225,90);\n"
 "    color: black;\n"
 "}\n"
 "")
@@ -584,12 +586,3 @@ class Ui_TabsPage(object):
 
     def updateDatabase_INTERFACE(self, table, info):
         setUser(table, info)
-        
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     AdvancedPage = QtWidgets.QWidget()
-#     ui = Ui_AdvancedPage()
-#     ui.setupUi(AdvancedPage)
-#     AdvancedPage.show()
-#     sys.exit(app.exec_())
