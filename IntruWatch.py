@@ -119,19 +119,19 @@ def openWiz():
     TabsPage.hide()
     
 def main():
-    # if getFirstRun == None:
-    #     #IF THERE IS NO DATA SET TO TRUE
-    #     setFirstRun()
-    # if getFirstRun() == 1:
-    #     #TODO
-    #     #RUN WIZ 
-    #     wizButton = wizardPage.findChild(QPushButton, "pushButton")
-    #     wizButton.clicked.connect(lambda: closeWiz())
-    #     # updateFirstRun()# sets First run to 0 
-    #     wizardPage.show()
+    if getFirstRun == None:
+        #IF THERE IS NO DATA SET TO TRUE
+        setFirstRun()
+    if getFirstRun() == 1:
+        #TODO
+        #RUN WIZ 
+        wizButton = wizardPage.findChild(QPushButton, "pushButton")
+        wizButton.clicked.connect(lambda: closeWiz())
+        # updateFirstRun()# sets First run to 0 
+        wizardPage.show()
         
     clearCounterDB()
-    DashPage.show()
+    # DashPage.show()
     
     #Button setup
     data_thread = DataEntryThread(data_handler)
