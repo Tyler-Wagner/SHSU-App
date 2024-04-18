@@ -1,3 +1,4 @@
+import os
 import threading
 import psutil
 from PyQt5.QtWidgets import *
@@ -13,7 +14,9 @@ from Handlers.sendNotification import sendnotification
 from Handlers.dbHandle import clearCounterDB
 
 app = QApplication([])
-app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+os.environ["QT_SCALE_FACTOR"] = "1"
 DashPage = QMainWindow()
 Dash_ui = Ui_Dashboard()
 Dash_ui.setupUi(DashPage)
