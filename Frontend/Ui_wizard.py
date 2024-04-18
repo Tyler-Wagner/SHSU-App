@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
+class Ui_Wiz(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(408, 224)
+        Form.resize(400, 247)
         Form.setStyleSheet("")
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(10, 10, 381, 21))
@@ -41,6 +41,9 @@ class Ui_Form(object):
         self.textEdit.setGeometry(QtCore.QRect(240, 150, 131, 51))
         self.textEdit.setReadOnly(True)
         self.textEdit.setObjectName("textEdit")
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(310, 220, 56, 17))
+        self.pushButton.setObjectName("pushButton")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
@@ -59,6 +62,7 @@ class Ui_Form(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If checked you will recive notifications</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If <span style=\" font-style:italic;\">Uncheked </span>you will NOT recive notifications.</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This can be changed in the settings.</p></body></html>"))
+        self.pushButton.setText(_translate("Form", "Finish"))
 
 
 if __name__ == "__main__":

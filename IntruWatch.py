@@ -11,7 +11,7 @@ from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS
 from Handlers.dbHandle import importPastAlerts as getPastAlerts
 from Handlers.sendNotification import sendnotification
 from Handlers.dbHandle import clearCounterDB, checkDate, updateDate, updateCount, setDate, setFirstRun, getFirstRun, updateFirstRun
-from Frontend.Ui_vTotalReturn import Ui_Form
+from Frontend.Ui_vTotalReturn import Ui_Form, Ui_Wiz
 from datetime import datetime
 
 app = QApplication([])
@@ -28,6 +28,8 @@ tabs_ui.setupUi(TabsPage)
 vTotalPage = QWidget()
 vTotal_ui=Ui_Form() 
 vTotal_ui.setupUi(vTotalPage)
+
+wizardPage = 
 
 # Instantiate the EnterDataHandler class with references to UI objects
 data_handler = EnterDataHandler(Dash_ui, tabs_ui, vTotal_ui, DashPage, TabsPage, vTotalPage)

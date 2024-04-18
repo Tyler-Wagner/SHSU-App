@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>224</height>
+    <width>400</width>
+    <height>247</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -117,6 +117,19 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If checked you will recive notifications&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If &lt;span style=&quot; font-style:italic;&quot;&gt;Uncheked &lt;/span&gt;you will NOT recive notifications.&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This can be changed in the settings.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>220</y>
+     <width>56</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Finish</string>
    </property>
   </widget>
  </widget>
