@@ -128,7 +128,6 @@ def main():
         setFirstRun()
     if getFirstRun() == 1:
         # RUN WIZARD IF IT'S THE FIRST RUN
-        updateUserSettings('interface', -1)
         wizButton = wizardPage.findChild(QPushButton, "pushButton")
         wizButton.clicked.connect(lambda: closeWiz())
         updateFirstRun()# sets First run to 0 
@@ -175,7 +174,5 @@ def main():
         #### TEST ATTACK########################################    
 
 if __name__ == "__main__":
-    if getFirstRun() == 1:
-        updateUserSettings('interface', -1)
     main()
     app.exec_()
