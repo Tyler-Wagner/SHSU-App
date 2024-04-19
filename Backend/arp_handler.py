@@ -1,5 +1,7 @@
+#MIC IMPORTS
 import scapy.all as scapy
 import logging
+#HANDLER IMPORTS
 from Handlers.sendNotification import sendnotification
 
 class CheckARP:
@@ -20,8 +22,6 @@ class CheckARP:
             arp_layer = self.packet[scapy.ARP]
             operation = "Request" if arp_layer.op == 1 else "Reply"
 
-            # print(f"ARP {operation}: {self.src_ip} ({self.src_mac}) -> {self.dst_ip} ({self.dst_mac})")
-
             # Checking for arp Poisoning
             if self.src_ip in self.arp_cache and self.arp_cache[self.src_ip] != self.src_mac:
                 title = "ARP Poisoning Detected!"
@@ -34,6 +34,4 @@ class CheckARP:
                 sendnotification(title, msg)
 
         else:
-            print("Not seeing ARP")
-
-
+            pass

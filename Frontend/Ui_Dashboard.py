@@ -1,28 +1,24 @@
-import sys
-import os
+#MIC IMPORTS
 import matplotlib.pyplot as plt
-#from Backend.icmp_handler import ICMPcount
-#from Backend.tcp_handler import TCPcount
-#from Backend.udp_handler import UDPcount
 from datetime import datetime, timezone
-from random import randint
 from typing import Optional
 from matplotlib.animation import FuncAnimation
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-import random
+#PYQT5 IMPORTS
+from PyQt5.QtWidgets import  QVBoxLayout, QWidget
+from PyQt5.QtCore import QSize, QCoreApplication, Qt, QRect
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QSplitter, QLabel, QFrame, QTableWidget, QTableWidgetItem
+#HANDLER IMPORTS
 from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
+
+
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
             Dashboard.setObjectName(u"Dashboard")
         Dashboard.resize(1600, 900)
         Dashboard.setFixedSize(QSize(1600, 900))
-        #Dashboard.setMinSize(QSize(1600, 900))
-        #Dashboard.setMaxSize(QSize(1600, 900))
         Dashboard.setAutoFillBackground(False)
         Dashboard.setStyleSheet(u"color:rgb(0,0,0);")
         Dashboard.setAnimated(True)
@@ -157,9 +153,9 @@ class Ui_Dashboard(object):
     def retranslateUi(self, Dashboard):
         Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
         self.pushButton.setText(QCoreApplication.translate("Dashboard", u"Advanced", None))
-        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Packets Scanned", None))
+        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Past Threats", None))
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(importPastAlertsCount()), None))
-        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
+        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Current Threats Detected", None))
         self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Time", None)); # 
@@ -168,8 +164,10 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Dashboard", u"Source Port", None));
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Destination Port", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Packet Type", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
+        
+        
     def update_past_alerts_count(self, count):
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
     def update_current_alerts_count(self, count):
@@ -200,20 +198,41 @@ class RealTimeGraph(QWidget):
 
         self.canvas = FigureCanvas(self.fig)
         layout.addWidget(self.canvas)
-
+        
     def update(self, frame):
-        date_px = datetime.now().timestamp()
-        self.dates.append(date_px)
+        current_time = datetime.now().timestamp()
+        two_seconds_ago = current_time - 10
+        
+        # Filter out data points older than two seconds
+        filtered_indices = [i for i, date in enumerate(self.dates) if date >= two_seconds_ago]
+        self.dates = [self.dates[i] for i in filtered_indices]
+        self.TCP_data = [self.TCP_data[i] for i in filtered_indices]
+        self.UDP_data = [self.UDP_data[i] for i in filtered_indices]
+        self.ICMP_data = [self.ICMP_data[i] for i in filtered_indices]
+        
+        top=0
         
         # Fetch packet counts for TCP, UDP, and ICMP
         tcp_count = int(getPacketCounter("TCP") or 0)
         udp_count = int(getPacketCounter("UDP") or 0)
         icmp_count = int(getPacketCounter("ICMP") or 0)
         
+        if tcp_count > top:
+            top = .5 * tcp_count
+        elif udp_count > top:
+            top = .5 * udp_count
+        elif icmp_count > top:
+            top = .5 * icmp_count
+        else:
+            top = top
+        
         # Append counts to data lists
         self.TCP_data.append(tcp_count)
         self.UDP_data.append(udp_count)
         self.ICMP_data.append(icmp_count)
+        
+        # Append current time
+        self.dates.append(current_time)
 
         # Update dataset with new data
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
@@ -227,7 +246,7 @@ class RealTimeGraph(QWidget):
         max_value = max(max_tcp, max_udp, max_icmp)
         
         # Add buffer space (0.5) to the top and bottom
-        buffer_space = 0.5
+        buffer_space = top
         min_y = min(0, max_value - buffer_space)
         max_y = max_value + buffer_space
         

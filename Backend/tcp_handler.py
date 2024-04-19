@@ -1,6 +1,5 @@
 import scapy.all as scapy
-#global TCPcount
-#TCPcount = 0
+
 class CheckTCP:
     def __init__(self, packet, src_ip, src_port, dst_ip, dst_port):
         self.packet = packet
@@ -8,10 +7,8 @@ class CheckTCP:
         self.src_port = src_port
         self.dst_ip = dst_ip
         self.dst_port = dst_port
-        
+
     def handle_tcp_packet(self):
-        #print("Got packet")# used for debugging
-        #TCPcount+=1
         # check to see if I sent the right layer through
         if self.packet.haslayer(scapy.TCP):
             # Extracting the TCP information
@@ -21,17 +18,8 @@ class CheckTCP:
             seq_number = tcp_layer.seq
             ack_number = tcp_layer.ack
             flags = self.figure_flag(tcp_layer.flags)
-
-            
-
-            #displaying information to the CONSOLE
-            # print(f"TCP: {self.src_ip}:{self.src_port} -> {self.dst_ip}:{self.dst_port}")
-            # print(f"Sequence Number: {seq_number}")
-            # print(f"Acknowledgement Number: {ack_number}")
-            # print(f"Flags: {flags}")
-
         else:
-            print("Not seeing TCP")
+            pass
 
     """
     Takes the information from scapy's flag and makes it easier for us to read
@@ -65,11 +53,6 @@ class CheckTCP:
                 n_flag = 'SYNACK'
             case 'RA':
                 n_flag = 'RSTACK'
-            case 'FPA':
-                n_flag = 'FINPSHACK'
             case _:
-                print(f"TCP flag, {raw_flag} not implemented yet")
+                pass
         return n_flag
-    #def get_TCP_count(self):
-        #return TCPcount
-#FORCING AN UPDATE

@@ -1,4 +1,6 @@
+#PYQT IMPORTS
 from PyQt5 import QtCore, QtGui, QtWidgets
+#HANDLER IMPORTS
 from Handlers.dbHandle import importUserSettings as getUser
 from Handlers.dbHandle import updateUserSettings as setUser
 
@@ -8,6 +10,7 @@ class Ui_TabsPage(object):
         AdvancedPage.setObjectName("AdvancedPage")
         AdvancedPage.resize(1600, 900)
         AdvancedPage.setFixedSize(QtCore.QSize(1600, 900))
+        AdvancedPage.setStyleSheet("background-color:white;")
         self.tabWidget = QtWidgets.QTabWidget(AdvancedPage)
         self.tabWidget.setGeometry(QtCore.QRect(135, 45, 1321, 721))
         font = QtGui.QFont()
@@ -34,7 +37,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: black;\n"
+"    border-color: blue;\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -45,17 +48,18 @@ class Ui_TabsPage(object):
 "    margin-top: 2px;\n"
 "    background-color: white;\n"
 "    border-bottom:0px;\n"
-"    border-color: black;\n"
+"    border-color: blue;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}\n"
 "\n"
 "QTabWidget:pane  {\n"
-"    border: 2px solid black; /* Set the border color for the content area */\n"
+"    border: 2px solid rgb(0,0,225); /* Set the border color for the content area */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
+"    background-color:white;\n   "
 "}\n"
 "QTabWidget::tab-bar {\n"
 "    alignment: center;\n"
@@ -75,7 +79,7 @@ class Ui_TabsPage(object):
 "}\n"
 "\n"
 "QTabBar::tab:selected {\n"
-"    border-color: black;\n"
+"    border-color:rgb(0,0,225);\n"
 "    border-bottom: 0px;\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
@@ -86,13 +90,13 @@ class Ui_TabsPage(object):
 "    margin-top: 2px;\n"
 "    background-color: white;\n"
 "    border-bottom: 0px;\n"
-"    border-color: black;\n"
+"    border-color: rgb(0,0,225);\n"
 "    border-bottom-left-radius: 0px;\n"
 "    border-bottom-right-radius: 0px;\n"
 "}\n"
 "\n"
 "QTabWidget:pane {\n"
-"    border: 2px solid black; /* Set the border color for the outline of the QTabWidget */\n"
+"    border: 5px solid rgb(0,0,225); /* Set the border color for the outline of the QTabWidget */\n"
 "    border-top-left-radius: 6px;\n"
 "    border-top-right-radius: 6px;\n"
 "    border-bottom-left-radius: 0px;\n"
@@ -125,7 +129,7 @@ class Ui_TabsPage(object):
 "    border-right-style:null;\n"
 "}\n"
 "QTableWidget::item {\n"
-"    background-color: rgba(0,0,0,90);\n"
+"    background-color: rgba(0,0,225,90);\n"
 "    color: black;\n"
 "}\n"
 "")
@@ -401,7 +405,7 @@ class Ui_TabsPage(object):
 "\n"
 "}\n"
 "")
-        self.checkBox.setChecked(getUser('notifications'))
+        self.checkBox.setChecked(getUser('notifications') or False)
         self.checkBox.setObjectName("checkBox")
         self.gridLayout_3.addWidget(self.checkBox, 0, 0, 1, 1)
         self.checkBox_2 = QtWidgets.QCheckBox(self.frame_3)
@@ -411,7 +415,7 @@ class Ui_TabsPage(object):
 "}\n"
 "")
         self.checkBox_2.setObjectName("checkBox_2")
-        self.checkBox_2.setChecked(not getUser('notifications'))
+        self.checkBox_2.setChecked(not getUser('notifications') or False)
         self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.frame_3)
         self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -548,11 +552,11 @@ class Ui_TabsPage(object):
         self.label_9.setText(_translate("AdvancedPage", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-style:italic;\">**Please read the Disclaimer on the settings page.**</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("AdvancedPage", "Actions"))
         self.label_3.setText(_translate("AdvancedPage", "<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>"))
-        self.label_4.setText(_translate("AdvancedPage", "*Defaule Is 4*"))
+        self.label_4.setText(_translate("AdvancedPage", "*Defaule Is 0*"))
         self.label_7.setText(_translate("AdvancedPage", "Allow Notifications"))
         self.checkBox.setText(_translate("AdvancedPage", "Yes"))
         self.checkBox_2.setText(_translate("AdvancedPage", "No"))
-        self.label_8.setText(_translate("AdvancedPage", "*Default is Yes*"))
+        self.label_8.setText(_translate("AdvancedPage", "*Default is No*"))
         self.label_5.setText(_translate("AdvancedPage", "Scanning Interface Option"))
         self.label_6.setText(_translate("AdvancedPage", "Notifications"))
         self.textBrowser_4.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -578,16 +582,9 @@ class Ui_TabsPage(object):
             self.checkBox_2.setChecked(True)
         setUser('notifications', 'T')
 
+    def resetInterfaceBox(self):
+            self.interfaceSelectionBox.setProperty("value", getUser('interface'))
                 
 
     def updateDatabase_INTERFACE(self, table, info):
         setUser(table, info)
-        
-# if __name__ == "__main__":
-#     import sys
-#     app = QtWidgets.QApplication(sys.argv)
-#     AdvancedPage = QtWidgets.QWidget()
-#     ui = Ui_AdvancedPage()
-#     ui.setupUi(AdvancedPage)
-#     AdvancedPage.show()
-#     sys.exit(app.exec_())
