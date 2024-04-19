@@ -193,20 +193,41 @@ class RealTimeGraph(QWidget):
 
         self.canvas = FigureCanvas(self.fig)
         layout.addWidget(self.canvas)
-
+        
     def update(self, frame):
-        date_px = datetime.now().timestamp()
-        self.dates.append(date_px)
+        current_time = datetime.now().timestamp()
+        two_seconds_ago = current_time - 10
+        
+        # Filter out data points older than two seconds
+        filtered_indices = [i for i, date in enumerate(self.dates) if date >= two_seconds_ago]
+        self.dates = [self.dates[i] for i in filtered_indices]
+        self.TCP_data = [self.TCP_data[i] for i in filtered_indices]
+        self.UDP_data = [self.UDP_data[i] for i in filtered_indices]
+        self.ICMP_data = [self.ICMP_data[i] for i in filtered_indices]
+        
+        top=0
         
         # Fetch packet counts for TCP, UDP, and ICMP
         tcp_count = int(getPacketCounter("TCP") or 0)
         udp_count = int(getPacketCounter("UDP") or 0)
         icmp_count = int(getPacketCounter("ICMP") or 0)
         
+        if tcp_count > top:
+            top = .5 * tcp_count
+        elif udp_count > top:
+            top = .5 * udp_count
+        elif icmp_count > top:
+            top = .5 * icmp_count
+        else:
+            top = top
+        
         # Append counts to data lists
         self.TCP_data.append(tcp_count)
         self.UDP_data.append(udp_count)
         self.ICMP_data.append(icmp_count)
+        
+        # Append current time
+        self.dates.append(current_time)
 
         # Update dataset with new data
         self.TCP_dataset.set_data(self.dates, self.TCP_data)
@@ -220,7 +241,7 @@ class RealTimeGraph(QWidget):
         max_value = max(max_tcp, max_udp, max_icmp)
         
         # Add buffer space (0.5) to the top and bottom
-        buffer_space = 0.5
+        buffer_space = top
         min_y = min(0, max_value - buffer_space)
         max_y = max_value + buffer_space
         
