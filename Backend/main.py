@@ -1,23 +1,33 @@
+#MIC IMPORTS
 import scapy.all as scapy
+import os
+import sys
+import time
+import pyautogui
+#BACKEND IMPORTS
 from Backend.tcp_handler import CheckTCP
 from Backend.udp_handler import CheckUDP
 from Backend.icmp_handler import CheckICMP
 from Backend.arp_handler import CheckARP
+#HANDLER IMPORTS
 from Handlers.dbHandle import setPacketCounter, getPacketCounter
-# def list_network_devices():
-#     # Get a list of all network devices using psutil
-#     devices = psutil.net_if_addrs()
-    
-#     print("Network Devices:")
-#     for index, (name, addresses) in enumerate(devices.items()):
-#         print(f"{index + 1}. {name}")
-#         print("   Addresses:")
-#         for addr in addresses:
-#             print(f"      {addr.family.name}: {addr.address}")
 
+flag = False #Tell Capture Packets to stop
+
+def kill_cmd():
+    # Simulate Ctrl+C key press to send KeyboardInterrupt signal to the command prompt
+    global flag
+    flag = True
+    pyautogui.hotkey('ctrl', 'c')
+    time.sleep(1)
+    os.system("taskkill /F /IM cmd.exe")
+    sys.exit()
 
 def process_packet(packet, data_handler):
     # Process and display information about the packet
+    global flag
+    if flag == True:
+        return
     if packet.haslayer(scapy.IP):
         src_ip = packet[scapy.IP].src
         dst_ip = packet[scapy.IP].dst
@@ -73,6 +83,4 @@ def process_packet(packet, data_handler):
 
 # Modify the call to process_packet in capture_packets
 def capture_packets(interface, data_handler):
-    
-    # print(f"\nCapturing packets on {interface}...\n")
     scapy.sniff(iface=interface, store=False, prn=lambda x: process_packet(x, data_handler))

@@ -1,4 +1,6 @@
+#MIC IMPORTS
 from plyer import notification
+#HANDLER IMPORTS
 from Handlers.dbHandle import importUserSettings as getUser
 
 def sendnotification(title, message):

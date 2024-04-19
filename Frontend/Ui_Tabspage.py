@@ -1,4 +1,6 @@
+#PYQT IMPORTS
 from PyQt5 import QtCore, QtGui, QtWidgets
+#HANDLER IMPORTS
 from Handlers.dbHandle import importUserSettings as getUser
 from Handlers.dbHandle import updateUserSettings as setUser
 
@@ -403,7 +405,7 @@ class Ui_TabsPage(object):
 "\n"
 "}\n"
 "")
-        self.checkBox.setChecked(getUser('notifications'))
+        self.checkBox.setChecked(getUser('notifications') or False)
         self.checkBox.setObjectName("checkBox")
         self.gridLayout_3.addWidget(self.checkBox, 0, 0, 1, 1)
         self.checkBox_2 = QtWidgets.QCheckBox(self.frame_3)
@@ -413,7 +415,7 @@ class Ui_TabsPage(object):
 "}\n"
 "")
         self.checkBox_2.setObjectName("checkBox_2")
-        self.checkBox_2.setChecked(not getUser('notifications'))
+        self.checkBox_2.setChecked(not getUser('notifications') or False)
         self.gridLayout_3.addWidget(self.checkBox_2, 0, 1, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.frame_3)
         self.label_8.setLayoutDirection(QtCore.Qt.RightToLeft)

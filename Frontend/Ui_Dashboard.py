@@ -1,15 +1,18 @@
-
+#MIC IMPORTS
 import matplotlib.pyplot as plt
 from datetime import datetime, timezone
 from typing import Optional
 from matplotlib.animation import FuncAnimation
-from PyQt5.QtWidgets import  QVBoxLayout, QWidget
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-
+#PYQT5 IMPORTS
+from PyQt5.QtWidgets import  QVBoxLayout, QWidget
+from PyQt5.QtCore import QSize, QCoreApplication, Qt, QRect
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton, QSplitter, QLabel, QFrame, QTableWidget, QTableWidgetItem
+#HANDLER IMPORTS
 from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
+
+
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
@@ -150,9 +153,9 @@ class Ui_Dashboard(object):
     def retranslateUi(self, Dashboard):
         Dashboard.setWindowTitle(QCoreApplication.translate("Dashboard", u"Intruwatch Dash", None))
         self.pushButton.setText(QCoreApplication.translate("Dashboard", u"Advanced", None))
-        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Packets Scanned", None))
+        self.label_2.setText(QCoreApplication.translate("Dashboard", u"Past Threats", None))
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(importPastAlertsCount()), None))
-        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Threats Detected", None))
+        self.label_3.setText(QCoreApplication.translate("Dashboard", u"Current Threats Detected", None))
         self.label_5.setText(QCoreApplication.translate("Dashboard", u"TDCounter", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Dashboard", u"Time", None)); # 
@@ -163,6 +166,8 @@ class Ui_Dashboard(object):
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Dashboard", u"Packet Type", None));
         self.label.setText(QCoreApplication.translate("Dashboard", u"Intruwatch Dashboard", None))
+        
+        
     def update_past_alerts_count(self, count):
         self.label_4.setText(QCoreApplication.translate("Dashboard", str(count), None))
     def update_current_alerts_count(self, count):

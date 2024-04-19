@@ -1,10 +1,4 @@
-# This entire file is used for demonstration purposes only.
-# I really hope this works for us, cannot confirm nor deny
-# if it will or not. Just a serious hope it does cause I 
-# cant really test it
-
 import requests
-import os
 from dotenv import load_dotenv
 
 env_file = 'api.env'

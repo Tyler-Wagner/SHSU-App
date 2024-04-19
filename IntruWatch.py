@@ -1,25 +1,29 @@
 #MIC IMPORTS
+import sys
 import psutil
 import threading
 from datetime import datetime
 #QT IMPORTS
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QListWidgetItem
+from PyQt5.QtGui import QFont
+from PyQt5.QtCore import Qt, QRect
 #FRONT AND BACK END IMPORTS
 from Frontend.Ui_Dashboard import Ui_Dashboard, RealTimeGraph
 from Frontend.Ui_Tabspage import Ui_TabsPage
 from Frontend.Ui_vTotalReturn import Ui_Form
 from Frontend.Ui_wizard import Ui_Wiz
 from Backend.main import capture_packets
+from Backend.main import kill_cmd
 #HANDLERS IMPORTS
 from Handlers.enterData import EnterDataHandler
-from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS, importPastAlerts as getPastAlerts, updateUserSettings, clearCounterDB, checkDate, updateDate, updateCount, setDate, setFirstRun, getFirstRun, updateFirstRun
+from Handlers.dbHandle import importUserSettings as dbhandle_SETTINGS, importPastAlerts as getPastAlerts
+from Handlers.dbHandle import updateUserSettings, clearCounterDB, checkDate, updateDate, updateCount
+from Handlers.dbHandle import setDate, setFirstRun, getFirstRun, updateFirstRun
+from Handlers.dbHandle import initiation
 from Handlers.sendNotification import sendnotification
 
     
 app = QApplication([])
-app.setAttribute(Qt.AA_EnableHighDpiScaling, True)
 
 DashPage = QMainWindow()
 Dash_ui = Ui_Dashboard()
@@ -65,6 +69,9 @@ layout.addWidget(real_time_graph)
 layout.addStretch(10)
 
 class DataEntryThread(threading.Thread):
+    def terminate_cmd():
+        kill_cmd()
+            
     def __init__(self, data_handler):
         threading.Thread.__init__(self)
         self.data_handler = data_handler
@@ -95,13 +102,15 @@ def list_network_devices():
     return device_list
 def loadPastAlerts():
     out = getPastAlerts()
-    
-    for past_alert in out:
-        # Extract the necessary information from the past_alert tuple
-        dtEntry, sourceP, sourceIP, destP = past_alert  # Adjust the order of arguments if needed
+    if getPastAlerts() == None:
+        pass
+    else:
+        for past_alert in out:
+            # Extract the necessary information from the past_alert tuple
+            dtEntry, sourceP, sourceIP, destP = past_alert  # Adjust the order of arguments if needed
 
-        # Add the past alert to the data handler
-        data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
+            # Add the past alert to the data handler
+            data_handler.add_table_row_pAlerts_ONSTART(dtEntry, sourceIP, sourceP, destP)  # Pass the arguments correctly
 
 
 def showDash():
@@ -125,11 +134,12 @@ def openWiz():
     
 
 def main():
-    if getFirstRun == None:
+    if getFirstRun() == None:
         # IF THERE IS NO DATA SET TO TRUE
         setFirstRun()
     if getFirstRun() == 1:
         # RUN WIZARD IF IT'S THE FIRST RUN
+        initiation.initiateDB() # set up DB
         wizButton = wizardPage.findChild(QPushButton, "pushButton")
         wizButton.clicked.connect(lambda: closeWiz())
         updateFirstRun()# sets First run to 0 
@@ -142,7 +152,6 @@ def main():
             font.setPointSize(10)  # Set the point size to 10
             item.setFont(font)
             wizard_ui.listWidget.addItem(item)
-        loadPastAlerts()
         wizardPage.show()
         return
     if getFirstRun() == 0:      
@@ -174,7 +183,7 @@ def main():
         date = datetime.now()
         currentDate = date.strftime("%Y-%m-%d")
         
-        if checkDate() == None:
+        if checkDate() == "None":
             setDate(currentDate)
         if currentDate != checkDate():
             updateCount(1000)
@@ -187,4 +196,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    app.aboutToQuit.connect(DataEntryThread.terminate_cmd) #send ctr C to terminal
     app.exec_()

@@ -1,13 +1,17 @@
+#MIC IMPORTS
+from datetime import datetime
+#PYQT IMPORTS
 from PyQt5.QtWidgets import QTableWidgetItem, QPushButton
 from PyQt5.QtGui import QFont, QColor
 from PyQt5.QtCore import pyqtSignal, Qt, QObject
-from datetime import datetime
+from PyQt5.QtWidgets import QListWidgetItem
+#HANDLER IMPORTS
 from Handlers.dbHandle import updatePastAlerts as dbhandeler
 from Handlers.dbHandle import updateCurrentAlertsCount
 from Handlers.dbHandle import importPastAlertsCount, checkCount, updateCount
+#BACKEND IMPORTS
 from Backend.active_scanning import AbuseIPDBClient
-from PyQt5.QtWidgets import QListWidgetItem
-from Backend.active_scanning import AbuseIPDBClient
+
 
 
 counter = 0

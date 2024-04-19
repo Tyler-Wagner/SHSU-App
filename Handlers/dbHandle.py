@@ -27,7 +27,7 @@ def setFirstRun(): #SET THE VALUE TO TRUE IF THERE IS NONE IN THE DB
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
     
-    cursor.execute("INSERT INTO firstRun VALUES (1)")
+    cursor.execute("INSERT INTO firstRun (ans) VALUES (1)")
     
     conn.commit()
     cursor.close()
@@ -48,7 +48,8 @@ def updateFirstRun():#SET VALUE TO FALSE AFTER FIRST RUN
 def setDate(date):
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO dateCheck VALUES (?)", (date,))
+
+    cursor.execute("INSERT INTO dateCheck VALUES (?)", (str(date),))
     
     conn.commit()
     cursor.close()
@@ -79,9 +80,8 @@ def updateCount(number):
     
     conn.commit()
     cursor.close()
-    conn.close()
+    conn.close()   
     
-
 def checkDate():
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
@@ -102,6 +102,7 @@ def checkDate():
 def updateDate(date):
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
+    
     cursor.execute("UPDATE dateCheck SET date=?", (date,))
     
     conn.commit()
@@ -221,7 +222,7 @@ def importPastAlertsCount():
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
     
-    cursor.execute("SELECT COUNT(*) FROM pastAlerts")
+    cursor.execute("SELECT COUNT(*) FROM pastAlerts ORDER BY date")
     
     row = cursor.fetchone()  # Retrieve the first (and only) row
     
@@ -238,16 +239,93 @@ def updateCurrentAlertsCount(value):
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
     
-    cursor.execute("SELECT count(*) FROM curretnAlertsCount")
+    cursor.execute("SELECT count(*) FROM currentAlertsCount")
     result = cursor.fetchone()
     if result[0] > 0: 
-        cursor.execute("UPDATE curretnAlertsCount SET count=? WHERE ID=1", (value,))
+        cursor.execute("UPDATE currentAlertsCount SET count=? WHERE ID=1", (value,))
         conn.commit()
     else:
-        cursor.execute("INSERT INTO curretnAlertsCount (ID, count) VALUES (1, 0)")  # Corrected typo
+        cursor.execute("INSERT INTO currentAlertsCount (ID, count) VALUES (1, 0)")  # Corrected typo
         conn.commit()
     
     cursor.close()
     conn.close()
 
+
+#INITIATE THE DB SO THAT THERE ARE TABLES IN THE DB AND THE USER HAS A CLEAN SLATE ON FIRST RUN
+class initiation:
+    def initiateDB():
+        conn = sqlite3.connect(path)
+        cursor = conn.cursor()
+        
+        initiation.createTables(cursor=cursor)
+        initiation.deleteData(cursor=cursor)
+        
+        cursor.execute("INSERT OR IGNORE INTO apiCounter (apiCount) VALUES (999)")
+        cursor.execute("INSERT OR IGNORE INTO settingsInfo (id, interface, notifications) VALUES (1, 0, 'F')")
+        cursor.execute("INSERT OR IGNORE INTO currentAlertsCount (ID, count) VALUES (1, 0)")
+        
+        initial_values = [
+            ("UDP", 0),
+            ("TCP", 0),
+            ("ICMP", 0),
+            ("ARP", 0)
+        ]
+        cursor.executemany("INSERT OR IGNORE INTO packetCounters (packetName, packetNumber) VALUES (?, ?)", initial_values)
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+
+    def deleteData(cursor):
+        table_names = [
+                "settingsInfo",
+                "pastAlerts",
+                "packetCounters",
+                "dateCheck",
+                "currentAlertsCount",
+                "apiCounter"
+            ]
+
+        # Delete all data from each table for a clean start
+        for table_name in table_names:
+            cursor.execute(f"DELETE FROM {table_name}")
+
+    def createTables(cursor):
+        
+        cursor.execute('''CREATE TABLE IF NOT EXISTS settingsInfo (
+                            id INTEGER NOT NULL,
+                            interface INTEGER,
+                            notifications VARCHAR(5)
+                            )''')
+
+        # Create pastAlerts table
+        cursor.execute('''CREATE TABLE IF NOT EXISTS pastAlerts (
+                            date VARCHAR NOT NULL,
+                            sourcePort VARCHAR,
+                            sourceIP VARCHAR,
+                            destP VARCHAR
+                            )''')
+
+        # Create packetCounters table
+        cursor.execute('''CREATE TABLE IF NOT EXISTS packetCounters (
+                            packetName VARCHAR NOT NULL,
+                            packetNumber INTEGER
+                            )''')
+        # Create dateCheck table
+        cursor.execute('''CREATE TABLE IF NOT EXISTS dateCheck (
+                            date VARCHAR
+                            )''')
+
+        # Create currentAlertsCount table
+        cursor.execute('''CREATE TABLE IF NOT EXISTS currentAlertsCount (
+                            ID INTEGER PRIMARY KEY NOT NULL,
+                            count INTEGER
+                            )''')
+
+        # Create apiCounter table
+        cursor.execute('''CREATE TABLE IF NOT EXISTS apiCounter (
+                            apiCount INTEGER
+                            )''')
   
