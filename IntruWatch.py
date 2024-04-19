@@ -133,6 +133,16 @@ def main():
         wizButton = wizardPage.findChild(QPushButton, "pushButton")
         wizButton.clicked.connect(lambda: closeWiz())
         updateFirstRun()# sets First run to 0 
+        devices = list_network_devices()
+        for device in devices:
+            item = QListWidgetItem(device)
+            # Create a QFont object for bold text with 10pt size
+            font = QFont()
+            font.setBold(True)
+            font.setPointSize(10)  # Set the point size to 10
+            item.setFont(font)
+            wizard_ui.listWidget.addItem(item)
+        loadPastAlerts()
         wizardPage.show()
         return
     if getFirstRun() == 0:      
@@ -172,7 +182,7 @@ def main():
 
         #### TEST ATTACK########################################
         data_handler.add_current_alerts_row('104.250.49.205', 22,22)
-        # sendnotification("TEST ATTACK", f"Source IP: 104.250.49.205 Source port: 22 Dest port: 22")
+        sendnotification("ATTACK DETECTED", f"Source IP: 104.250.49.205 Source port: 22 Dest port: 22")
         #### TEST ATTACK########################################    
 
 if __name__ == "__main__":

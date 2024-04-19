@@ -550,11 +550,11 @@ class Ui_TabsPage(object):
         self.label_9.setText(_translate("AdvancedPage", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-style:italic;\">**Please read the Disclaimer on the settings page.**</span></p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.action), _translate("AdvancedPage", "Actions"))
         self.label_3.setText(_translate("AdvancedPage", "<html><head/><body><p><span style=\" font-size:10pt;\">Select Scanning Interface</span></p></body></html>"))
-        self.label_4.setText(_translate("AdvancedPage", "*Defaule Is 4*"))
+        self.label_4.setText(_translate("AdvancedPage", "*Defaule Is 0*"))
         self.label_7.setText(_translate("AdvancedPage", "Allow Notifications"))
         self.checkBox.setText(_translate("AdvancedPage", "Yes"))
         self.checkBox_2.setText(_translate("AdvancedPage", "No"))
-        self.label_8.setText(_translate("AdvancedPage", "*Default is Yes*"))
+        self.label_8.setText(_translate("AdvancedPage", "*Default is No*"))
         self.label_5.setText(_translate("AdvancedPage", "Scanning Interface Option"))
         self.label_6.setText(_translate("AdvancedPage", "Notifications"))
         self.textBrowser_4.setHtml(_translate("AdvancedPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
