@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtWidgets
 
 class Ui_Form(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("IntruWatch Return")
         Form.resize(506, 337)
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(20, 10, 191, 41))

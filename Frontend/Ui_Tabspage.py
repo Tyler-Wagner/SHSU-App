@@ -478,7 +478,7 @@ class Ui_TabsPage(object):
 
     def retranslateUi(self, AdvancedPage):
         _translate = QtCore.QCoreApplication.translate
-        AdvancedPage.setWindowTitle(_translate("AdvancedPage", "Form"))
+        AdvancedPage.setWindowTitle(_translate("AdvancedPage", "IntruWatch Advanced Page"))
         item = self.logTable.horizontalHeaderItem(0)
         item.setText(_translate("AdvancedPage", "Date"))
         item = self.logTable.horizontalHeaderItem(1)

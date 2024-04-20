@@ -16,7 +16,7 @@ from Handlers.dbHandle import importPastAlertsCount, getPacketCounter
 class Ui_Dashboard(object):
     def setupUi(self, Dashboard):
         if Dashboard.objectName():
-            Dashboard.setObjectName(u"Dashboard")
+            Dashboard.setObjectName(u"Intruwatch Dashboard")
         Dashboard.resize(1600, 900)
         Dashboard.setFixedSize(QSize(1600, 900))
         Dashboard.setAutoFillBackground(False)

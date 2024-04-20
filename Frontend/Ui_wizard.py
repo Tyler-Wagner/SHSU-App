@@ -6,7 +6,7 @@ from Handlers.dbHandle import updateUserSettings as setUserSettings
 
 class Ui_Wiz(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("Intruwatch Setup Wizard")
         Form.resize(600, 350)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
