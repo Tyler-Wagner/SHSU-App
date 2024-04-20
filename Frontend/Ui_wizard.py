@@ -109,7 +109,7 @@ class Ui_Wiz(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Intruwatch Setup Wizard"))
         self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; color:#0000ff;\">Welcome To </span><span style=\" font-size:14pt; font-weight:600; text-decoration: underline; color:#0000ff;\">IntruWatch</span></p></body></html>"))
         self.label_4.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:8pt; font-weight:600;\">Please Select an Interface</span></p></body></html>"))
         self.label_3.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:8pt; font-weight:600;\">Notifications?</span></p></body></html>"))
