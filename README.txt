@@ -7,4 +7,4 @@ Our goal for the future is to have the display aduto adjust to the users screen 
 To ensure you see traffic coming through on startup make sure you find what interface is currently getting traffic. Once you determine what interface is running either:
 change the DB manually, change the interface in the setting and restart the program, or set it to the interface on the setup wizard if it is your first time running.
 
-In order to run the application please run the following in your CMD (py, python, python3) IntruWatch.py
+In order to run the application please run the following in your CMD (Run one of the following depending on your python version)<py, python, python3> IntruWatch.py
